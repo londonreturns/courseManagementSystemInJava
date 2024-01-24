@@ -1,0 +1,11 @@
+package courseManagementSystem;
+
+public class StandardButton extends JButton{
+	StandardButton() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	StandardButton(String text){
+		super(text);
+	}
+}

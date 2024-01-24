@@ -1,0 +1,81 @@
+package courseManagementSystem;
+
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
+@SuppressWarnings("serial")
+public class LoginFrame extends StandardFrame implements ActionListener{
+	JPanel loginPanel = new StandardPanel(250, 75, 1000, 1005, Color.red);
+	JTextField nameTextField = new JTextField();
+	JPasswordField passwordPasswordField = new JPasswordField();
+	JLabel nameLabel = new JLabel();
+	JLabel passwordLabel = new JLabel();
+	JButton okBtn = new StandardButton();
+	JLabel registrationLabel = new JLabel();
+	
+	
+	LoginFrame(){
+		super();
+	}
+	
+	LoginFrame(int x_coord, int y_coord, int width, int height){
+		super(x_coord, y_coord, width, height);
+	}
+	
+	LoginFrame(int x_coord, int y_coord, int width, int height, Color color){
+		super(x_coord, y_coord, width, height, color);
+	}
+	
+	protected void setElements() {
+		
+		
+		nameLabel.setText("Name");
+		nameLabel.setBounds(10, 10, 200, 50);
+		nameLabel.setBackground(Color.green);
+		nameLabel.setOpaque(true);
+		
+		passwordLabel.setText("Password");
+		passwordLabel.setBounds(10, 100, 200, 50);
+		passwordLabel.setBackground(Color.blue);
+		passwordLabel.setOpaque(true);
+
+		nameTextField.setBounds(250, 15, 200, 32);
+		
+		passwordPasswordField.setBounds(250, 115, 200, 32);
+		
+		okBtn.setText("Login");
+		okBtn.setBounds(75, 250, 200, 100);
+		okBtn.addActionListener(this);
+		
+		registrationLabel.setText("No account?");
+		registrationLabel.setBounds(75, 400, 200, 50);
+		registrationLabel.setBackground(Color.green);
+		registrationLabel.setOpaque(true);
+		
+		loginPanel.add(nameLabel);
+		loginPanel.add(passwordLabel);
+		loginPanel.add(nameTextField);
+		loginPanel.add(passwordPasswordField);		
+		loginPanel.add(okBtn);
+		loginPanel.add(registrationLabel);
+		
+		add(loginPanel);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == okBtn) {
+			System.out.println("UserName: " + nameTextField.getText());
+			System.out.println("Password: " + new String(passwordPasswordField.getPassword()));
+		}
+		
+		
+	}
+}

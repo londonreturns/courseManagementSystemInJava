@@ -1,0 +1,14 @@
+package courseManagementSystem;
+
+import javax.swing.JButton;
+
+@SuppressWarnings("serial")
+public class StandardButton extends JButton{
+	StandardButton() {
+		
+	}
+	
+	StandardButton(String text){
+		super(text);
+	}
+}

@@ -1,0 +1,16 @@
+package courseManagementSystem;
+
+import java.awt.Cursor;
+
+import javax.swing.JButton;
+
+@SuppressWarnings("serial")
+public class StandardButton extends JButton{
+	StandardButton() {
+		this.setCursor(Cursor.HAND_CURSOR);
+	}
+	
+	StandardButton(String text){
+		super(text);
+	}
+}

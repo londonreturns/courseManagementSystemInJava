@@ -1,9 +1,0 @@
-package courseManagementSystem;
-
-public class LoginFrame extends StandardPanel{
-	LoginFrame(){
-		
-	}
-	
-	
-}
