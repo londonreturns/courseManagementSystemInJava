@@ -1,0 +1,41 @@
+package courseManagementSystem;
+
+import java.awt.Color;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class Main {
+	public static void main(String[] args) {
+		StandardFrame loginFrame = new StandardFrame(1000, 1000);
+		JPanel loginPanel = new JPanel();
+		JLabel nameLabel = new JLabel();
+		JTextField nameTextField = new JTextField();
+		JButton okButton = new StandardButton("Ok");
+		
+		okButton.addActionListener(loginFrame);
+		okButton.setBounds(50, 200, 50, 32);
+		okButton.addActionListener(loginFrame);
+		
+		nameTextField.setBounds(50, 50, 100, 100);
+		
+		nameLabel.setText("Name");	
+		nameLabel.setBounds(0, -20, 50, 50);
+		nameLabel.setLayout(null);
+		
+		loginPanel.setLayout(null);
+		loginPanel.setBackground(Color.green);
+		loginPanel.setOpaque(true);
+		loginPanel.setBounds(450, 100, 500, 500);
+		
+		loginPanel.add(okButton);
+		loginPanel.add(nameLabel);
+		loginPanel.add(nameTextField);
+		
+		loginFrame.setLayout(null);
+		loginFrame.setVisible(loginFrame.visibility);
+		loginFrame.add(loginPanel);
+	}	
+}

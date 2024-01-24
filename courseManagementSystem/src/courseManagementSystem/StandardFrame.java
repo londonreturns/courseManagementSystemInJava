@@ -1,30 +1,27 @@
 package courseManagementSystem;
 
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 @SuppressWarnings("serial")
 public class StandardFrame extends JFrame{
 	
-	int width = 500;
-	int height = 500;
+	int x_coord = 0;
+	int y_coord = 0;
+	int width = 1000;
+	int height = 1000;
 	boolean visibility = true;
-	String logoPath = "assets/logo.png";
 	
 	StandardFrame(){
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(this.x_coord, this.y_coord, this.width, this.height);
+		setLayout(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(visibility);
-		setSize(width, height);
-		setResizable(false);
-		ImageIcon logo = new ImageIcon(logoPath);
-		setIconImage(logo.getImage());
 	}
 	
-	StandardFrame(int width, int height){
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	StandardFrame(int x_coord, int y_coord, int width, int height){
+		setBounds(x_coord, y_coord, width, height);
+		setLayout(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(visibility);
-		setSize(width, height);
 	}
-	
-	
 }

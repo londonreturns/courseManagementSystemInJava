@@ -1,0 +1,12 @@
+package courseManagementSystem;
+
+import java.awt.Color;
+
+import javax.swing.JPanel;
+
+@SuppressWarnings("serial")
+public class StandardPanel extends JPanel{
+	void setBackground();
+	void setOpaque();
+	setBounds(0, 0, 250, 250);
+}

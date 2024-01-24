@@ -1,0 +1,28 @@
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class Main {
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Swing Example");
+        JTextField textField = new JTextField(20);
+        JButton button = new JButton("Get Text");
+
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String text = textField.getText();
+                JOptionPane.showMessageDialog(null, "Text from the text field: " + text);
+            }
+        });
+
+        JPanel panel = new JPanel();
+        panel.add(textField);
+        panel.add(button);
+
+        frame.getContentPane().add(panel);
+        frame.setSize(300, 150);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
+}

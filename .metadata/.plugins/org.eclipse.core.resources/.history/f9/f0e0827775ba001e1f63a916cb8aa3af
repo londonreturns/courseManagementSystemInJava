@@ -1,0 +1,51 @@
+package courseManagementSystem;
+
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+
+@SuppressWarnings("serial")
+public class StandardFrame extends JFrame implements ActionListener{
+	
+	int width = 500;
+	int height = 500;
+	boolean visibility = true;
+	String logoPath = "assets/logo.png";
+	String title = "Course Management System";
+	
+	StandardFrame(){
+		this.setTitle(title);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(width, height);
+//		this.setResizable(false);
+		ImageIcon logo = new ImageIcon(logoPath);
+		this.setIconImage(logo.getImage());
+		this.getContentPane().setBackground(new Color(0xFBF7F5));
+	}
+	
+	StandardFrame(int width, int height){
+		this.width = width;
+		this.height = height;
+		
+		this.setTitle(title);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(width, height);
+//		this.setResizable(false);
+		ImageIcon logo = new ImageIcon(logoPath);
+		this.setIconImage(logo.getImage());
+		this.getContentPane().setBackground(new Color(0xFBF7F5));
+	}
+	
+	boolean getVisibility() {
+		return visibility;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Class<? extends ActionEvent> f = e.getClass();
+		System.out.println(f);
+	}
+}

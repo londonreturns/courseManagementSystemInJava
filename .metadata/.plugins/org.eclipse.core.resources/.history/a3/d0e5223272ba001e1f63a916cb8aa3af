@@ -1,0 +1,9 @@
+package courseManagementSystem;
+
+import javax.swing.JButton;
+
+public class StandardButton extends JButton{
+	StandardButton(){
+		
+	}
+}

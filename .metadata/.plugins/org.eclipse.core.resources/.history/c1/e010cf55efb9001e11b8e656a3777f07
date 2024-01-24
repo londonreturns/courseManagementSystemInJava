@@ -1,0 +1,28 @@
+package courseManagementSystem;
+
+import java.awt.Color;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class Main {
+	public static void main(String[] args) {
+		StandardFrame loginFrame = new StandardFrame(1000, 1000);
+		JPanel loginPanel = new JPanel();
+		JLabel nameLabel = new JLabel();
+		
+		nameLabel.setText("Name");	
+		nameLabel.setBounds(0, 0, 50, 50);
+		nameLabel.setLayout(null);
+		
+		loginPanel.setLayout(null);
+		loginPanel.add(nameLabel);
+		loginPanel.setBackground(Color.green);
+		loginPanel.setOpaque(true);
+		loginPanel.setBounds(0, 0, 100, 100);
+		
+		loginFrame.setLayout(null);
+		loginFrame.setVisible(loginFrame.visibility);
+		loginFrame.add(loginPanel);
+	}	
+}

@@ -1,0 +1,23 @@
+package courseManagementSystem;
+
+public class User implements UserInterface{
+	@Override
+	String getId() {
+		
+	}
+	
+	@Override
+	String getName() {
+		
+	}
+	
+	@Override
+	void setId() {
+		
+	}
+	
+	@Override
+	void setName() {
+		
+	}
+}

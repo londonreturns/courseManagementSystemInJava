@@ -1,0 +1,11 @@
+package courseManagementSystem;
+
+import java.awt.Cursor;
+import javax.swing.JButton;
+
+public class StandardButton extends JButton{
+	StandardButton(){
+		Cursor cur = new Cursor();
+		
+	}
+}

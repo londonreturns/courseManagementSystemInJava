@@ -1,0 +1,27 @@
+package courseManagementSystem;
+
+import javax.swing.JFrame;
+
+@SuppressWarnings("serial")
+public class StandardFrame extends JFrame{
+	
+	int x_coord = 0;
+	int y_coord = 0;
+	int width = 1000;
+	int height = 100;
+	boolean visibility = true;
+	
+	StandardFrame(){
+		setBounds(this.x_coord, this.y_coord, this.width, this.height);
+		setLayout(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setVisible(visibility);
+	}
+	
+	StandardFrame(int x_coord, int y_coord, int width, int height){
+		setBounds(x_coord, y_coord, width, height);
+		setLayout(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setVisible(visibility);
+	}
+}

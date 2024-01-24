@@ -1,0 +1,8 @@
+package courseManagementSystem;
+
+
+public class Student implements User{
+	static {
+		id = "";
+	}
+}

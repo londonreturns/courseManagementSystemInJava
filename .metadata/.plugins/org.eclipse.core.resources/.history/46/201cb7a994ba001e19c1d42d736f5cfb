@@ -1,0 +1,23 @@
+package courseManagementSystem;
+
+import java.awt.Color;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+
+public class LoginFrame extends StandardPanel{
+	LoginFrame(){
+		
+	}
+	
+	LoginFrame(int width, int height){
+		super(width, height);
+		this.setTitle(title);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(width, height);
+//		this.setResizable(false);
+		ImageIcon logo = new ImageIcon(logoPath);
+		this.setIconImage(logo.getImage());
+		this.getContentPane().setBackground(new Color(0xFBF7F5));
+	}
+}

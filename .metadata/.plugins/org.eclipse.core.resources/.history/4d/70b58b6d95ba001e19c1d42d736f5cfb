@@ -1,0 +1,11 @@
+package courseManagementSystem;
+
+public class LoginFrame extends StandardPanel{
+	LoginFrame(){
+		
+	}
+	
+	LoginFrame(int width, int height){
+		super(width, height);
+	}
+}

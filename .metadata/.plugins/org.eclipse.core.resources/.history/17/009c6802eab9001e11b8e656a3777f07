@@ -1,0 +1,7 @@
+package courseManagementSystem;
+
+import javax.swing.JPanel;
+
+public class StandardPanel extends JPanel{
+
+}

@@ -1,0 +1,18 @@
+package courseManagementSystem;
+
+public class LoginFrame extends StandardFrame{
+	int x_coord = 0;
+	int y_coord = 0;
+	int width = 1000;
+	int height = 1500;
+	boolean visibility = true;
+	
+	LoginFrame(){
+		super();
+		
+	}
+	
+	LoginFrame(int x_coord, int y_coord, int width, int height){
+		super(x_coord, y_coord, width, height);
+	}
+}

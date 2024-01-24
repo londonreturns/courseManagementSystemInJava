@@ -1,0 +1,9 @@
+package courseManagementSystem;
+
+
+public class Student extends User{
+	Student(String id, String name){
+		super(id, name);
+	}
+	
+}
