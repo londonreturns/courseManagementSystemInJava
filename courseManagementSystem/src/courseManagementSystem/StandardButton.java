@@ -4,7 +4,6 @@ import java.awt.Cursor;
 
 import javax.swing.JButton;
 
-@SuppressWarnings("serial")
 public class StandardButton extends JButton{
 	StandardButton() {
 		Cursor handCursor = new Cursor(Cursor.HAND_CURSOR);

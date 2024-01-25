@@ -1,0 +1,20 @@
+package courseManagementSystem;
+
+import java.awt.Color;
+
+public class StandardAlertFrame extends StandardFrame{
+	
+	
+	
+	StandardAlertFrame(){
+		super();
+	}
+	
+	StandardAlertFrame(int x_coord, int y_coord, int width, int height){
+		super(x_coord, y_coord, width, height);
+	}
+	
+	StandardAlertFrame(int x_coord, int y_coord, int width, int height, Color color){
+		super(x_coord, y_coord, width, height, color);
+	}
+}

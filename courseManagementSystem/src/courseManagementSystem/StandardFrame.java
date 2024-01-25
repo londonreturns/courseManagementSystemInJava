@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 
 public class StandardFrame extends JFrame{
 	
+	String title = "Course Management System";
 	int x_coord = 0;
 	int y_coord = 0;
 	int width = 1000;
@@ -15,6 +16,7 @@ public class StandardFrame extends JFrame{
 	Container container = this.getContentPane();
 	
 	StandardFrame(){
+		setTitle(title);
 		setBounds(this.x_coord, this.y_coord, this.width, this.height);
 		setLayout(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -26,6 +28,7 @@ public class StandardFrame extends JFrame{
 	}
 	
 	StandardFrame(int x_coord, int y_coord, int width, int height){
+		setTitle(title);
 		setBounds(x_coord, y_coord, width, height);
 		setLayout(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -37,6 +40,7 @@ public class StandardFrame extends JFrame{
 	}
 	
 	StandardFrame(int x_coord, int y_coord, int width, int height, Color color){
+		setTitle(title);
 		setBounds(x_coord, y_coord, width, height);
 		setLayout(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);

@@ -1,9 +1,0 @@
-package courseManagementSystem;
-
-
-public class Main {
-	public static void main(String[] args) {
-		StandardFrame loginFrame = new LoginFrame(1000, 1000);
-		
-	}	
-}

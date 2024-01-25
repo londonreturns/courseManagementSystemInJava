@@ -22,8 +22,10 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 	JPasswordField passwordPasswordField = new JPasswordField();
 	JLabel idLabel = new JLabel();
 	JLabel passwordLabel = new JLabel();
-	JButton okBtn = new StandardButton();
+	JButton okBtnLogin = new StandardButton();
 	JLabel registrationLabel = new JLabel();
+	
+	boolean loginInit = false;
 	
 	LoginFrame(){
 		super();
@@ -37,14 +39,14 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 		super(x_coord, y_coord, width, height, color);
 	}
 	
-	protected void setElements() {
+	protected void setLoginElements() {
 		idLabel.setText("Id");
-		idLabel.setBounds(10, 10, 200, 50);
+		idLabel.setBounds(10, 10, 75, 50);
 		idLabel.setBackground(Color.green);
 		idLabel.setOpaque(true);
 		
 		passwordLabel.setText("Password");
-		passwordLabel.setBounds(10, 100, 200, 50);
+		passwordLabel.setBounds(10, 115, 75, 32);
 		passwordLabel.setBackground(Color.blue);
 		passwordLabel.setOpaque(true);
 
@@ -52,12 +54,12 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 		
 		passwordPasswordField.setBounds(250, 115, 200, 32);
 		
-		okBtn.setText("Login");
-		okBtn.setBounds(75, 250, 150, 35);
-		okBtn.addActionListener(this);
+		okBtnLogin.setText("Login");
+		okBtnLogin.setBounds(75, 250, 150, 35);
+		okBtnLogin.addActionListener(this);
 		
 		registrationLabel.setText("No account?");
-		registrationLabel.setForeground(new Color(0x0006B1));
+		registrationLabel.setForeground(new Color(0x321D2F));
 		registrationLabel.setBounds(75, 400, 85, 25);
 		registrationLabel.setBackground(Color.white);
 		registrationLabel.setOpaque(true);
@@ -65,10 +67,7 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				System.out.println("Registered");
-				RegisterFrame registerFrame = new RegisterFrame(0, 0, 1000, 750, new Color(0xF0F0F0));
-				registerFrame.setVisible(true);
-				setVisible(false);
+				Main.registerFrameDisplay();
 			}
 
 			@Override
@@ -80,13 +79,13 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 			@Override
 			public void mouseEntered(MouseEvent e) {
 //				registrationLabel.setFont(new Font("Dialog", Font.BOLD, 13));
-				registrationLabel.setForeground(new Color(0x0006B1));
+				registrationLabel.setForeground(new Color(0xF4D160));
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
 //				registrationLabel.setFont(new Font("Dialog", Font.BOLD, 12));
-				registrationLabel.setForeground(new Color(0x800080));
+				registrationLabel.setForeground(new Color(0x321D2F));
 			}
 		});
 		
@@ -94,7 +93,16 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 		loginPanel.add(passwordLabel);
 		loginPanel.add(idTextField);
 		loginPanel.add(passwordPasswordField);		
-		loginPanel.add(okBtn);
+		loginPanel.add(okBtnLogin);
+		loginPanel.add(registrationLabel);
+		
+		add(loginPanel);
+		
+		loginPanel.add(idLabel);
+		loginPanel.add(passwordLabel);
+		loginPanel.add(idTextField);
+		loginPanel.add(passwordPasswordField);		
+		loginPanel.add(okBtnLogin);
 		loginPanel.add(registrationLabel);
 		
 		add(loginPanel);
@@ -102,7 +110,7 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == okBtn) {
+		if (e.getSource() == okBtnLogin) {
 			String id = idTextField.getText();
 			String password = new String(passwordPasswordField.getPassword());
 			System.out.println("Id: " + id);
@@ -116,24 +124,17 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 			}else {
 				System.out.println("Logged in");
 			}
-		}
-		
-		
+		}	
 	}
 	
 	String checkUserInput(String id, String password) {
-		StringBuilder errors = new StringBuilder();
-		
 		if (!Pattern.matches("^[0-9]{7}$", id)) {
-			errors.append("ID not valid.");
-			return errors.toString();
+			return "ID not valid.";
         }else if(!Pattern.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$", password)){
-        	errors.append("                                                                   "
+        	return"                                                                   "
         			+ "Password not valid.\n"
-        			+ "Password should have at least one lowercase, one uppercase, one digit and be between 8 - 15 character");
-			return errors.toString();
+        			+ "Password should have at least one lowercase, one uppercase, one digit and be between 8 - 15 character";
         }
-		
-		return errors.toString();
+		return "";
 	}
 }

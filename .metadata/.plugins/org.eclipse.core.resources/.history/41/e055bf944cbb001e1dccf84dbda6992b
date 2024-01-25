@@ -1,0 +1,32 @@
+package courseManagementSystem;
+
+import java.awt.Color;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
+public class RegisterFrame extends StandardFrame{
+	
+	JPanel loginPanel = new StandardPanel(250, 75, 450, 450, Color.red);
+	JTextField idTextField = new JTextField();
+	JPasswordField passwordPasswordField = new JPasswordField();
+	JLabel idLabel = new JLabel();
+	JLabel passwordLabel = new JLabel();
+	JButton okBtn = new StandardButton();
+	JLabel registrationLabel = new JLabel();
+	
+	RegisterFrame(){
+		super();
+	}
+	
+	RegisterFrame(int x_coord, int y_coord, int width, int height){
+		super(x_coord, y_coord, width, height);
+	}
+	
+	RegisterFrame(int x_coord, int y_coord, int width, int height, Color color){
+		super(x_coord, y_coord, width, height, color);
+	}
+}

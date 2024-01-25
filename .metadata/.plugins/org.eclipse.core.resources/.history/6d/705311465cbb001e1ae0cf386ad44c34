@@ -1,0 +1,21 @@
+package courseManagementSystem;
+
+import java.awt.Color;
+
+public class Main {
+	static LoginRegisterFrame loginRegisterFrame = new LoginRegisterFrame(200, 200, 1000, 750, Color.black);
+
+	public static void main(String[] args) {
+		
+	}
+
+	static void loginDiplay() {
+		if () {
+			
+		}
+	}
+	
+	static void registerDisplay() {
+		
+	}
+}
