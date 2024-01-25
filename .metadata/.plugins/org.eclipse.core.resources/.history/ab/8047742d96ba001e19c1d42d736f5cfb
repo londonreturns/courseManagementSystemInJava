@@ -1,7 +1,0 @@
-package courseManagementSystem;
-
-import javax.swing.JFrame;
-
-public class StandardFrame extends JFrame{
-
-}

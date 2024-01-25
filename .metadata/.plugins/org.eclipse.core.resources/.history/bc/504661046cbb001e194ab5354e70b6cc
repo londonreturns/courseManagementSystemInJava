@@ -1,0 +1,13 @@
+package font;
+
+import java.awt.Font;
+
+public class Font1 extends Font{
+
+	public Font1(String name, int style, int size) {
+		super("Helvetica", Font.BOLD, size);
+		// TODO Auto-generated constructor stub
+	}
+
+	
+}

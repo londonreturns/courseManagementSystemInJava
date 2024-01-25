@@ -1,0 +1,12 @@
+package font;
+
+import java.awt.Font;
+
+public class Font2 extends Font{
+
+	public Font2(String name, int style, int size) {
+		super(name, style, size);
+		// TODO Auto-generated constructor stub
+	}
+
+}

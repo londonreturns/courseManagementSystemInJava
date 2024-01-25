@@ -1,0 +1,11 @@
+package font;
+
+import java.awt.Font;
+
+public class Font2 extends Font{
+
+	public Font2() {
+		super("Helvetica", Font.ITALIC | Font.BOLD, 20);
+	}
+
+}
