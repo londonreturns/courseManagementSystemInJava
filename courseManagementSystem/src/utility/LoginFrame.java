@@ -1,10 +1,15 @@
 package utility;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -14,23 +19,29 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import courseManagementSystem.Main;
-import font.Font1;
-import font.Font2;
-import font.Font3;
+import driver.Main;
+import font.HeadingFont;
+import font.SubHeadingFont;
+import font.RegularFont;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.regex.Pattern;
 
 public class LoginFrame extends StandardFrame implements ActionListener{
 	
-	public JPanel loginPanel = new StandardPanel(250, 75, 450, 450);
+	public JPanel loginPanel = new StandardPanel(275, 75, 450, 450);
 	public JLabel loginTitle = new JLabel();
-	public JTextField idTextField = new JTextField();
-	public JPasswordField passwordPasswordField = new JPasswordField();
+	
 	public JLabel idLabel = new JLabel();
 	public JLabel passwordLabel = new JLabel();
-	public JButton okBtnLogin = new StandardButton();
+	
+	public JTextField idTextField = new JTextField();
+	public JPasswordField passwordPasswordField = new JPasswordField();
+
 	public JLabel registerLabel = new JLabel();
+	
+	public JButton okBtnLogin = new StandardButton();
 	
 	public boolean loginInit = false;
 	
@@ -49,21 +60,21 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 	public void setLoginElements() {
 		loginTitle.setText("Login");
 		loginTitle.setBounds(200, 10, 75, 35);
-		loginTitle.setFont(new Font1());
+		loginTitle.setFont(new HeadingFont());
 		
 		idLabel.setText("Id");
 		idLabel.setBounds(10, 110, 75, 50);
-		idLabel.setFont(new Font2());
+		idLabel.setFont(new SubHeadingFont());
 		
 		passwordLabel.setText("Password");
 		passwordLabel.setBounds(10, 215, 120, 32);
-		passwordLabel.setFont(new Font2());
+		passwordLabel.setFont(new SubHeadingFont());
 
 		idTextField.setBounds(250, 115, 180, 32);
-		idTextField.setFont(new Font3());
+		idTextField.setFont(new RegularFont());
 		
 		passwordPasswordField.setBounds(250, 215, 180, 32);
-		passwordPasswordField.setFont(new Font3());
+		passwordPasswordField.setFont(new RegularFont());
 		
 		okBtnLogin.setText("Login");
 		okBtnLogin.setBounds(150, 350, 150, 35);
@@ -98,13 +109,13 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 		
 		loginPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 		
-		loginPanel.add(loginTitle);
-		loginPanel.add(idLabel);
-		loginPanel.add(passwordLabel);
-		loginPanel.add(idTextField);
-		loginPanel.add(passwordPasswordField);		
-		loginPanel.add(okBtnLogin);
-		loginPanel.add(registerLabel);
+		ArrayList<Component> allComponents = new ArrayList<>(Arrays.asList(
+				loginTitle, idLabel, passwordLabel, idTextField, passwordPasswordField,
+				okBtnLogin, registerLabel));	
+		
+		for(Component comp : allComponents) {
+			loginPanel.add(comp);
+		}
 		
 		add(loginPanel);
 	}
@@ -124,6 +135,26 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 				JOptionPane.showMessageDialog(null, errors, "Error", JOptionPane.WARNING_MESSAGE);
 			}else {
 				System.out.println("Logged in");
+				try {
+					Class.forName("com.mysql.jdbc.Driver");
+					Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/tempdb", "root", "");
+					
+					Statement st = conn.createStatement();
+					
+					ResultSet result = st.executeQuery("SELECT * FROM user WHERE id = 1234567;");
+					
+					result.next();
+					String idFROMDB = result.getString("id");
+					String passFROMDB = result.getString("Password");
+					String typeFROMDB = result.getString("Type");
+					System.out.println(
+										"FROM DB Id: " + idFROMDB +
+										" Password: " + passFROMDB +
+										" Type of user: " + typeFROMDB);
+					
+				}catch (Exception e1) {
+					System.out.println("DB ERROR");
+				}
 			}
 		}	
 	}
