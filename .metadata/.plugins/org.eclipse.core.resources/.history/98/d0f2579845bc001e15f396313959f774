@@ -1,0 +1,9 @@
+package utility;
+
+import java.awt.TextField;
+
+public class StandardTextField extends TextField{
+	StandardTextField(){
+		
+	}
+}

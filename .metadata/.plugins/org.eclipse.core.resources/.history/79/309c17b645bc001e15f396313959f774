@@ -1,0 +1,10 @@
+package utility;
+
+import javax.swing.JTextField;
+
+public class StandardTextField extends JTextField{
+	
+	public void addPlaceHolder(JTextField textField) {
+		
+	}
+}

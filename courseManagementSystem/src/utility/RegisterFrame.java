@@ -1,15 +1,18 @@
 package utility;
 
-import courseManagementSystem.*;
-import font.Font1;
-import font.Font2;
-import font.Font3;
+import font.HeadingFont;
+import font.SubHeadingFont;
+import font.RegularFont;
+import font.PlaceHolderFont;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.regex.Pattern;
 
 import javax.swing.BorderFactory;
@@ -20,17 +23,37 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import driver.*;
+
 public class RegisterFrame extends StandardFrame implements ActionListener{
-	JPanel registerPanel = new StandardPanel(250, 75, 450, 450);
+	
+	JPanel registerPanel = new StandardPanel(275, 75, 450, 550);
 	JLabel registerTitle = new JLabel();
-	JTextField idTextField = new JTextField();
-	JPasswordField passwordPasswordField = new JPasswordField();
-	JLabel idLabel = new JLabel();
+	
+	JLabel nameLabel = new JLabel();
+	JLabel emailLabel = new JLabel();
 	JLabel passwordLabel = new JLabel();
-	JButton okBtnRegister = new StandardButton();
+	JLabel confirmPasswordLabel = new JLabel();
+	JLabel contactNumberLabel = new JLabel();
+	JLabel dateOfBirth = new JLabel();
+	
+	JTextField nameTextField = new JTextField();
+	JTextField emailTextField = new JTextField();
+	JTextField contactNumberField = new JTextField();
+	
+	JPasswordField passwordPasswordField = new JPasswordField();
+	JPasswordField confirmPasswordField = new JPasswordField();
+	
 	JLabel loginLabel = new JLabel();
 	
+	JButton okBtnRegister = new StandardButton();
+	
 	public boolean registerInit = false;
+	
+	private final int labelX = 0;
+	private int labelY = 0;
+	private final int fieldX = 0;
+	private int fieldY = 0;
 	
 	public RegisterFrame(){
 		super();
@@ -47,29 +70,56 @@ public class RegisterFrame extends StandardFrame implements ActionListener{
 	public void setLoginElements() {
 		registerTitle.setText("Register");
 		registerTitle.setBounds(185, 10, 175, 35);
-		registerTitle.setFont(new Font1());
+		registerTitle.setFont(new HeadingFont());
 		
-		idLabel.setText("Id");
-		idLabel.setBounds(10, 110, 75, 50);
-		idLabel.setFont(new Font2());
+		nameLabel.setText("Name");
+		nameLabel.setBounds(10, 110, 75, 50);
+		nameLabel.setFont(new SubHeadingFont());
+		
+		emailLabel.setText("Email");
+		emailLabel.setBounds(10, 145, 75, 50);
+		emailLabel.setFont(new SubHeadingFont());
 		
 		passwordLabel.setText("Password");
 		passwordLabel.setBounds(10, 215, 120, 32);
-		passwordLabel.setFont(new Font2());
+		passwordLabel.setFont(new SubHeadingFont());
+		
+		confirmPasswordLabel.setText("Confirm Password");
+		confirmPasswordLabel.setBounds(10, 250, 150, 32);
+		confirmPasswordLabel.setFont(new SubHeadingFont());
+		
+		contactNumberLabel.setText("Contact Number");
+		contactNumberLabel.setBounds(10, 285, 150, 32);
+		contactNumberLabel.setFont(new SubHeadingFont());
+		
+		dateOfBirth.setText("Date of Birth");
+		dateOfBirth.setBounds(10, 320, 150, 32);
+		dateOfBirth.setFont(new SubHeadingFont());
 
-		idTextField.setBounds(250, 115, 180, 32);
-		idTextField.setFont(new Font3());
+		setPlaceHolder();
+		
+		nameTextField.setBounds(250, 115, 180, 32);
+		nameTextField.setFont(new RegularFont());
+		
+		emailTextField.setBounds(250, 150, 180, 32);
+		emailTextField.setFont(new RegularFont());
 		
 		passwordPasswordField.setBounds(250, 215, 180, 32);
-		passwordPasswordField.setFont(new Font3());
+		passwordPasswordField.setFont(new RegularFont());
 		
-		okBtnRegister.setText("Login");
-		okBtnRegister.setBounds(150, 350, 150, 35);
+		confirmPasswordField.setBounds(250, 250, 180, 32);
+		confirmPasswordField.setFont(new RegularFont());
+		
+		contactNumberField.setBounds(250, 285, 180, 32);
+		contactNumberField.setFont(new RegularFont());
+		
+		okBtnRegister.setText("Register");
+		okBtnRegister.setBounds(150, 450, 150, 35);
 		okBtnRegister.addActionListener(this);
 		
-		loginLabel.setText("No account?");
+		loginLabel.setText("Already have an account?");
 		loginLabel.setForeground(new Color(0x321D2F));
-		loginLabel.setBounds(190, 300, 85, 25);
+		loginLabel.setBounds(150, 400, 175, 25);
 		loginLabel.addMouseListener(new MouseListener() {
 			
 			@Override
@@ -98,21 +148,40 @@ public class RegisterFrame extends StandardFrame implements ActionListener{
 		
 		registerPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 		
-		registerPanel.add(registerTitle);
-		registerPanel.add(idLabel);
-		registerPanel.add(passwordLabel);
-		registerPanel.add(idTextField);
-		registerPanel.add(passwordPasswordField);		
-		registerPanel.add(okBtnRegister);
-		registerPanel.add(loginLabel);		
+		ArrayList<Component> allComponents = new ArrayList<>(Arrays.asList(
+				registerTitle, nameLabel, emailLabel, passwordLabel,
+				confirmPasswordLabel, contactNumberLabel, dateOfBirth,
+				nameTextField, emailTextField, passwordPasswordField,
+				confirmPasswordField, contactNumberField,
+				
+				okBtnRegister, loginLabel));	
+		for(Component comp : allComponents) {
+			registerPanel.add(comp);
+		}
 		
 		add(registerPanel);
+	}
+
+	private void setPlaceHolder() {
+		TextPrompt namePlaceHolder = new TextPrompt("Name", nameTextField);
+		TextPrompt emailPlaceHolder = new TextPrompt("Email", emailTextField);
+		TextPrompt passwordPlaceHolder = new TextPrompt("*********", passwordPasswordField);
+		TextPrompt confirmPasswordPlaceHolder = new TextPrompt("********", confirmPasswordField);
+		TextPrompt contactNumberPlaceHolder = new TextPrompt("0123456789", contactNumberField);
+		
+		ArrayList<Component> allComponents = new ArrayList<>(Arrays.asList(
+				namePlaceHolder, emailPlaceHolder, passwordPlaceHolder,
+				confirmPasswordPlaceHolder, contactNumberPlaceHolder));	
+		
+		for(Component placeHolderComponent : allComponents) {
+			placeHolderComponent.setFont(new PlaceHolderFont());
+		}
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == okBtnRegister) {
-			String id = idTextField.getText();
+			String id = nameTextField.getText();
 			String password = new String(passwordPasswordField.getPassword());
 			System.out.println("Id: " + id);
 			System.out.println("Password: " + password);
@@ -123,7 +192,7 @@ public class RegisterFrame extends StandardFrame implements ActionListener{
 			if (!(errors.equals(""))) {
 				JOptionPane.showMessageDialog(null, errors, "Error", JOptionPane.WARNING_MESSAGE);
 			}else {
-				System.out.println("Logged in");
+				System.out.println("Registered");
 			}
 		}	
 	}

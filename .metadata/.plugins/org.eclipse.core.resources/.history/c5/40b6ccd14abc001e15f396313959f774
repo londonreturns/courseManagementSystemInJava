@@ -1,0 +1,11 @@
+package font;
+
+import java.awt.Font;
+
+
+public class PlaceHolderFont extends Font{
+	
+	public PlaceHolderFont() {
+		super("Helvetica", Font.ITALIC | Font.BOLD, 28);
+	}
+}

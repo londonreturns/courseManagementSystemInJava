@@ -1,0 +1,15 @@
+package font;
+
+import java.awt.Font;
+
+import utility.StandardTextField;
+
+public class PlaceHolderFont extends Font{
+	
+	public PlaceHolderFont(String string, StandardTextField nameTextField) {
+		super(	new Font(null).getName(),
+				new Font(null).getStyle(),
+				new Font(null).getSize());
+	}
+	
+}

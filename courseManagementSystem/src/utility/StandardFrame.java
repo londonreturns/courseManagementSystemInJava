@@ -2,8 +2,6 @@ package utility;
 
 import java.awt.Color;
 import java.awt.Container;
-import java.io.IOException;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
@@ -34,6 +32,7 @@ public class StandardFrame extends JFrame{
 		setResizable(false);
 		ImageIcon logo = new ImageIcon("assets/logo.png");
 		setIconImage(logo.getImage());
+		container.setBackground(new Color(0xF3F2EE));
 	}
 	
 	StandardFrame(int x_coord, int y_coord, int width, int height, Color color){

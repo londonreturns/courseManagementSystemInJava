@@ -1,0 +1,14 @@
+package font;
+
+import java.awt.Font;
+
+public class PlaceHolderFont extends Font{
+	
+	public PlaceHolderFont() {
+		super(	new Font(null).getName(),
+				new Font(null).getStyle(),
+				new Font(null).getSize());
+		setColor();
+	}
+	
+}

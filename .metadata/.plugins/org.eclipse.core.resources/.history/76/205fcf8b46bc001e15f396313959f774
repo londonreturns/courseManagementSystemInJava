@@ -1,0 +1,16 @@
+package utility;
+
+import java.awt.Color;
+
+import javax.swing.JTextField;
+
+public class StandardTextField extends JTextField{
+	
+	public void addPlaceHolder(JTextField textField) {
+		textField.setForeground(Color.GRAY);
+	}
+	
+	public void removePlaceHolder(JTextField textField) {
+		textField.setForeground(Color.GRAY);		
+	}
+}
