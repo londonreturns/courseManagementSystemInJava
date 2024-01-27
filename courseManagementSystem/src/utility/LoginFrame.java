@@ -18,9 +18,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 import driver.Main;
 import font.HeadingFont;
+import font.PlaceHolderFont;
 import font.SubHeadingFont;
 import font.RegularFont;
 
@@ -45,6 +47,11 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 	
 	public boolean loginInit = false;
 	
+	private int axisX = 8;
+	private int axisY = 150;
+	private final int width = 185;
+	private final int height = 32;
+	
 	public LoginFrame(){
 		super();
 	}
@@ -62,19 +69,34 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 		loginTitle.setBounds(200, 10, 75, 35);
 		loginTitle.setFont(new HeadingFont());
 		
-		idLabel.setText("Id");
-		idLabel.setBounds(10, 110, 75, 50);
+		idLabel.setText("Id: ");
+		idLabel.setBounds(axisX, axisY, width, height);
 		idLabel.setFont(new SubHeadingFont());
 		
-		passwordLabel.setText("Password");
-		passwordLabel.setBounds(10, 215, 120, 32);
+		axisY = incrementPosition(axisY);
+		
+		passwordLabel.setText("Password: ");
+		passwordLabel.setBounds(axisX, axisY, width, height);
 		passwordLabel.setFont(new SubHeadingFont());
 
-		idTextField.setBounds(250, 115, 180, 32);
+		axisX = 250;
+		axisY = 150;
+
+		idTextField.setBounds(axisX, axisY, width, height);
 		idTextField.setFont(new RegularFont());
 		
-		passwordPasswordField.setBounds(250, 215, 180, 32);
+		axisY = incrementPosition(axisY);
+		
+		passwordPasswordField.setBounds(axisX, axisY, width, height);
 		passwordPasswordField.setFont(new RegularFont());
+		
+		setPlaceHolders();
+		
+		ArrayList<Component> allLabelComponents = new ArrayList<>(Arrays.asList(
+				idLabel, passwordLabel));
+		for(Component labelComponent : allLabelComponents) {
+			((JLabel) labelComponent).setHorizontalAlignment(SwingConstants.RIGHT);
+		}
 		
 		okBtnLogin.setText("Login");
 		okBtnLogin.setBounds(150, 350, 150, 35);
@@ -118,6 +140,18 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 		}
 		
 		add(loginPanel);
+	}
+	
+	private void setPlaceHolders(){
+		TextPrompt namePlaceHolder = new TextPrompt("Id", idTextField);
+		TextPrompt passwordPlaceHolder = new TextPrompt("*********", passwordPasswordField);
+		
+		ArrayList<Component> allComponents = new ArrayList<>(Arrays.asList(
+				namePlaceHolder, passwordPlaceHolder));	
+		
+		for(Component placeHolderComponent : allComponents) {
+			placeHolderComponent.setFont(new PlaceHolderFont());
+		}
 	}
 
 	@Override
@@ -168,5 +202,9 @@ public class LoginFrame extends StandardFrame implements ActionListener{
         			+ "Password should have at least one lowercase, one uppercase, one digit and be between 8 - 15 character";
         }
 		return "";
+	}
+	
+	private static int incrementPosition(int x) {
+		return x += 35;
 	}
 }

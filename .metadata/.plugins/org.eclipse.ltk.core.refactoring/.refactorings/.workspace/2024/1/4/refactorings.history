@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete resource &apos;courseManagementSystem/src/utility/jcalendar-1.4.jar&apos;" deleteContents="false" description="Delete resource &apos;courseManagementSystem/src/utility/jcalendar-1.4.jar&apos;" element1="/courseManagementSystem/src/utility/jcalendar-1.4.jar" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1706282759466"/>
+</session>

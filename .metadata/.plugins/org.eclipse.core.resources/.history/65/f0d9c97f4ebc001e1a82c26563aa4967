@@ -1,0 +1,5 @@
+package utility;
+
+public class StandardInteger extends Integer{
+	super();
+}

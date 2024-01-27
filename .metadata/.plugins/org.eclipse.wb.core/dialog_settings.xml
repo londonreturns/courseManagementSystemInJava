@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.wb.internal.core.editor.palette.dialogs.ImportArchiveDialog">
+		<item key="x" value="842"/>
+		<item key="y" value="515"/>
+		<item key="width" value="1047"/>
+		<item key="height" value="743"/>
+		<list key="HISTORY_JAR_LIST">
+			<item value="D:\code\courseManagementSystemInJava\courseManagementSystem\lib\jcalendar-1.4.jar"/>
+			<item value="D:/code/courseManagementSystemInJava/courseManagementSystem/jcalendar-1.4.jar"/>
+			<item value="D:\code\courseManagementSystemInJava\courseManagementSystem\src\lib\jcalendar-1.4.jar"/>
+			<item value="D:\code\courseManagementSystemInJava\courseManagementSystem\src\lib\junit-4.6.jar"/>
+			<item value="D:\code\courseManagementSystemInJava\courseManagementSystem\src\lib\jgoodies-looks-2.4.1.jar"/>
+			<item value="D:\code\courseManagementSystemInJava\courseManagementSystem\src\lib\jgoodies-common-1.2.0.jar"/>
+		</list>
+	</section>
+	<section name="org.eclipse.wb.internal.core.editor.palette.dialogs.PaletteManagerDialog">
+		<item key="x" value="842"/>
+		<item key="y" value="410"/>
+		<item key="width" value="875"/>
+		<item key="height" value="779"/>
+	</section>
+	<section name="org.eclipse.wb.internal.core.editor.palette.dialogs.ComponentAddDialog">
+		<item key="x" value="778"/>
+		<item key="y" value="520"/>
+		<item key="width" value="1004"/>
+		<item key="height" value="559"/>
+	</section>
+	<section name="org.eclipse.wb.internal.core.editor.palette.dialogs.factory.FactoryAddDialog">
+		<item key="x" value="778"/>
+		<item key="y" value="518"/>
+		<item key="width" value="1004"/>
+		<item key="height" value="563"/>
+	</section>
+</section>

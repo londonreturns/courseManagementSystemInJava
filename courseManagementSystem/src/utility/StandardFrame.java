@@ -45,4 +45,6 @@ public class StandardFrame extends JFrame{
 		ImageIcon logo = new ImageIcon("assets/logo.png");
 		setIconImage(logo.getImage());
 	}
+	
+	
 }
