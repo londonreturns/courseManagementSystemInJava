@@ -1,0 +1,12 @@
+package exception;
+
+public class DatabaseException extends Exception {
+	
+	public DateException() {
+		super();
+	}
+	
+	public DateException(String message) {
+		super(message);
+	}
+}

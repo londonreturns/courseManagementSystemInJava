@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -21,6 +22,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import driver.Main;
+import exception.DatabaseException;
+import exception.FormExecption;
 import font.HeadingFont;
 import font.PlaceHolderFont;
 import font.SubHeadingFont;
@@ -38,8 +41,8 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 	public JLabel idLabel = new JLabel();
 	public JLabel passwordLabel = new JLabel();
 	
-	public JTextField idTextField = new JTextField();
-	public JPasswordField passwordPasswordField = new JPasswordField();
+	public static JTextField idTextField = new JTextField();
+	public static JPasswordField passwordPasswordField = new JPasswordField();
 
 	public JLabel registerLabel = new JLabel();
 	
@@ -159,52 +162,73 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 		if (e.getSource() == okBtnLogin) {
 			String id = idTextField.getText();
 			String password = new String(passwordPasswordField.getPassword());
-			System.out.println("Id: " + id);
-			System.out.println("Password: " + password);
-			
-			String errors = checkUserInput(id, password);
-			System.out.println(errors);
-			
-			if (!(errors.equals(""))) {
-				JOptionPane.showMessageDialog(null, errors, "Error", JOptionPane.WARNING_MESSAGE);
-			}else {
-				System.out.println("Logged in");
+			try {
+				if(!Pattern.matches("^[0-9]{7}$", id)) {
+					throw new FormExecption("Invalid id");
+				}else if(!Pattern.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$", password)) {
+					throw new FormExecption("Invalid password");
+				}	
+				boolean userExists = false;
 				try {
-					Class.forName("com.mysql.jdbc.Driver");
-					Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/tempdb", "root", "");
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
+					String query = "SELECT type_of_user FROM user WHERE student_id = ? OR teacher_id = ? OR admin_id = ?";
+					PreparedStatement pst = conn.prepareStatement(query);
 					
-					Statement st = conn.createStatement();
+					pst.setString(1, id);
+					pst.setString(2, id);
+					pst.setString(3, id);
+					ResultSet result = pst.executeQuery();
 					
-					ResultSet result = st.executeQuery("SELECT * FROM user WHERE id = 1234567;");
-					
-					result.next();
-					String idFROMDB = result.getString("id");
-					String passFROMDB = result.getString("Password");
-					String typeFROMDB = result.getString("Type");
-					System.out.println(
-										"FROM DB Id: " + idFROMDB +
-										" Password: " + passFROMDB +
-										" Type of user: " + typeFROMDB);
-					
-				}catch (Exception e1) {
-					System.out.println("DB ERROR");
-				}
+					if(!result.next()) {
+						throw new DatabaseException("Credentials invalid");
+					}else {
+						String typeOfUser = result.getString(1);
+						
+						query = "SELECT password FROM " + typeOfUser + " WHERE " + typeOfUser + "_id = " + id;
+						
+						pst = conn.prepareStatement(query);
+						
+						result = pst.executeQuery();
+						
+						if(!result.next()) {
+							throw new DatabaseException("Credentials invalid");
+						}else {
+							String dbPassword = result.getString(1);
+							if (password.equals(dbPassword)) {
+								JOptionPane.showMessageDialog(null, "Login successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
+						        resetFields();
+							}else {
+								throw new DatabaseException("Credentials invalid");
+							}
+						}
+					}
+
+				}catch (DatabaseException dbe) {
+					String exp = dbe.getMessage();
+		            JOptionPane.showMessageDialog(null, exp, "Error", JOptionPane.WARNING_MESSAGE);
+				} catch (Exception exp) {
+					String ex = exp.getMessage();
+		            JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.WARNING_MESSAGE);
+				} 
+			}catch(FormExecption fe) {
+				String exp = fe.getMessage();
+	            System.out.println(fe);
+	            JOptionPane.showMessageDialog(null, exp, "Error", JOptionPane.WARNING_MESSAGE);
 			}
+			
+			
 		}	
 	}
 	
-	String checkUserInput(String id, String password) {
-		if (!Pattern.matches("^[0-9]{7}$", id)) {
-			return "ID not valid.";
-        }else if(!Pattern.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$", password)){
-        	return"                                                                   "
-        			+ "Password not valid.\n"
-        			+ "Password should have at least one lowercase, one uppercase, one digit and be between 8 - 15 character";
-        }
-		return "";
+	private static void resetFields() {
+		idTextField.setText("");	
+		passwordPasswordField.setText("");
 	}
-	
+
 	private static int incrementPosition(int x) {
 		return x += 35;
 	}
+	
+	
 }

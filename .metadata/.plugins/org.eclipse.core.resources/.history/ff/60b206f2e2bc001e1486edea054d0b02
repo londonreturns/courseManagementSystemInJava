@@ -1,0 +1,12 @@
+package exception;
+
+public class DateError extends Exception{
+	
+	public DateError() {
+		super();
+	}
+	
+	public DateError(String message) {
+		super(message);
+	}
+}

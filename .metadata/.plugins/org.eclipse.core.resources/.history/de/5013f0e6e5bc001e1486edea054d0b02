@@ -1,0 +1,63 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.swing.JOptionPane;
+
+public class DatabaseConnection {
+
+    private static Connection conn;
+    private static Statement st;
+    private static ResultSet result;
+
+    public void connectDatabase() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/tempdb", "root", "");
+            st = conn.createStatement();
+        } catch (ClassNotFoundException | SQLException e) {
+            String error = "DB Connection error: " + e.getMessage();
+            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    public void insert(PreparedStatement preparedStatement) {
+        try {
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            String error = "Error during insertion: " + e.getMessage();
+            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    public ResultSet select(PreparedStatement preparedStatement) {
+        try {
+            result = preparedStatement.executeQuery();
+            return result;
+        } catch (SQLException e) {
+            String error = "Error during selection: " + e.getMessage();
+            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+            return null;
+        }
+    }
+
+    public void closeDatabase() {
+        try {
+            if (result != null) {
+                result.close();
+            }
+            if (st != null) {
+                st.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        } catch (SQLException e) {
+            String error = "Error while closing db: " + e.getMessage();
+            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+}
