@@ -39,3 +39,14 @@
 1706339271170	Move compilation unit
 1706339340426	Rename type 'DateError'
 1706341370906	Delete element
+1706370067505	Delete element
+1706370071624	Delete element
+1706371078837	Encapsulate field 'name'
+1706371086095	Encapsulate field 'id'
+1706371090810	Encapsulate field 'email'
+1706371094935	Encapsulate field 'password'
+1706371098633	Encapsulate field 'phone'
+1706371139388	Encapsulate field 'faculty'
+1706371142904	Encapsulate field 'level'
+1706371229944	Encapsulate field 'typeOfUser'
+1706371728644	Encapsulate field 'dateOfBirth'

@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="courseManagementSystem.StandardPanel"/>
-    <fullyQualifiedTypeName name="javax.swing.JButton"/>
-    <fullyQualifiedTypeName name="java.awt.Cursor"/>
-    <fullyQualifiedTypeName name="courseManagementSystem.StandardButton"/>
-    <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
     <fullyQualifiedTypeName name="java.awt.event.MouseListener"/>
     <fullyQualifiedTypeName name="java.util.regex.Pattern"/>
     <fullyQualifiedTypeName name="java.lang.StringBuilder"/>
@@ -46,7 +41,6 @@
     <fullyQualifiedTypeName name="java.awt.event.ItemEvent"/>
     <fullyQualifiedTypeName name="java.awt.event.ItemListener"/>
     <fullyQualifiedTypeName name="java.time.LocalDate"/>
-    <fullyQualifiedTypeName name="java.sql.Date"/>
     <fullyQualifiedTypeName name="java.lang.NullPointerException"/>
     <fullyQualifiedTypeName name="utility.DatabaseConnection"/>
     <fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
@@ -60,4 +54,10 @@
     <fullyQualifiedTypeName name="utility.DatabaseConstant"/>
     <fullyQualifiedTypeName name="exception.DatabaseException"/>
     <fullyQualifiedTypeName name="java.lang.Exception"/>
+    <fullyQualifiedTypeName name="utility.StandardDashboardFrame"/>
+    <fullyQualifiedTypeName name="utility.StandardFrame"/>
+    <fullyQualifiedTypeName name="utility.StudentFrame"/>
+    <fullyQualifiedTypeName name="user.Student"/>
+    <fullyQualifiedTypeName name="java.sql.Date"/>
+    <fullyQualifiedTypeName name="user.User"/>
 </qualifiedTypeNameHistroy>

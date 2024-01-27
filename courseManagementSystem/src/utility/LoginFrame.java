@@ -27,6 +27,7 @@ import exception.FormExecption;
 import font.HeadingFont;
 import font.PlaceHolderFont;
 import font.SubHeadingFont;
+import user.Student;
 import font.RegularFont;
 
 import java.util.ArrayList;
@@ -47,8 +48,6 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 	public JLabel registerLabel = new JLabel();
 	
 	public JButton okBtnLogin = new StandardButton();
-	
-	public boolean loginInit = false;
 	
 	private int axisX = 8;
 	private int axisY = 150;
@@ -160,24 +159,24 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == okBtnLogin) {
-			String id = idTextField.getText();
+			Student student = new Student();
+			student.setId(idTextField.getText());
 			String password = new String(passwordPasswordField.getPassword());
 			try {
-				if(!Pattern.matches("^[0-9]{7}$", id)) {
+				if(!Pattern.matches("^[0-9]{7}$", student.getId())) {
 					throw new FormExecption("Invalid id");
 				}else if(!Pattern.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$", password)) {
 					throw new FormExecption("Invalid password");
 				}	
-				boolean userExists = false;
 				try {
 					Class.forName("com.mysql.cj.jdbc.Driver");
 					Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
 					String query = "SELECT type_of_user FROM user WHERE student_id = ? OR teacher_id = ? OR admin_id = ?";
 					PreparedStatement pst = conn.prepareStatement(query);
 					
-					pst.setString(1, id);
-					pst.setString(2, id);
-					pst.setString(3, id);
+					pst.setString(1, student.getId());
+					pst.setString(2, student.getId());
+					pst.setString(3, student.getId());
 					ResultSet result = pst.executeQuery();
 					
 					if(!result.next()) {
@@ -185,7 +184,7 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 					}else {
 						String typeOfUser = result.getString(1);
 						
-						query = "SELECT password FROM " + typeOfUser + " WHERE " + typeOfUser + "_id = " + id;
+						query = "SELECT password FROM student WHERE " + typeOfUser + "_id = " + student.getId();
 						
 						pst = conn.prepareStatement(query);
 						
@@ -198,6 +197,7 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 							if (password.equals(dbPassword)) {
 								JOptionPane.showMessageDialog(null, "Login successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
 						        resetFields();
+						        Main.dashboardFrameDisplay();
 							}else {
 								throw new DatabaseException("Credentials invalid");
 							}

@@ -2,6 +2,8 @@ package utility;
 
 import font.HeadingFont;
 import font.SubHeadingFont;
+import user.Student;
+import user.User;
 import font.RegularFont;
 import font.PlaceHolderFont;
 
@@ -77,8 +79,6 @@ public class RegisterFrame extends StandardFrame implements ActionListener, Item
 	JLabel loginLabel = new JLabel();
 	
 	JButton okBtnRegister = new StandardButton();
-	
-	public boolean registerInit = false;
 	
 	private int axisX = 8;
 	private int axisY = 110;
@@ -318,7 +318,7 @@ public class RegisterFrame extends StandardFrame implements ActionListener, Item
 				int tempId = 0;
 				String id = "";
 				
-				if(user.equals("student")) {
+				if(user.equals("student")) {					
 					String faculty = (String) facultyCombo.getSelectedItem();
 					System.out.println(user);
 					try {						
@@ -348,50 +348,63 @@ public class RegisterFrame extends StandardFrame implements ActionListener, Item
 							}
 							
 						}
-						
-						String query = "INSERT INTO " + user + " (student_id, name, email, password, contact, dob, faculty, level)"
-								+ " VALUES"
-								+ " (?, ?, ?, ?, ?, ?, ?, ?)";
-						
-						PreparedStatement pst = conn.prepareStatement(query);
-						
-						int index = 1;
+
 						int level;
-						
-						pst.setString(index, id);
-						
-						index++;
-						
-						pst.setString(index, name);
-						
-						index++;
-						
-						pst.setString(index, email);
-						
-						index++;
-						
-						pst.setString(index, password);
-						
-						index++;
-						
-						pst.setString(index, contactNumber);
-						
-						index++;
-						
-						pst.setDate(index, new java.sql.Date(dateOfBirth.getTime()));
-						
-						index++;
-						
-						pst.setString(index, faculty);
-						
-						index++;
 						
 						if(faculty.equals("BCS")) {
 							level = 4;
 						}else {
 							level = 3;
 						}
-						pst.setInt(index, level);
+						
+						Student student1 = new Student();
+						student1.setName(name);
+						student1.setId(id);
+						student1.setEmail(email);
+						student1.setPassword(password);
+						student1.setContact(contactNumber);
+						student1.setTypeOfUser(user);
+						student1.setDateOfBirth(new java.sql.Date(dateOfBirth.getTime()));
+						student1.setFaculty(faculty);
+						student1.setLevel(level);
+						
+						String query = "INSERT INTO " + student1.getTypeOfUser() + " (student_id, name, email, password, contact, dob, faculty, level)"
+								+ " VALUES"
+								+ " (?, ?, ?, ?, ?, ?, ?, ?)";
+						
+						PreparedStatement pst = conn.prepareStatement(query);
+						
+						int index = 1;
+						
+						pst.setString(index, student1.getId());
+						
+						index++;
+						
+						pst.setString(index, student1.getName());
+						
+						index++;
+						
+						pst.setString(index, student1.getEmail());
+						
+						index++;
+						
+						pst.setString(index, student1.getPassword());
+						
+						index++;
+						
+						pst.setString(index, student1.getContact());
+						
+						index++;
+						
+						pst.setDate(index, student1.getDateOfBirth());
+						
+						index++;
+						
+						pst.setString(index, student1.getFaculty());
+						
+						index++;						
+
+						pst.setInt(index, student1.getLevel());
 						
 						int rowsAffected = pst.executeUpdate();
 						
@@ -403,15 +416,15 @@ public class RegisterFrame extends StandardFrame implements ActionListener, Item
 						
 						index = 1;
 						
-						pst.setString(index, id);
+						pst.setString(index, student1.getId());
 						
 						index++;
 						
-						pst.setString(index, name);
+						pst.setString(index, student1.getName());
 						
 						index++;
 						
-						pst.setString(index, user);
+						pst.setString(index, student1.getTypeOfUser());
 						
 						rowsAffected += pst.executeUpdate();
 
@@ -461,7 +474,16 @@ public class RegisterFrame extends StandardFrame implements ActionListener, Item
 							
 						}
 						
-						String query = "INSERT INTO " + user + " (" + user + "_id, name, email, password, contact, dob)"
+						User user1 = new User();
+						user1.setId(id);
+						user1.setName(name);
+						user1.setEmail(email);
+						user1.setPassword(password);
+						user1.setContact(contactNumber);
+						user1.setTypeOfUser(user);
+						user1.setDateOfBirth(new java.sql.Date(dateOfBirth.getTime()));
+						
+						String query = "INSERT INTO " + user1.getTypeOfUser() + " (" + user1.getTypeOfUser() + "_id, name, email, password, contact, dob)"
 						        + " VALUES"
 						        + " (?, ?, ?, ?, ?, ?)";
 
@@ -469,31 +491,31 @@ public class RegisterFrame extends StandardFrame implements ActionListener, Item
 
 						int index = 1;
 						
-						pst.setString(index, id);
+						pst.setString(index, user1.getId());
 						
 						index++;
 						
-						pst.setString(index, name);
+						pst.setString(index, user1.getName());
 						
 						index++;
 						
-						pst.setString(index, email);
+						pst.setString(index, user1.getEmail());
 						
 						index++;
 						
-						pst.setString(index, password);
+						pst.setString(index, user1.getPassword());
 						
 						index++;
 						
-						pst.setString(index, contactNumber);
+						pst.setString(index, user1.getContact());
 						
 						index++;
 						
-						pst.setDate(index, new java.sql.Date(dateOfBirth.getTime()));
+						pst.setDate(index, user1.getDateOfBirth());
 						
 						int rowsAffected = pst.executeUpdate();
 						
-						query = "INSERT INTO user (" + user + "_id, name, type_of_user)"
+						query = "INSERT INTO user (" + user1.getTypeOfUser() + "_id, name, type_of_user)"
 								+ " VALUES"
 								+ " (?, ?, ?)";
 						
