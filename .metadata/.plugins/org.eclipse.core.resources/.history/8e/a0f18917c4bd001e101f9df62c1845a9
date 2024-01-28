@@ -1,0 +1,8 @@
+package utility;
+
+public class MenuButton  extends StandardButton{
+	MenuButton(){
+		super();
+		this.setBackground(color);
+	}
+}

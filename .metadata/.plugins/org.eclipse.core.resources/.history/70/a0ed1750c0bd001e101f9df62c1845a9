@@ -1,0 +1,27 @@
+package utility;
+
+import java.awt.Color;
+
+import javax.swing.JLabel;
+
+public class MenuLabel extends JLabel {
+	
+	MenuLabel(){
+		super();
+		this.setBgColor(Color.white);
+		this.setBackground(Color.white);
+	}
+	
+	MenuLabel(String string){
+		super(string);
+		
+	}
+
+	public Color getBgColor() {
+		return bgColor;
+	}
+
+	public void setBgColor(Color bgColor) {
+		this.bgColor = bgColor;
+	}
+}

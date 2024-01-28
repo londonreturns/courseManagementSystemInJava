@@ -27,7 +27,9 @@ import exception.FormExecption;
 import font.HeadingFont;
 import font.PlaceHolderFont;
 import font.SubHeadingFont;
+import user.Admin;
 import user.Student;
+import user.Teacher;
 import user.User;
 import font.RegularFont;
 
@@ -141,7 +143,6 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 		for(Component comp : allComponents) {
 			loginPanel.add(comp);
 		}
-		
 		add(loginPanel);
 	}
 	
@@ -207,19 +208,36 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 						        	student1.setName(result.getString("name"));
 									student1.setId(result.getString("student_id"));
 									student1.setEmail(result.getString("email"));
-									student1.setPassword(result.getString("password"));
+									student1.setPassword(result.getString("password"));                  
 									student1.setContact(result.getString("contact"));
 									student1.setTypeOfUser("student");
 									student1.setDateOfBirth(result.getDate("dob"));
 									student1.setFaculty(result.getString(7));
 									student1.setLevel(result.getInt(8));
-							        Main.studentDashboardFrameDisplay(this, student1);
+							        Main.studentFrameDisplay(this, student1);
 						        }else if(user1.getTypeOfUser().equals("teacher")) {
+						        	Teacher teacher1 = new Teacher();
+						        	teacher1.setName(result.getString("name"));
+						        	teacher1.setId(result.getString("teacher_id"));
+						        	teacher1.setEmail(result.getString("email"));
+						        	teacher1.setPassword(result.getString("password"));                  
+						        	teacher1.setContact(result.getString("contact"));
+						        	teacher1.setTypeOfUser("teacher");
+						        	teacher1.setDateOfBirth(result.getDate("dob"));
+						        	
 						        	System.out.println("Teacher");
-//						        	Main.dashboardFrameDisplay(this, user1.getId(), "teacher");
+						        	Main.teacherFrameDisplay(this, teacher1);
 						        }else {
+						        	Admin admin1 = new Admin();
+						        	admin1.setName(result.getString("name"));
+						        	admin1.setId(result.getString("admin_id"));
+						        	admin1.setEmail(result.getString("email"));
+						        	admin1.setPassword(result.getString("password"));                  
+						        	admin1.setContact(result.getString("contact"));
+						        	admin1.setTypeOfUser("admin");
+						        	admin1.setDateOfBirth(result.getDate("dob"));
 						        	System.out.println("Admin");
-//						        	Main.dashboardFrameDisplay(this, user1.getId(), "admin");
+						        	Main.adminFrameDisplay(this, admin1);
 						        }
 							}else {
 								throw new DatabaseException("Credentials invalid");

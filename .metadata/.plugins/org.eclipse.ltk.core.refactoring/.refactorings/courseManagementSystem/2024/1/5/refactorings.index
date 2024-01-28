@@ -1,0 +1,6 @@
+1706427303335	Encapsulate field 'courseId'
+1706427307014	Encapsulate field 'courseName'
+1706432528952	Encapsulate field 'bgColor'
+1706437269685	Delete element
+1706439856486	Rename type 'StudentFrame'
+1706446477882	Encapsulate field 'courses'

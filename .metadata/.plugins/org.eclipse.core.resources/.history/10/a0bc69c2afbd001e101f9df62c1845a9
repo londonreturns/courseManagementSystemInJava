@@ -1,0 +1,6 @@
+package course;
+
+public class Course {
+	private int courseId;
+	private int courseName;
+}

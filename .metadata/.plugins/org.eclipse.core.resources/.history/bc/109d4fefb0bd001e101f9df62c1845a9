@@ -1,0 +1,27 @@
+package user;
+
+import java.util.ArrayList;
+
+import course.Course;
+
+public class Teacher extends User{
+	private ArrayList<Course>courses;
+	
+	// Constructor to initialize the ArrayList
+    public Teacher() {
+        super();
+        this.courses = new ArrayList<>();
+    }
+	
+	public Course getCourse(int index) {
+		return courses.get(index);
+	}
+	
+	public void setCourse(Course course) {
+		courses.add(course);
+	}
+	
+	public void removeCourse(Course course) {
+		courses.remove(course);
+	}
+}

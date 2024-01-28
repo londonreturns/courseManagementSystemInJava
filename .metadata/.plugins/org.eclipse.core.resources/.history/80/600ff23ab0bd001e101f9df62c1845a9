@@ -1,0 +1,13 @@
+package user;
+
+public class Teacher extends User{
+	private courses[];
+	
+	public String getCourses(int index) {
+		return courses[index];
+	}
+	
+	public void setLevel(int level) {
+		this.level = level;
+	}	
+}

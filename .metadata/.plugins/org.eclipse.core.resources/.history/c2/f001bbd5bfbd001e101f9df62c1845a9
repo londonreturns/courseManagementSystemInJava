@@ -1,0 +1,29 @@
+package utility;
+
+import java.awt.Color;
+
+import javax.swing.BorderFactory;
+import javax.swing.JFrame;
+
+public class MenuLabel extends JFrame {
+	
+	private Color bgColor;
+	
+	MenuLabel(){
+		super();
+		
+	}
+	
+	MenuLabel(String string){
+		super(string);
+		
+	}
+
+	public Color getBgColor() {
+		return bgColor;
+	}
+
+	public void setBgColor(Color bgColor) {
+		this.bgColor = bgColor;
+	}
+}

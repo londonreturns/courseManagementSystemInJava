@@ -50,7 +50,7 @@ import exception.DatabaseException;
 import exception.DateException;
 import exception.FormExecption;
 
-public class RegisterFrame extends StandardFrame implements ActionListener, ItemListener{
+public class RegisterFrame extends StandardFrame implements ActionListener,  ItemListener{
 	
 	JPanel registerPanel = new StandardPanel(275, 75, 450, 550);
 	JLabel registerTitle = new JLabel();
@@ -102,57 +102,26 @@ public class RegisterFrame extends StandardFrame implements ActionListener, Item
 		super(x_coord, y_coord, width, height, color);
 	}
 	
-	public void setLoginElements() {
+	public void setRegisterElements() {
 		try {
 			registerTitle.setText("Register");
 			registerTitle.setBounds(185, 10, 175, 35);
 			registerTitle.setFont(new HeadingFont());
 			
-			nameLabel.setText("Name: ");
-			nameLabel.setBounds(axisX, axisY, width, height);
-			nameLabel.setFont(new SubHeadingFont());
+			String[] labelItems = {
+					"Name: ", "Email: ", "Password: ", "Confirm Password: ", "Contact Number: ",
+					"Date of Birth: ", "User Type: ","Faculty: "
+			};
 			
-			axisY = incrementPosition(axisY);
-			
-			emailLabel.setText("Email: ");
-			emailLabel.setBounds(axisX, axisY, width, height);
-			emailLabel.setFont(new SubHeadingFont());
-			
-			axisY = incrementPosition(axisY);
-			
-			passwordLabel.setText("Password: ");
-			passwordLabel.setBounds(axisX, axisY, width, height);
-			passwordLabel.setFont(new SubHeadingFont());
-			
-			axisY = incrementPosition(axisY);
-			
-			confirmPasswordLabel.setText("Confirm Password: ");
-			confirmPasswordLabel.setBounds(axisX, axisY, width, height);
-			confirmPasswordLabel.setFont(new SubHeadingFont());
-
-			axisY = incrementPosition(axisY);
-			
-			contactNumberLabel.setText("Contact Number: ");
-			contactNumberLabel.setBounds(axisX, axisY, width, height);
-			contactNumberLabel.setFont(new SubHeadingFont());
-			
-			axisY = incrementPosition(axisY);
-			
-			dateOfBirthLabel.setText("Date of Birth: ");
-			dateOfBirthLabel.setBounds(axisX, axisY, width, height);
-			dateOfBirthLabel.setFont(new SubHeadingFont());
-			
-			axisY = incrementPosition(axisY);
-
-			typeOfUserLabel.setText("User Type: ");
-			typeOfUserLabel.setBounds(axisX, axisY, width, height);
-			typeOfUserLabel.setFont(new SubHeadingFont());
-			
-			axisY = incrementPosition(axisY);
-
-			facultyLabel.setText("Faculty: ");
-			facultyLabel.setBounds(axisX, axisY, width, height);
-			facultyLabel.setFont(new SubHeadingFont());
+			for (String menu : labelItems) {
+				JLabel menuLabels = new JLabel();
+				menuLabels.setText(menu);
+				menuLabels.setBounds(axisX, axisY, width, height);
+				menuLabels.setFont(new SubHeadingFont());
+				axisY = incrementPosition(axisY);
+				registerPanel.add(menuLabels);
+				((JLabel) menuLabels).setHorizontalAlignment(SwingConstants.RIGHT);
+			}
 			
 			setPlaceHolders();
 			
@@ -166,45 +135,20 @@ public class RegisterFrame extends StandardFrame implements ActionListener, Item
 			axisX = 250;
 			axisY = 115;
 			
-			nameTextField.setBounds(axisX, axisY, width, height);
-			nameTextField.setFont(new RegularFont());
+			Component[] fieldItems = {
+					nameTextField, emailTextField, passwordPasswordField, confirmPasswordField,
+					contactNumberField, dateOfBirthDate, typeOfUserCombo, facultyCombo
+			};
 			
-			axisY = incrementPosition(axisY);
+			for (Component field : fieldItems) {
+				field.setBounds(axisX, axisY, width, height);
+				field.setFont(new RegularFont());
+				axisY = incrementPosition(axisY);
+			}
 			
-			emailTextField.setBounds(axisX, axisY, width, height);
-			emailTextField.setFont(new RegularFont());
-			
-			axisY = incrementPosition(axisY);
-			
-			passwordPasswordField.setBounds(axisX, axisY, width, height);
-			passwordPasswordField.setFont(new RegularFont());
-			
-			axisY = incrementPosition(axisY);
-			
-			confirmPasswordField.setBounds(axisX, axisY, width, height);
-			confirmPasswordField.setFont(new RegularFont());
-			
-			axisY = incrementPosition(axisY);
-			
-			contactNumberField.setBounds(axisX, axisY, width, height);
-			contactNumberField.setFont(new RegularFont());
-			
-			axisY = incrementPosition(axisY);
-			
-			dateOfBirthDate.setBounds(axisX, axisY, width, height);
-			dateOfBirthDate.setFont(new RegularFont());
-			
-			axisY = incrementPosition(axisY);
-			
-			typeOfUserCombo.setBounds(axisX, axisY, width, height);
-			typeOfUserCombo.setFont(new RegularFont());
 			typeOfUserCombo.setBackground(Color.white);
 			typeOfUserCombo.addItemListener(this);
 			
-			axisY = incrementPosition(axisY);
-					
-			facultyCombo.setBounds(axisX, axisY, width, height);
-			facultyCombo.setFont(new RegularFont());
 			facultyCombo.setBackground(Color.white);
 			
 			okBtnRegister.setText("Register");
@@ -561,7 +505,7 @@ public class RegisterFrame extends StandardFrame implements ActionListener, Item
 					}
 				}else {
 					try {						
-						Class.forName("com.mysql.cj.jdbc.Driver");
+						Class.forName(DatabaseConstant.CLASSNAME);
 						Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
 						
 						while (!false) {

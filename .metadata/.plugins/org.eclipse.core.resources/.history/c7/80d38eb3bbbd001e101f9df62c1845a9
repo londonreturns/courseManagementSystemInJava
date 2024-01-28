@@ -1,0 +1,7 @@
+package utility;
+
+import javax.swing.JFrame;
+
+public class MenuLabel extends JFrame {
+	
+}

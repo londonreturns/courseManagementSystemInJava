@@ -1,0 +1,51 @@
+package utility;
+
+import java.awt.Color;
+
+import javax.swing.JLabel;
+
+import user.Admin;
+import user.Student;
+import user.Teacher;
+
+public class StudentFrame extends MenuFrame {
+
+	public StudentFrame(){
+		super();
+	}
+	
+	public StudentFrame(int x_coord, int y_coord, int width, int height){
+		super(x_coord, y_coord, width, height);
+	}
+	
+	public StudentFrame(int x_coord, int y_coord, int width, int height, Color color){
+		super(x_coord, y_coord, width, height, color);
+	}
+
+	public void changeRightPanel(Student student, String menu) {
+		rightPanel.removeAll();
+		switch (menu) {
+			case "Dashboard":
+						        
+				StudentFrame.add(rightPanel);
+				break;
+			case "Course":
+				
+				break;
+			case "Teacher":
+				
+				break;
+			case "Settings":
+				
+				break;
+		}
+		
+	}
+	public void changeRightPanel(Teacher teacher, String menu) {
+		
+	}
+	
+	public void changeRightPanel(Admin admin, String menu) {
+		
+	}
+}

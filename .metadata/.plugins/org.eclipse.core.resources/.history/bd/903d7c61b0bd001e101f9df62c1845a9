@@ -1,0 +1,13 @@
+package user;
+
+import java.util.ArrayList;
+
+public class Teacher extends User{
+	private courses[];
+	
+	public ArrayList<String> getCourses(int index) {
+		return courses[index];
+	}
+	
+	public 
+}
