@@ -28,6 +28,7 @@ import font.HeadingFont;
 import font.PlaceHolderFont;
 import font.SubHeadingFont;
 import user.Student;
+import user.User;
 import font.RegularFont;
 
 import java.util.ArrayList;
@@ -159,32 +160,35 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == okBtnLogin) {
-			Student student = new Student();
-			student.setId(idTextField.getText());
+			User user1 = new User();
+			user1.setId(idTextField.getText());
 			String password = new String(passwordPasswordField.getPassword());
 			try {
-				if(!Pattern.matches("^[0-9]{7}$", student.getId())) {
+				if(!Pattern.matches("^[0-9]{7}$", user1.getId())) {
 					throw new FormExecption("Invalid id");
 				}else if(!Pattern.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$", password)) {
 					throw new FormExecption("Invalid password");
 				}	
 				try {
-					Class.forName("com.mysql.cj.jdbc.Driver");
+					password = Main.hashAlgorithm(password);
+					
+					Class.forName("com.mysql.jdbc.Driver");
 					Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
 					String query = "SELECT type_of_user FROM user WHERE student_id = ? OR teacher_id = ? OR admin_id = ?";
 					PreparedStatement pst = conn.prepareStatement(query);
 					
-					pst.setString(1, student.getId());
-					pst.setString(2, student.getId());
-					pst.setString(3, student.getId());
+					pst.setString(1, user1.getId());
+					pst.setString(2, user1.getId());
+					pst.setString(3, user1.getId());
 					ResultSet result = pst.executeQuery();
 					
 					if(!result.next()) {
 						throw new DatabaseException("Credentials invalid");
 					}else {
 						String typeOfUser = result.getString(1);
+						user1.setTypeOfUser(typeOfUser);
 						
-						query = "SELECT password FROM student WHERE " + typeOfUser + "_id = " + student.getId();
+						query = "SELECT * FROM " + user1.getTypeOfUser() + " WHERE " + user1.getTypeOfUser() + "_id = " + user1.getId();
 						
 						pst = conn.prepareStatement(query);
 						
@@ -193,15 +197,35 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 						if(!result.next()) {
 							throw new DatabaseException("Credentials invalid");
 						}else {
-							String dbPassword = result.getString(1);
+							String dbPassword = result.getString(4);
 							if (password.equals(dbPassword)) {
 								JOptionPane.showMessageDialog(null, "Login successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
 						        resetFields();
-						        Main.dashboardFrameDisplay();
+						        if(user1.getTypeOfUser().equals("student")) {
+						        	System.out.println("Student");
+						        	Student student1 = new Student();
+						        	student1.setName(result.getString("name"));
+									student1.setId(result.getString("student_id"));
+									student1.setEmail(result.getString("email"));
+									student1.setPassword(result.getString("password"));
+									student1.setContact(result.getString("contact"));
+									student1.setTypeOfUser("student");
+									student1.setDateOfBirth(result.getDate("dob"));
+									student1.setFaculty(result.getString(7));
+									student1.setLevel(result.getInt(8));
+							        Main.studentDashboardFrameDisplay(this, student1);
+						        }else if(user1.getTypeOfUser().equals("teacher")) {
+						        	System.out.println("Teacher");
+//						        	Main.dashboardFrameDisplay(this, user1.getId(), "teacher");
+						        }else {
+						        	System.out.println("Admin");
+//						        	Main.dashboardFrameDisplay(this, user1.getId(), "admin");
+						        }
 							}else {
 								throw new DatabaseException("Credentials invalid");
 							}
 						}
+						conn.close();
 					}
 
 				}catch (DatabaseException dbe) {

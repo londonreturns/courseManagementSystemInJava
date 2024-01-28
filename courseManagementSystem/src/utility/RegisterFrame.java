@@ -2,7 +2,9 @@ package utility;
 
 import font.HeadingFont;
 import font.SubHeadingFont;
+import user.Admin;
 import user.Student;
+import user.Teacher;
 import user.User;
 import font.RegularFont;
 import font.PlaceHolderFont;
@@ -15,6 +17,9 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -315,6 +320,8 @@ public class RegisterFrame extends StandardFrame implements ActionListener, Item
 					throw new FormExecption("Invalid email");
 				}
 				
+				password = Main.hashAlgorithm(password);
+				
 				int tempId = 0;
 				String id = "";
 				
@@ -322,7 +329,7 @@ public class RegisterFrame extends StandardFrame implements ActionListener, Item
 					String faculty = (String) facultyCombo.getSelectedItem();
 					System.out.println(user);
 					try {						
-						Class.forName("com.mysql.cj.jdbc.Driver");
+						Class.forName(DatabaseConstant.CLASSNAME);
 						Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
 						
 						while (!false) {
@@ -445,6 +452,113 @@ public class RegisterFrame extends StandardFrame implements ActionListener, Item
 			        	String err = "Please try again" + exp;
 			            JOptionPane.showMessageDialog(null, err, "Error", JOptionPane.WARNING_MESSAGE);
 					}
+				}else if(user.equals("teacher")) {
+					try {						
+						Class.forName(DatabaseConstant.CLASSNAME);
+						Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
+						
+						while (!false) {
+							tempId = (int)(Math.random() * (9999999 - 1000000)) + 1000000;
+							id = Integer.toString(tempId);
+							System.out.println("Generated ID: " + tempId);
+							
+							String query = "SELECT * FROM user WHERE student_id = ? OR teacher_id = ? OR admin_id = ?";
+							PreparedStatement pst = conn.prepareStatement(query);
+							
+							pst.setString(1, id);
+							pst.setString(2, id);
+							pst.setString(3, id);
+							ResultSet result = pst.executeQuery();
+
+							int rows = 0;
+							
+							while (result.next()) {
+								rows++;
+							}
+							if(!(rows > 0)) {
+								break;
+							}
+							
+						}
+						
+						Teacher teacher1 = new Teacher();
+						teacher1.setId(id);
+						teacher1.setName(name);
+						teacher1.setEmail(email);
+						teacher1.setPassword(password);
+						teacher1.setContact(contactNumber);
+						teacher1.setTypeOfUser(user);
+						teacher1.setDateOfBirth(new java.sql.Date(dateOfBirth.getTime()));
+						
+						String query = "INSERT INTO " + teacher1.getTypeOfUser() + " (" + teacher1.getTypeOfUser() + "_id, name, email, password, contact, dob)"
+						        + " VALUES"
+						        + " (?, ?, ?, ?, ?, ?)";
+
+						PreparedStatement pst = conn.prepareStatement(query);
+
+						int index = 1;
+						
+						pst.setString(index, teacher1.getId());
+						
+						index++;
+						
+						pst.setString(index, teacher1.getName());
+						
+						index++;
+						
+						pst.setString(index, teacher1.getEmail());
+						
+						index++;
+						
+						pst.setString(index, teacher1.getPassword());
+						
+						index++;
+						
+						pst.setString(index, teacher1.getContact());
+						
+						index++;
+						
+						pst.setDate(index, teacher1.getDateOfBirth());
+						
+						int rowsAffected = pst.executeUpdate();
+						
+						query = "INSERT INTO user (" + teacher1.getTypeOfUser() + "_id, name, type_of_user)"
+								+ " VALUES"
+								+ " (?, ?, ?)";
+						
+						pst = conn.prepareStatement(query);
+						
+						index = 1;
+						
+						pst.setString(index, id);
+						
+						index++;
+						
+						pst.setString(index, name);
+						
+						index++;
+						
+						pst.setString(index, user);
+						
+						rowsAffected += pst.executeUpdate();
+
+					    if (rowsAffected > 0) {
+					        JOptionPane.showMessageDialog(null, "Registration successful!"
+					        		+ "\nYour id is " + id, "Success", JOptionPane.INFORMATION_MESSAGE);
+					        resetFields();
+					    } else {
+					        throw new DatabaseException("Registration unsuccessful");
+					    }
+					    conn.close();
+			        } catch (DatabaseException dbExp) {
+			            String error = dbExp.getMessage();
+			            System.out.println(dbExp);
+			            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+			        } catch (Exception error) {
+			            System.out.println(error);
+			        	String err = "Please try again" + error;
+			            JOptionPane.showMessageDialog(null, err, "Error", JOptionPane.WARNING_MESSAGE);
+					}
 				}else {
 					try {						
 						Class.forName("com.mysql.cj.jdbc.Driver");
@@ -474,16 +588,16 @@ public class RegisterFrame extends StandardFrame implements ActionListener, Item
 							
 						}
 						
-						User user1 = new User();
-						user1.setId(id);
-						user1.setName(name);
-						user1.setEmail(email);
-						user1.setPassword(password);
-						user1.setContact(contactNumber);
-						user1.setTypeOfUser(user);
-						user1.setDateOfBirth(new java.sql.Date(dateOfBirth.getTime()));
+						Admin admin1 = new Admin();
+						admin1.setId(id);
+						admin1.setName(name);
+						admin1.setEmail(email);
+						admin1.setPassword(password);
+						admin1.setContact(contactNumber);
+						admin1.setTypeOfUser(user);
+						admin1.setDateOfBirth(new java.sql.Date(dateOfBirth.getTime()));
 						
-						String query = "INSERT INTO " + user1.getTypeOfUser() + " (" + user1.getTypeOfUser() + "_id, name, email, password, contact, dob)"
+						String query = "INSERT INTO " + admin1.getTypeOfUser() + " (" + admin1.getTypeOfUser() + "_id, name, email, password, contact, dob)"
 						        + " VALUES"
 						        + " (?, ?, ?, ?, ?, ?)";
 
@@ -491,31 +605,31 @@ public class RegisterFrame extends StandardFrame implements ActionListener, Item
 
 						int index = 1;
 						
-						pst.setString(index, user1.getId());
+						pst.setString(index, admin1.getId());
 						
 						index++;
 						
-						pst.setString(index, user1.getName());
+						pst.setString(index, admin1.getName());
 						
 						index++;
 						
-						pst.setString(index, user1.getEmail());
+						pst.setString(index, admin1.getEmail());
 						
 						index++;
 						
-						pst.setString(index, user1.getPassword());
+						pst.setString(index, admin1.getPassword());
 						
 						index++;
 						
-						pst.setString(index, user1.getContact());
+						pst.setString(index, admin1.getContact());
 						
 						index++;
 						
-						pst.setDate(index, user1.getDateOfBirth());
+						pst.setDate(index, admin1.getDateOfBirth());
 						
 						int rowsAffected = pst.executeUpdate();
 						
-						query = "INSERT INTO user (" + user1.getTypeOfUser() + "_id, name, type_of_user)"
+						query = "INSERT INTO user (" + admin1.getTypeOfUser() + "_id, name, type_of_user)"
 								+ " VALUES"
 								+ " (?, ?, ?)";
 						
@@ -560,6 +674,9 @@ public class RegisterFrame extends StandardFrame implements ActionListener, Item
 			}catch (FormExecption fe) {
 				String error = fe.getMessage();
 				JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+			} catch (NoSuchAlgorithmException nsae) {
+				String error = nsae.getMessage();
+				JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
 			}
 		}	
 	}
@@ -578,4 +695,6 @@ public class RegisterFrame extends StandardFrame implements ActionListener, Item
 	private static int incrementPosition(int x) {
 		return x += 35;
 	}
+	
+	
 }
