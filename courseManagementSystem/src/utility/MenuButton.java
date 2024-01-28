@@ -1,0 +1,10 @@
+package utility;
+
+import java.awt.Color;
+
+public class MenuButton  extends StandardButton{
+	MenuButton(Color color){
+		super();
+		this.setBackground(color);
+	}
+}
