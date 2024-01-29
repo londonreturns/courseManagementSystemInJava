@@ -17,13 +17,5 @@ public class AdminFrame  extends MenuFrame{
 		super(x_coord, y_coord, width, height, color);
 	}
 
-	public void setRightPanel(Admin admin) {
-		System.out.println(admin.getName());
-	}
-	
-//	@Override
-//	void setRightPanel() {	}
-	
-	
 
 }

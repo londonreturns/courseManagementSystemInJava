@@ -8,7 +8,6 @@ import javax.swing.JFrame;
 import user.Admin;
 import user.Student;
 import user.Teacher;
-import user.User;
 import utility.AdminFrame;
 import utility.LoginFrame;
 import utility.RegisterFrame;

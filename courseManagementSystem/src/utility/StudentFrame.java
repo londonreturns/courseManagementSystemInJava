@@ -20,11 +20,4 @@ public class StudentFrame extends MenuFrame {
 		super(x_coord, y_coord, width, height, color);
 	}
 
-	public void changeRightPanel(Teacher teacher, String menu) {
-		
-	}
-	
-	public void changeRightPanel(Admin admin, String menu) {
-		
-	}
 }

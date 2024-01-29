@@ -5,7 +5,6 @@ import font.SubHeadingFont;
 import user.Admin;
 import user.Student;
 import user.Teacher;
-import user.User;
 import font.RegularFont;
 import font.PlaceHolderFont;
 
@@ -17,8 +16,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.math.BigInteger;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -30,7 +27,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 import java.util.regex.Pattern;
 
 import javax.swing.BorderFactory;
@@ -110,7 +106,7 @@ public class RegisterFrame extends StandardFrame implements ActionListener,  Ite
 			
 			String[] labelItems = {
 					"Name: ", "Email: ", "Password: ", "Confirm Password: ", "Contact Number: ",
-					"Date of Birth: ", "User Type: ","Faculty: "
+					"Date of Birth: ", "User Type: "
 			};
 			
 			for (String menu : labelItems) {
@@ -122,6 +118,13 @@ public class RegisterFrame extends StandardFrame implements ActionListener,  Ite
 				registerPanel.add(menuLabels);
 				((JLabel) menuLabels).setHorizontalAlignment(SwingConstants.RIGHT);
 			}
+			
+			facultyLabel.setText("Faculty: ");
+			facultyLabel.setVisible(true);
+			facultyLabel.setBounds(axisX, axisY, width, height);
+			facultyLabel.setFont(new RegularFont());
+			
+			registerPanel.add(facultyLabel);
 			
 			setPlaceHolders();
 			
@@ -201,6 +204,9 @@ public class RegisterFrame extends StandardFrame implements ActionListener,  Ite
 			
 		}catch(Exception e) {
 			
+		}finally {
+			axisX = 8;
+			axisY = 110;
 		}
 	}
 		
@@ -227,8 +233,8 @@ public class RegisterFrame extends StandardFrame implements ActionListener,  Ite
 				facultyLabel.setVisible(true);
 				facultyCombo.setVisible(true);
 			}else {
-				facultyLabel.setVisible(false);
 				facultyCombo.setVisible(false);
+				facultyLabel.setVisible(false);
 			}
 		}
 	}

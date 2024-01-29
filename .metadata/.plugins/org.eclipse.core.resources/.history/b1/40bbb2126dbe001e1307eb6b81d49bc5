@@ -1,0 +1,25 @@
+package course;
+
+public class Course {
+	private int courseId;
+	private String courseName;
+	
+	public Course(String course) {
+		
+	}
+	
+	public int getCourseId() {
+		return courseId;
+	}
+	public void setCourseId(int courseId) {
+		this.courseId = courseId;
+	}
+	public int getCourseName() {
+		return courseName;
+	}
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
+	}
+	
+	
+}

@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="changeRightPanel"/>
+		<item key="selection" value="switch"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="changeRightPanel"/>
-			<item value="adminf"/>
-			<item value="selectedMenu"/>
-			<item value="cj"/>
-			<item value="student"/>
-			<item value="hashAlgorithm"/>
-			<item value="border"/>
-			<item value="right"/>
-			<item value="boolean"/>
-			<item value="math"/>
-			<item value="main"/>
-			<item value="user1"/>
-			<item value="user"/>
-			<item value="Main."/>
-			<item value="Main.dis"/>
+			<item value="switch"/>
+			<item value="logOut"/>
+			<item value="logout"/>
+			<item value="action"/>
+			<item value="log"/>
+			<item value="loginLabel"/>
+			<item value="already"/>
+			<item value="faculty:"/>
+			<item value="faculty"/>
+			<item value="bcs"/>
+			<item value="facultyLabel"/>
+			<item value="facultyLabel.setVisible(false);"/>
+			<item value="facultyCombo"/>
+			<item value="popup"/>
+			<item value="jcombo"/>
 		</list>
 		<list key="replacehistory">
 			<item value="menu"/>

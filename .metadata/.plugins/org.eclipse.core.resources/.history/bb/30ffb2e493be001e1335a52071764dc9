@@ -1,0 +1,11 @@
+package font;
+
+import java.awt.Font;
+
+public class SmallBold extends Font{
+	
+		public SmallBold() {
+			super("Helvetica", Font.ITALIC | Font.BOLD, 30);
+		}
+
+}
