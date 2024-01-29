@@ -2,13 +2,29 @@ package utility;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 import course.Course;
 import driver.Main;
@@ -109,8 +125,9 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 	        }
 		
 		for (String menu : menuItems) {
-			MenuButton menuButton = new MenuButton(Color.pink);
+			MenuButton menuButton = new MenuButton(Color.black);
 			menuButton.setText(menu);
+			menuButton.setForeground(Color.white);
 			menuButton.setBounds(axisX, axisY, width, height);
 			menuButton.setFont(new SubHeadingFont());
 			axisY = incrementPosition(axisY);
@@ -119,6 +136,7 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 			menuButtonList.add(menuButton);
 			if(selectedMenu.equals(menu)) {
 				menuButton.setBackground(Color.white);
+				menuButton.setForeground(Color.black);
 			}
 		}
 		leftPanel.validate();
@@ -141,25 +159,32 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 	}
 	
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == logOut) {
-			System.out.println("LOG");
-			this.setVisible(false);
-			Main.loginFrameDisplay();
-		}else {
-			for (MenuButton menuButton : menuButtonList) {
-				if (e.getSource() == menuButton) {
-					newSelectedMenu(menuButton);
+	public void actionPerformed(ActionEvent e)  {
+		try {
+			if(e.getSource() == logOut) {
+				System.out.println("LOG");
+				this.setVisible(false);
+				Main.loginFrameDisplay();
+			}else {
+				for (MenuButton menuButton : menuButtonList) {
+					if (e.getSource() == menuButton) {
+						newSelectedMenu(menuButton);
+					}
+				}
+				if (typeOfUser.equals("student")) {
+					changeRightPanel(student, selectedMenu);
+				}else if(typeOfUser.equals("teacher")){
+					changeRightPanel(teacher, selectedMenu);
+				}else {
+					changeRightPanel(admin, selectedMenu);
 				}
 			}
-			if (typeOfUser.equals("student")) {
-				changeRightPanel(student, selectedMenu);
-			}else if(typeOfUser.equals("teacher")){
-				changeRightPanel(teacher, selectedMenu);
-			}else {
-				changeRightPanel(admin, selectedMenu);
-			}
+		}catch(Exception exp) {
+			String error = exp.getMessage();
+	        System.out.println(exp);
+	        JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
 		}
+		
 		
 	}
 	
@@ -168,52 +193,81 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 		for(MenuButton menuButton : menuButtonList) {
 			if(newMenuButton == menuButton) {
 				menuButton.setBackground(Color.white);
+				menuButton.setForeground(Color.black);
 			}else {
-				menuButton.setBackground(Color.pink);
+				menuButton.setBackground(Color.black);
+				menuButton.setForeground(Color.white);
 			}
 		}
 	}
 	
-	public void changeRightPanel(Student student, String menu) {
+	public void changeRightPanel(Student student, String menu) throws ClassNotFoundException {
 		rightPanel.removeAll();
 		switch (menu) {
 			case "Dashboard":
 				
-				idLabel = new JLabel("Faculty: " + student.getId());
-				nameLabel = new JLabel("Level: " + student.getName());
-				
-				idLabel.setFont(new BigBold());
-				idLabel.setBounds(0, 0, 500, 100);
-				
-				nameLabel.setFont(new BigBold());
-				nameLabel.setBounds(0, 10, 500, 100);
-				
-				rightPanel.add(nameLabel);
-				rightPanel.add(nameLabel);
+				String[] columns = {"Course Name", "Course Id"};
 				
 				try {
-					Course course = new Course("Introductory");
-					student.setCourse(course);
-					ArrayList<Course> courses = student.getCourses();
+					Class.forName(DatabaseConstant.CLASSNAME);
+					Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
 					
-					for (Course course2 : courses) {
-						System.out.println(course2.getCourseName());
+					String query1 = "SELECT course_id FROM student_course WHERE student_id = ?";
+					
+					PreparedStatement pst1 = conn.prepareStatement(query1);
+					
+					pst1.setString(1, student.getId());
+					
+					ResultSet result1 = pst1.executeQuery();
+					while (result1.next()) {
+					    int courseId = result1.getInt("course_id");
+					    String query2 = "SELECT course_name FROM course WHERE course_id = ?";
+					    
+					    PreparedStatement pst = conn.prepareStatement(query2);
+						
+						pst.setInt(1, courseId);
+						
+						ResultSet result2 = pst.executeQuery();
+						result2.next();
+						Course course = new Course(result2.getString("course_name"), courseId);
+						student.setCourse(course);
 					}
 					
-					System.out.println("Courses" + "");
-				}catch(Exception e) {
-					System.out.println(e);
+					ArrayList<Course> course = student.getCourses();
+					
+					Object[][] data = new Object[course.size()][];
+					for (int i = 0; i < course.size(); i++) {
+					    Course tempCourse = course.get(i);
+					    Object[] courseData = {tempCourse.getCourseName(), tempCourse.getCourseId()};
+					    data[i] = courseData;
+					}
+			            
+					StandardTable table = new StandardTable();
+					
+					StandardScrollPane sp = createTable(rightPanel, table, data, columns);
+					
+					TableColumnModel columnModel = table.getColumnModel();
+					int columnIndex = Arrays.asList(columns).indexOf("Course Id"); 
+					columnModel.getColumn(columnIndex).setMaxWidth(150);
+					
+					sp.setBounds(50, 500, 350, 100);
+					
+					rightPanel.add(sp);
+					rightPanel.validate();
+					rightPanel.repaint();
+					break;
+					
+				}catch (ClassNotFoundException cnfe) {
+					String error = cnfe.getMessage();
+		            System.out.println(cnfe);
+		            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+				}catch (SQLException sqle) {
+					String error = sqle.getMessage();
+		            System.out.println(sqle);
+		            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
 				}
-//				facultyLabel.setFont(new RegularFont());
-//				levelLabel.setFont(new RegularFont());
-//				
-//				facultyLabel.setBounds(0, 0, 150, 100);
-//				rightPanel.add(facultyLabel);
-//				
-//				levelLabel.setBounds(0, 100, 150, 100);
-//				rightPanel.add(levelLabel);
 				
-				break;
+				
 			case "Course":
 				JLabel text2 = new JLabel(student.getId());
 				text2.setBounds(0, 0, 100, 100);
@@ -304,17 +358,28 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 		
 	}
 	
-	public void setSelectedMenu(String menu) {
-		selectedMenu = menu;
-	}
-	
-	public String getSelectedMenu() {
-		return selectedMenu;
+	private static StandardScrollPane createTable(StandardPanel panel, StandardTable table, Object[][] data, String[] columns) {
+		DefaultTableModel model = new DefaultTableModel() ;
+		model.setColumnIdentifiers(columns);
+		
+		for (int i = 0; i < data.length; i++) {
+			model.addRow(data[i]);
+		}
+		
+		table.setModel(model);
+		table.setFocusable(false);
+		
+		StandardScrollPane sp = new StandardScrollPane(table);
+		
+		sp.setBounds(100, 100, 500, 100);
+		sp.setVisible(true);
+		return sp;
 	}
 	
 	private static int incrementPosition(int x) {
 		return x += 100;
 	}
+
 	
 	
 }

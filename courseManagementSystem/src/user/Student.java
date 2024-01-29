@@ -54,4 +54,8 @@ public class Student extends User{
 	public void removeCourse(Course course) {
 		courses.remove(course);
 	}
+
+	public void setCourse(String course, int courseId) {
+		courses.add(new Course(course, courseId));
+	}
 }

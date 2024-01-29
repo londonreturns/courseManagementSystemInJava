@@ -4,6 +4,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import user.Admin;
 import user.Student;
@@ -54,7 +55,14 @@ public class Main {
 		if(!studentFrame.init) {
 			studentFrame.init = true;
 		}
+	try{
 		studentFrame.changeRightPanel(student, "Dashboard");
+	}catch (Exception exp) {
+		String error = exp.getMessage();
+        System.out.println(exp);
+        JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+	}
+		
 		studentFrame.setVisible(true);
 	}
 	
