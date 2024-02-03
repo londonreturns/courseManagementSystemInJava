@@ -17,8 +17,8 @@ import utility.TeacherFrame;
 import utility.MenuFrame;
 
 public class Main {
-	static LoginFrame loginFrame = new LoginFrame(200, 200, 1000, 750);
-	static RegisterFrame registerFrame = new RegisterFrame(200, 200, 1000, 750);
+	static LoginFrame loginFrame = new LoginFrame(200, 200, 650, 650);
+	static RegisterFrame registerFrame = new RegisterFrame(200, 200, 650, 750);
 	
 	public static void main(String[] args) {
 		loginFrameDisplay();
