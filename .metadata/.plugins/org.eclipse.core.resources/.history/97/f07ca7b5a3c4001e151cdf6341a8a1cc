@@ -1,0 +1,11 @@
+package utility;
+
+import java.awt.Color;
+
+import user.Teacher;
+
+public class TeacherFrame  extends MenuFrame{
+
+
+
+}

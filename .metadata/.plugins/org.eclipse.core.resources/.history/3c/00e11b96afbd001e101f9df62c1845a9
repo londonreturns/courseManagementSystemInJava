@@ -1,6 +1,0 @@
-package user;
-
-public class Teacher extends User{
-	private String course;
-	
-}

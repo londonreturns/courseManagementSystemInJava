@@ -1,4 +1,4 @@
-package utility;
+package component;
 
 import java.awt.Color;
 
@@ -6,16 +6,8 @@ import user.Teacher;
 
 public class TeacherFrame  extends MenuFrame{
 
-	public TeacherFrame(){
-		super();
+	public TeacherFrame(int x_coord, int y_coord, int width, int height) {
+		super(x_coord, y_coord, width, height, "teacher");
 	}
 	
-	public TeacherFrame(int x_coord, int y_coord, int width, int height, Teacher teacher){
-		super(x_coord, y_coord, width, height, teacher);
-	}
-	
-	public TeacherFrame(int x_coord, int y_coord, int width, int height, Color color){
-		super(x_coord, y_coord, width, height, color);
-	}
-
 }

@@ -1,8 +1,0 @@
-package courseManagementSystem;
-
-public interface UserInterface {
-	String getId();
-	String getName();
-	void setId();
-	void setName();
-}

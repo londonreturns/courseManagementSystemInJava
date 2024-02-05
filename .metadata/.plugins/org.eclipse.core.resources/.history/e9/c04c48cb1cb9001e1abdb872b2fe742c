@@ -1,6 +1,0 @@
-package courseManagementSystem;
-
-public interface User {
-	public static int id = 0;
-	
-}

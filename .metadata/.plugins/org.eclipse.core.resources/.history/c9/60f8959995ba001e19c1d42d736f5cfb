@@ -1,9 +1,0 @@
-package courseManagementSystem;
-
-import javax.swing.JPanel;
-
-@SuppressWarnings("serial")
-public class StandardPanel extends JPanel{
-	
-	
-}

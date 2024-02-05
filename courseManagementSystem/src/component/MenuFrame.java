@@ -1,4 +1,4 @@
-package utility;
+package component;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -23,23 +23,33 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import javax.swing.text.StyleContext.SmallAttributeSet;
 
 import course.Course;
 import driver.Main;
 import font.BigBold;
 import font.RegularFont;
+import font.SmallBold;
 import font.SubHeadingFont;
 import user.Admin;
 import user.Student;
 import user.Teacher;
+import utility.DatabaseConstant;
 
 public class MenuFrame extends StandardFrame  implements ActionListener{
 	
 	static StandardPanel leftPanel = new StandardPanel(0, 0, 400, 800) ;
 	static StandardPanel rightPanel = new StandardPanel(400, 0, 800, 700, new Color(0xE5E3E2));
 	static StandardPanel bottomPanel = new StandardPanel(400, 700, 800, 100, new Color(0x36454F)) ;
+	
+	public MenuFrame(int x_coord, int y_coord, int width, int height, String typeOfUser){
+		super(x_coord, y_coord, width, height);
+		setElements(typeOfUser);
+		this.typeOfUser = typeOfUser;  // Update the instance variable
+	}
 	
 	Student student = new Student();
 	Teacher teacher = new Teacher();
@@ -56,7 +66,7 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 	
 	final private String defaultMenu = "Dashboard";
 	private String selectedMenu = defaultMenu;
-	public static String typeOfUser;
+	public String typeOfUser;
 	
 	static StandardButton logOut = new StandardButton();
 	
@@ -69,43 +79,15 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 	private final int width = 185;
 	private final int height = 32;
 	
-	public MenuFrame(){
-		super();
-		setElements();
-	}
-	
-	public MenuFrame(int x_coord, int y_coord, int width, int height, Student student){
-		super(x_coord, y_coord, width, height);
-		this.student = student;
-		setElements();
-	}
-	
-	public MenuFrame(int x_coord, int y_coord, int width, int height, Teacher teacher){
-		super(x_coord, y_coord, width, height);
-		this.teacher = teacher;
-		setElements();
-	}
-	
-	public MenuFrame(int x_coord, int y_coord, int width, int height, Admin admin){
-		super(x_coord, y_coord, width, height);
-		this.admin = admin;
-		setElements();
-	}
-	
-	public MenuFrame(int x_coord, int y_coord, int width, int height, Color color){
-		super(x_coord, y_coord, width, height, color);
-		setElements();
-	}
 
-	public void setElements() {
-		setLeftPanel();
+	public void setElements(String typeOfUser) {
+	    setLeftPanel(typeOfUser);
+	    setBottomPanel();
 		this.add(leftPanel);
-		setBottomPanel();
 		this.add(bottomPanel);
 	}
 
-	private void setLeftPanel() {
-		
+	private void setLeftPanel(String typeOfUser) {
 		cmsLabel.setBounds(10, 0, 1000, 100);
 		ImageIcon cmsImageIcon = new ImageIcon("assets/cms2.png");
 		cmsLabel.setIcon(cmsImageIcon);
@@ -164,6 +146,10 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 			if(e.getSource() == logOut) {
 				System.out.println("LOG");
 				this.setVisible(false);
+				rightPanel.removeAll();
+				leftPanel.removeAll();
+				bottomPanel.removeAll();
+				this.dispose();
 				Main.loginFrameDisplay();
 			}else {
 				for (MenuButton menuButton : menuButtonList) {
@@ -184,8 +170,6 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 	        System.out.println(exp);
 	        JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
 		}
-		
-		
 	}
 	
 	public void newSelectedMenu(MenuButton newMenuButton) {
@@ -202,13 +186,12 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 	}
 	
 	public void changeRightPanel(Student student, String menu) throws ClassNotFoundException {
+		this.student = student;
 		rightPanel.removeAll();
 		switch (menu) {
-			case "Dashboard":
-				
-				String[] columns = {"Course Name", "Course Id"};
-				
+			case "Dashboard":				
 				try {
+					String[] columns = {"Course Name", "Course Id"};
 					Class.forName(DatabaseConstant.CLASSNAME);
 					Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
 					
@@ -241,7 +224,37 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					    Object[] courseData = {tempCourse.getCourseName(), tempCourse.getCourseId()};
 					    data[i] = courseData;
 					}
-			            
+			        
+					JLabel nameLabel = new JLabel("Name:");
+					nameLabel.setBounds(40, 0, 120, 100);
+					nameLabel.setFont(new BigBold());
+					nameLabel.setHorizontalAlignment(SwingConstants.LEFT);
+
+					JLabel idLabel = new JLabel("Id:");
+					idLabel.setBounds(480, 0, 60, 100);
+					idLabel.setFont(new BigBold());
+					idLabel.setHorizontalAlignment(SwingConstants.LEFT);
+
+					JLabel numberOfCourseLabel = new JLabel("No. of courses currently enrolled:");
+					numberOfCourseLabel.setBounds(40, 150, 530, 100);
+					numberOfCourseLabel.setFont(new BigBold());
+					numberOfCourseLabel.setHorizontalAlignment(SwingConstants.LEFT);
+
+					JLabel name = new JLabel(student.getName());
+					name.setBounds(170, 0, 400, 100);
+					name.setFont(new SmallBold());
+
+					JLabel id = new JLabel(student.getId());
+					id.setBounds(550, 0, 400, 100);
+					id.setFont(new SmallBold());
+
+					JLabel numberOfCourse = new JLabel(student.getNumberOfCourses());
+					numberOfCourse.setBounds(580, 150, 100, 100);
+					numberOfCourse.setFont(new SmallBold());
+
+					
+					System.out.println(student.getNumberOfCourses());
+					
 					StandardTable table = new StandardTable();
 					
 					StandardScrollPane sp = createTable(rightPanel, table, data, columns);
@@ -250,11 +263,22 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					int columnIndex = Arrays.asList(columns).indexOf("Course Id"); 
 					columnModel.getColumn(columnIndex).setMaxWidth(150);
 					
-					sp.setBounds(50, 500, 350, 100);
+					sp.setBounds(200, 350, 400, 200);
+					
+					table.setUneditable();
 					
 					rightPanel.add(sp);
+					rightPanel.add(nameLabel);
+					rightPanel.add(idLabel);
+					rightPanel.add(numberOfCourseLabel);
+					rightPanel.add(name);
+					rightPanel.add(id);
+					rightPanel.add(numberOfCourse);
 					rightPanel.validate();
 					rightPanel.repaint();
+					
+					course.removeAll(course);
+					
 					break;
 					
 				}catch (ClassNotFoundException cnfe) {
@@ -286,76 +310,90 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 		}
 		rightPanel.repaint();
 		rightPanel.validate();
-		add(rightPanel);		
+		add(rightPanel);				
 	}
 	
-	public void changeRightPanel(Teacher teacher, String menu) {
-		rightPanel.removeAll();
-		switch (menu) {
-			case "Dashboard":
-				JLabel text = new JLabel(teacher.getName());
-				text.setBounds(0, 0, 100, 100);
-				rightPanel.add(text);
-				break;
-			case "Course":
-				JLabel text2 = new JLabel(teacher.getId());
-				text2.setBounds(0, 0, 100, 100);
-				rightPanel.add(text2);
-				break;
-			case "Student":
-				JLabel text3 = new JLabel(teacher.getContact());
-				text3.setBounds(0, 0, 100, 100);
-				rightPanel.add(text3);
-				break;
-			case "Settings":
-				JLabel text4 = new JLabel(teacher.getEmail());
-				text4.setBounds(0, 0, 100, 100);
-				rightPanel.add(text4);
-				break;
-		}
-		rightPanel.repaint();
-		rightPanel.validate();
-		add(rightPanel);
-		
-		System.out.println("right panel : " + rightPanel.getComponents());
+	public void changeRightPanel(Teacher teacher, String menu) throws ClassNotFoundException {
 		
 	}
 	
-	public void changeRightPanel(Admin admin, String menu) {
+	public void changeRightPanel(Admin admin, String menu) throws ClassNotFoundException {
+		this.admin = admin;
 		rightPanel.removeAll();
 		switch (menu) {
-			case "Dashboard":
-				JLabel text = new JLabel(admin.getName());
-				text.setBounds(0, 0, 100, 100);
-				rightPanel.add(text);
+			case "Dashboard":				
+				
 				break;
 			case "Course":
-				JLabel text2 = new JLabel(admin.getId());
-				text2.setBounds(0, 0, 100, 100);
-				rightPanel.add(text2);
+				try {
+					
+					JLabel allCourseLabel = new JLabel();
+					allCourseLabel.setText("All courses:");
+					allCourseLabel.setFont(new BigBold());
+					allCourseLabel.setBounds(10, 20, 400, 100);
+					
+					ArrayList<Course> courses = new ArrayList<Course>();
+					String[] columns = {"Course Name", "Course Id", "Faculty", "Level"};
+					Class.forName(DatabaseConstant.CLASSNAME);
+					Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
+
+					String query = "SELECT course_id, course_name, faculty, level FROM course";
+
+					PreparedStatement pst = conn.prepareStatement(query);
+					ResultSet result = pst.executeQuery();
+
+					while (result.next()) {
+					    int courseId = result.getInt("course_id");
+					    String courseName = result.getString("course_name");
+					    String faculty = result.getString("faculty");
+					    int level = result.getInt("level");
+
+					    Course course = new Course(courseName, courseId, faculty, level);
+					    courses.add(course);
+					}
+
+					Object[][] cData = new Object[courses.size()][];
+					for (int i = 0; i < courses.size(); i++) {
+					    Course tempCourse = courses.get(i);
+					    Object[] courseData = {tempCourse.getCourseName(), tempCourse.getCourseId(), tempCourse.getFaculty(), tempCourse.getLevel()};
+					    cData[i] = courseData;
+					}
+
+					StandardTable courseTable = new StandardTable();
+					StandardScrollPane sp = createTable(rightPanel, courseTable, cData, columns);
+
+					TableColumnModel columnModel = courseTable.getColumnModel();
+					int nameIndex = Arrays.asList(columns).indexOf("Course Name"); 
+					columnModel.getColumn(nameIndex).setMaxWidth(600);
+					int idIndex = Arrays.asList(columns).indexOf("Course Id"); 
+					columnModel.getColumn(idIndex).setMaxWidth(200);
+					int facultyIndex = Arrays.asList(columns).indexOf("Faculty"); 
+					columnModel.getColumn(facultyIndex).setMaxWidth(200);
+					int levelIndex = Arrays.asList(columns).indexOf("Level"); 
+					columnModel.getColumn(levelIndex).setMaxWidth(200);
+
+					sp.setBounds(100, 150, 600, 200);
+					courseTable.setUneditable();
+					
+					rightPanel.add(allCourseLabel);
+					rightPanel.add(sp);
+				}catch (SQLException sqle) {
+					
+				}
 				break;
 			case "Student":
-				JLabel text3 = new JLabel(admin.getEmail());
-				text3.setBounds(0, 0, 100, 100);
-				rightPanel.add(text3);
+				
 				break;
 			case "Teacher":
-				JLabel text4 = new JLabel(admin.getDateOfBirth().toString());
-				text4.setBounds(0, 0, 100, 100);
-				rightPanel.add(text4);
+				
 				break;
 			case "Settings":
-				JLabel text5 = new JLabel(admin.getPassword());
-				text5.setBounds(0, 0, 100, 100);
-				rightPanel.add(text5);
+				
 				break;
 		}
 		rightPanel.repaint();
 		rightPanel.validate();
-		add(rightPanel);
-		
-		System.out.println("right panel : " + rightPanel.getComponents());
-		
+		add(rightPanel);		
 	}
 	
 	private static StandardScrollPane createTable(StandardPanel panel, StandardTable table, Object[][] data, String[] columns) {

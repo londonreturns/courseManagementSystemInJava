@@ -1,4 +1,4 @@
-package utility;
+package component;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -21,6 +21,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import color.Color0;
+import color.Color1;
+import color.Color5;
 import driver.Main;
 import exception.DatabaseException;
 import exception.FormExecption;
@@ -31,6 +34,8 @@ import user.Admin;
 import user.Student;
 import user.Teacher;
 import user.User;
+import utility.DatabaseConstant;
+import utility.TextPrompt;
 import font.RegularFont;
 
 import java.util.ArrayList;
@@ -39,7 +44,7 @@ import java.util.regex.Pattern;
 
 public class LoginFrame extends StandardFrame implements ActionListener{
 	
-	public JPanel loginPanel = new StandardPanel(275, 75, 450, 450);
+	public JPanel loginPanel = new StandardPanel(100, 75, 450, 450);
 	public JLabel loginTitle = new JLabel();
 	
 	public JLabel idLabel = new JLabel();
@@ -108,7 +113,7 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 		okBtnLogin.addActionListener(this);
 		
 		registerLabel.setText("No account?");
-		registerLabel.setForeground(new Color(0x321D2F));
+		registerLabel.setForeground(new Color0());
 		registerLabel.setBounds(190, 300, 85, 25);
 		registerLabel.addMouseListener(new MouseListener() {
 			
@@ -134,7 +139,7 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 			}
 		});
 		
-		loginPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		loginPanel.setBorder(BorderFactory.createLineBorder(new Color0()));
 		
 		ArrayList<Component> allComponents = new ArrayList<>(Arrays.asList(
 				loginTitle, idLabel, passwordLabel, idTextField, passwordPasswordField,

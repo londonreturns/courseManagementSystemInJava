@@ -1,8 +1,0 @@
-package utility;
-
-import java.awt.TextField;
-
-public class StandardTextField extends JTextField{
-	
-	public void addPlaceHolder(J)
-}

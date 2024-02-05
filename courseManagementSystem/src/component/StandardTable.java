@@ -1,4 +1,4 @@
-package utility;
+package component;
 
 import java.awt.Color;
 
@@ -20,13 +20,14 @@ public class StandardTable extends JTable{
 	}
 	
 	private void settings() {
+		RegularFont headerFont = new RegularFont(); // Replace with your desired font
+		this.getTableHeader().setFont(headerFont);
 		this.getTableHeader().setBackground(Color.black);
 		this.getTableHeader().setForeground(Color.white);
 		this.setBackground(Color.white);
 		this.setForeground(Color.black);
 		this.setFont(new RegularFont());
 		this.setRowHeight(25);
-		this.setUneditable();
 	}
 	
 	public void setUneditable() {

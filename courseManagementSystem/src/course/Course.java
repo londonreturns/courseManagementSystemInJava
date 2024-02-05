@@ -3,16 +3,22 @@ package course;
 public class Course {
 	private int courseId;
 	private String courseName;
+	private String faculty;
+	private int level;
 	
 	public Course() {
 	}
 	
-	public Course(String course) {
-		setCourseName(course);
+	public Course(String courseName) {
+		setCourseName(courseName);
 	}
 	
-	public Course(String course, int courseId) {
-		setCourse(course, courseId);
+	public Course(String courseName, int courseId) {
+		setCourse(courseName, courseId);
+	}
+
+	public Course(String courseName, int courseId, String faculty, int level) {
+		setCourse(courseName, courseId, faculty, level);
 	}
 
 	public int getCourseId() {
@@ -34,6 +40,29 @@ public class Course {
 	public void setCourse(String course, int courseId) {
 		this.courseName = course;
 		this.courseId = courseId;
+	}
+	
+	public void setCourse(String courseName, int courseId, String faculty, int level) {
+		this.courseName = courseName;
+		this.courseId = courseId;
+		this.faculty = faculty;
+		this.level = level;
+	}
+
+	public String getFaculty() {
+		return faculty;
+	}
+
+	public void setFaculty(String faculty) {
+		this.faculty = faculty;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
 	}
 	
 }

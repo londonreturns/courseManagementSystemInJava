@@ -1,6 +1,0 @@
-package user;
-
-public class Student extends User{
-	String faculty;
-	int level;
-}

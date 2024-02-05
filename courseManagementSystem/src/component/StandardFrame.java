@@ -1,9 +1,11 @@
-package utility;
+package component;
 
 import java.awt.Color;
 import java.awt.Container;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+
+import color.Color2;
 
 public class StandardFrame extends JFrame{
 	
@@ -23,6 +25,7 @@ public class StandardFrame extends JFrame{
 		setResizable(false);
 		ImageIcon logo = new ImageIcon("assets/logo.png");
 		setIconImage(logo.getImage());	
+		container.setBackground(new Color2());
 	}
 	
 	StandardFrame(int x_coord, int y_coord, int width, int height){
@@ -33,7 +36,7 @@ public class StandardFrame extends JFrame{
 		setResizable(false);
 		ImageIcon logo = new ImageIcon("assets/logo.png");
 		setIconImage(logo.getImage());
-		container.setBackground(new Color(0xF3F2EE));
+		container.setBackground(new Color2());
 	}
 	
 	StandardFrame(int x_coord, int y_coord, int width, int height, Color color){
@@ -45,6 +48,7 @@ public class StandardFrame extends JFrame{
 		setResizable(false);
 		ImageIcon logo = new ImageIcon("assets/logo.png");
 		setIconImage(logo.getImage());
+		container.setBackground(new Color2());
 	}
 	
 	

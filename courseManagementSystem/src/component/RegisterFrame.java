@@ -1,10 +1,12 @@
-package utility;
+package component;
 
 import font.HeadingFont;
 import font.SubHeadingFont;
 import user.Admin;
 import user.Student;
 import user.Teacher;
+import utility.DatabaseConstant;
+import utility.TextPrompt;
 import font.RegularFont;
 import font.PlaceHolderFont;
 
@@ -48,7 +50,7 @@ import exception.FormExecption;
 
 public class RegisterFrame extends StandardFrame implements ActionListener,  ItemListener{
 	
-	JPanel registerPanel = new StandardPanel(275, 75, 450, 550);
+	JPanel registerPanel = new StandardPanel(100, 75, 450, 550);
 	JLabel registerTitle = new JLabel();
 	
 	JLabel nameLabel = new JLabel();

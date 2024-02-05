@@ -1,0 +1,9 @@
+package Color;
+
+import java.awt.Color;
+
+public class Color3 extends Color{
+	Color3(){
+		super(0x461111);
+	}
+}

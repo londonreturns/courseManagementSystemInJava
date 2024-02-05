@@ -1,11 +1,11 @@
-package utility;
+package component;
 
 import java.awt.Cursor;
 
 import javax.swing.JButton;
 
 public class StandardButton extends JButton{
-	StandardButton() {
+	public StandardButton() {
 		Cursor handCursor = new Cursor(Cursor.HAND_CURSOR);
 		this.setCursor(handCursor);
 	}

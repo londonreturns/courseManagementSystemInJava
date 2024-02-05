@@ -1,0 +1,127 @@
+package driver;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import component.AdminFrame;
+import component.LoginFrame;
+import component.MenuFrame;
+import component.RegisterFrame;
+import component.StudentFrame;
+import component.TeacherFrame;
+import user.Admin;
+import user.Student;
+import user.Teacher;
+
+public class Main {
+	static LoginFrame loginFrame = new LoginFrame(200, 200, 650, 650);
+	static RegisterFrame registerFrame = new RegisterFrame(200, 200, 650, 750);
+	static StudentFrame studentFrame = new StudentFrame(250, 150, 1200, 800);
+	static TeacherFrame teacherFrame = new TeacherFrame(250, 150, 1200, 800);
+	
+	static Student student = new Student();
+	static Teacher teacher = new Teacher();
+	static Admin admin = new Admin();
+	
+	public static void main(String[] args) {
+		loginFrameDisplay();
+	}
+
+	public static void loginFrameDisplay() {
+		if (loginFrame.init == false) {
+			loginFrame.setLocation(registerFrame.getX(), registerFrame.getY());
+			loginFrame.setVisible(true);
+			loginFrame.init = true;
+			loginFrame.setLoginElements();
+		}else {
+			loginFrame.setLocation(registerFrame.getX(), registerFrame.getY());
+			loginFrame.setVisible(true);
+		}
+		registerFrame.setVisible(false);
+	}
+	
+	public static void registerFrameDisplay() {
+		if (registerFrame.init == false) {
+			registerFrame.init = true;
+		}
+		registerFrame.setRegisterElements();
+		registerFrame.setLocation(loginFrame.getX(), loginFrame.getY());
+		registerFrame.setVisible(true);
+		loginFrame.setVisible(false);
+	}
+	
+	public static void studentFrameDisplay(JFrame previousFrame, Student student) {
+		MenuFrame.typeOfUser = student.getTypeOfUser();
+		teacherFrame.setVisible(false);
+		studentFrame.setVisible(true);
+
+		previousFrame.setVisible(false);
+		if(!studentFrame.init) {
+			studentFrame.init = true;
+		}
+	try{
+		studentFrame.changeRightPanel(student, "Dashboard");
+	}catch (Exception exp) {
+		String error = exp.getMessage();
+        System.out.println(exp);
+        JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+	}
+		
+	}
+	
+	public static void teacherFrameDisplay(JFrame previousFrame, Teacher teacher) {
+		MenuFrame.typeOfUser = teacher.getTypeOfUser();
+		studentFrame.setVisible(false);
+		teacherFrame.setVisible(true);
+		previousFrame.setVisible(false);
+		if(!teacherFrame.init) {
+			teacherFrame.init = true;
+		}
+	try{
+		teacherFrame.changeRightPanel(teacher, "Dashboard");
+	}catch (Exception exp) {
+		String error = exp.getMessage();
+        System.out.println(exp);
+        JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+	}
+		
+	}
+	
+	public static void adminFrameDisplay(JFrame previousFrame, Admin admin) {
+//		MenuFrame.typeOfUser = admin.getTypeOfUser();
+//		AdminFrame adminFrame = new AdminFrame(200, 200, 1000, 750, admin);
+//		
+//		previousFrame.setVisible(false);
+//		if(!adminFrame.init) {
+//			adminFrame.init = true;
+//			adminFrame.changeRightPanel(admin, "Dashboard");
+//		}
+//		adminFrame.setVisible(true);
+	}
+	
+	public static String hashAlgorithm(String pass) throws NoSuchAlgorithmException {
+		MessageDigest messageDigest = MessageDigest.getInstance("SHA");
+		
+		messageDigest.update(pass.getBytes());
+		
+		byte[] result = messageDigest.digest();
+		
+		StringBuilder sb = new StringBuilder();
+		
+		for (byte b: result) {
+			sb.append(String.format("%02x", b));
+		}
+		
+		if(sb.toString().equals("")) {
+			return "";
+		}else {
+			return sb.toString();
+		}
+		
+	}
+
+	
+}

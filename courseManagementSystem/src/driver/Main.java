@@ -6,19 +6,22 @@ import java.security.NoSuchAlgorithmException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import component.AdminFrame;
+import component.LoginFrame;
+import component.MenuFrame;
+import component.RegisterFrame;
+import component.StudentFrame;
+import component.TeacherFrame;
 import user.Admin;
 import user.Student;
 import user.Teacher;
-import utility.AdminFrame;
-import utility.LoginFrame;
-import utility.RegisterFrame;
-import utility.StudentFrame;
-import utility.TeacherFrame;
-import utility.MenuFrame;
 
 public class Main {
 	static LoginFrame loginFrame = new LoginFrame(200, 200, 650, 650);
 	static RegisterFrame registerFrame = new RegisterFrame(200, 200, 650, 750);
+	static Student student = new Student();
+	static Teacher teacher = new Teacher();
+	static Admin admin = new Admin();
 	
 	public static void main(String[] args) {
 		loginFrameDisplay();
@@ -48,46 +51,57 @@ public class Main {
 	}
 	
 	public static void studentFrameDisplay(JFrame previousFrame, Student student) {
-		MenuFrame.typeOfUser = student.getTypeOfUser();
-		StudentFrame studentFrame = new StudentFrame(250, 150, 1200, 800, student);
+		StudentFrame studentFrame = new StudentFrame(250, 150, 1200, 800);
+		studentFrame.typeOfUser = student.getTypeOfUser();
+	    studentFrame.setVisible(true);  // Set studentFrame visible
 
-		previousFrame.setVisible(false);
-		if(!studentFrame.init) {
-			studentFrame.init = true;
-		}
-	try{
-		studentFrame.changeRightPanel(student, "Dashboard");
-	}catch (Exception exp) {
-		String error = exp.getMessage();
-        System.out.println(exp);
-        JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
-	}
+	    previousFrame.setVisible(false);
+	    if (!studentFrame.init) {
+	        studentFrame.init = true;
+	    }
+	    try {
+	        studentFrame.changeRightPanel(student, "Dashboard");
+	    } catch (Exception exp) {
+	        String error = exp.getMessage();
+	        System.out.println(exp);
+	        JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+	    }
 		
-		studentFrame.setVisible(true);
 	}
 	
 	public static void teacherFrameDisplay(JFrame previousFrame, Teacher teacher) {
-		MenuFrame.typeOfUser = teacher.getTypeOfUser();
-		TeacherFrame teacherFrame = new TeacherFrame(250, 150, 1200, 800, teacher);
+		TeacherFrame teacherFrame = new TeacherFrame(250, 150, 1200, 800);
+		teacherFrame.typeOfUser = teacher.getTypeOfUser();
+	    teacherFrame.setVisible(true);  // Set teacherFrame visible
+	    previousFrame.setVisible(false);
+	    if (!teacherFrame.init) {
+	        teacherFrame.init = true;
+	    }
+	    try {
+	        teacherFrame.changeRightPanel(teacher, "Dashboard");
+	    } catch (Exception exp) {
+	        String error = exp.getMessage();
+	        System.out.println(exp);
+	        JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+	    }
 		
-		previousFrame.setVisible(false);
-		if(!teacherFrame.init) {
-			teacherFrame.init = true;
-			teacherFrame.changeRightPanel(teacher, "Dashboard");
-		}
-		teacherFrame.setVisible(true);
 	}
 	
 	public static void adminFrameDisplay(JFrame previousFrame, Admin admin) {
-		MenuFrame.typeOfUser = admin.getTypeOfUser();
-		AdminFrame adminFrame = new AdminFrame(200, 200, 1000, 750, admin);
-		
-		previousFrame.setVisible(false);
-		if(!adminFrame.init) {
-			adminFrame.init = true;
-			adminFrame.changeRightPanel(admin, "Dashboard");
-		}
-		adminFrame.setVisible(true);
+		AdminFrame adminFrame = new AdminFrame(250, 150, 1200, 800);
+		adminFrame.typeOfUser = admin.getTypeOfUser();
+		adminFrame.setVisible(true); 
+	    previousFrame.setVisible(false);
+	    if (!adminFrame.init) {
+	    	adminFrame.init = true;
+	    }
+	    try {
+	    	adminFrame.changeRightPanel(admin, "Dashboard");
+	    } catch (Exception exp) {
+	        String error = exp.getMessage();
+	        System.out.println(exp);
+	        JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+	    }
 	}
 	
 	public static String hashAlgorithm(String pass) throws NoSuchAlgorithmException {

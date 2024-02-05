@@ -1,0 +1,9 @@
+package Color;
+
+import java.awt.Color;
+
+public class Color4 extends Color{
+	Color4(){
+		super(0xB3541E);
+	}
+}

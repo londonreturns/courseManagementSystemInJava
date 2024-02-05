@@ -1,7 +1,0 @@
-package courseManagementSystem;
-
-
-public class Student implements User{
-	Student student1 = new Student();
-	
-}

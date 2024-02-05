@@ -1,6 +1,0 @@
-package courseManagementSystem;
-
-public interface User {
-	String id = "";
-	String name = "";
-}

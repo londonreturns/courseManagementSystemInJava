@@ -46,6 +46,10 @@ public class Student extends User{
     public ArrayList<Course> getCourses() {
 		return courses;
 	}
+    
+    public String getNumberOfCourses() {
+		return Integer.toString(courses.size());
+	}
 	
 	public void setCourse(Course course) {
 		courses.add(course);

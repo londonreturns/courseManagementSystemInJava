@@ -1,21 +1,14 @@
-package utility;
+package component;
 
 import java.awt.Color;
 
-import user.Admin;
+import user.Teacher;
+
 public class AdminFrame  extends MenuFrame{
 
-	public AdminFrame(){
-		super();
-	}
-	
-	public AdminFrame(int x_coord, int y_coord, int width, int height, Admin admin){
-		super(x_coord, y_coord, width, height, admin);
-	}
-	
-	public AdminFrame(int x_coord, int y_coord, int width, int height, Color color){
-		super(x_coord, y_coord, width, height, color);
-	}
 
+	public AdminFrame(int x_coord, int y_coord, int width, int height) {
+		super(x_coord, y_coord, width, height, "admin");
+	}
 
 }
