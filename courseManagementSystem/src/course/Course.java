@@ -1,10 +1,10 @@
 package course;
 
 public class Course {
-	private int courseId;
+	private String courseId;
 	private String courseName;
 	private String faculty;
-	private int level;
+	private String level;
 	
 	public Course() {
 	}
@@ -13,20 +13,20 @@ public class Course {
 		setCourseName(courseName);
 	}
 	
-	public Course(String courseName, int courseId) {
+	public Course(String courseName, String courseId) {
 		setCourse(courseName, courseId);
 	}
 
-	public Course(String courseName, int courseId, String faculty, int level) {
+	public Course(String courseName, String courseId, String faculty, String level) {
 		setCourse(courseName, courseId, faculty, level);
 	}
 
-	public int getCourseId() {
+	public String getCourseId() {
 		return courseId;
 	}
 	
-	public void setCourseId(int courseId) {
-		this.courseId = courseId;
+	public void setCourseId(String id) {
+		this.courseId = id;
 	}
 	
 	public String getCourseName() {
@@ -37,12 +37,12 @@ public class Course {
 		this.courseName = courseName;
 	}
 	
-	public void setCourse(String course, int courseId) {
+	public void setCourse(String course, String courseId) {
 		this.courseName = course;
 		this.courseId = courseId;
 	}
 	
-	public void setCourse(String courseName, int courseId, String faculty, int level) {
+	public void setCourse(String courseName, String courseId, String faculty, String level) {
 		this.courseName = courseName;
 		this.courseId = courseId;
 		this.faculty = faculty;
@@ -57,11 +57,11 @@ public class Course {
 		this.faculty = faculty;
 	}
 
-	public int getLevel() {
+	public String getLevel() {
 		return level;
 	}
 
-	public void setLevel(int level) {
+	public void setLevel(String level) {
 		this.level = level;
 	}
 	
