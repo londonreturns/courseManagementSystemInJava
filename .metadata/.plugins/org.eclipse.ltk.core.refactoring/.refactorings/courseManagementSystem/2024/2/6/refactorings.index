@@ -17,3 +17,21 @@
 1707279208486	Delete element
 1707284201700	Encapsulate field 'faculty'
 1707284205603	Encapsulate field 'level'
+1707293914643	Move compilation unit
+1707293920065	Move compilation unit
+1707293997365	Move compilation unit
+1707294000548	Move compilation unit
+1707294003753	Move compilation unit
+1707294009400	Move compilation unit
+1707294071291	Move compilation unit
+1707294108613	Move compilation unit
+1707294122706	Move compilation unit
+1707294128533	Move compilation unit
+1707294178579	Move compilation unit
+1707294190125	Move compilation unit
+1707294544511	Move compilation unit
+1707294674709	Rename type 'addCourse'
+1707294870030	Rename type 'addCourseFrame'
+1707305723620	Rename type 'EditCourse'
+1707306292168	Delete element
+1707308767052	Rename type 'FormExecption'

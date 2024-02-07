@@ -1,0 +1,14 @@
+package component.frame;
+
+public class EditCourseFrame extends CourseFrame{
+
+	public EditCourseFrame() {
+		super();
+	}
+	
+	public EditCourseFrame(int x_coord, int y_coord, int width, int height, String title) {
+		super(x_coord, y_coord, width, height);
+		CourseFrame.title = title;
+	}
+	
+}

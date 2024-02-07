@@ -6,7 +6,7 @@ import course.Course;
 
 public class Student extends User{
 	private String faculty;
-	private int level;
+	private String level;
 	private ArrayList<Course> courses;
 	
 	public Student(){
@@ -22,11 +22,11 @@ public class Student extends User{
 		this.faculty = faculty;
 	}
 	
-	public int getLevel() {
+	public String getLevel() {
 		return level;
 	}
 	
-	public void setLevel(int level) {
+	public void setLevel(String level) {
 		this.level = level;
 	}	
 	
@@ -59,7 +59,7 @@ public class Student extends User{
 		courses.remove(course);
 	}
 
-	public void setCourse(String course, int courseId) {
+	public void setCourse(String course, String courseId) {
 		courses.add(new Course(course, courseId));
 	}
 }

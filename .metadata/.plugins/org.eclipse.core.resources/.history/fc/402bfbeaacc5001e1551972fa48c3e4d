@@ -1,0 +1,5 @@
+package component.frame;
+
+public class EditCourse extends CourseFrame{
+
+}

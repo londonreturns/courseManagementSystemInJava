@@ -6,12 +6,12 @@ import java.security.NoSuchAlgorithmException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import component.AdminFrame;
-import component.LoginFrame;
-import component.MenuFrame;
-import component.RegisterFrame;
-import component.StudentFrame;
-import component.TeacherFrame;
+import component.frame.AdminFrame;
+import component.frame.LoginFrame;
+import component.frame.MenuFrame;
+import component.frame.RegisterFrame;
+import component.frame.StudentFrame;
+import component.frame.TeacherFrame;
 import user.Admin;
 import user.Student;
 import user.Teacher;
@@ -46,6 +46,7 @@ public class Main {
 		}
 		registerFrame.setRegisterElements();
 		registerFrame.setLocation(loginFrame.getX(), loginFrame.getY());
+		registerFrame.typeOfUserCombo.setSelectedItem("Student");
 		registerFrame.setVisible(true);
 		loginFrame.setVisible(false);
 	}
