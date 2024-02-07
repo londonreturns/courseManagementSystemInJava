@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,7 +56,7 @@ public class AddCourseFrame extends StandardFrame implements ActionListener{
 		titleLabel.setFont(new BigBold());
 		
 		String[] labelItems = {
-				"Course Name: ", "Course Id: ", "Faculty: ", "Level: "
+				"Course Id: ", "Course Name: ", "Faculty: ", "Level: "
 		};
 		
 		for (String menu : labelItems) {
@@ -72,7 +73,7 @@ public class AddCourseFrame extends StandardFrame implements ActionListener{
 		axisY = 110;
 		
 		Component[] fieldItems = {
-				courseNameTextField, courseIdTextField, facultyTextField, levelTextField
+				courseIdTextField, courseNameTextField, facultyTextField, levelTextField
 		};
 		
 		for (Component field : fieldItems) {
@@ -82,11 +83,11 @@ public class AddCourseFrame extends StandardFrame implements ActionListener{
 		}
 		
 		okBtn.setText("Confirm");
-		okBtn.setBounds(100, 275, 100, 50);
+		okBtn.setBounds(100, 275, 100, 35);
 		okBtn.addActionListener(this);
 		
 		closeBtn.setText("Cancel");
-		closeBtn.setBounds(300, 275, 100, 50);
+		closeBtn.setBounds(300, 275, 100, 35);
 		closeBtn.addActionListener(this);
 		
 		ArrayList<Component> allComponents = new ArrayList<>(Arrays.asList(
@@ -120,7 +121,7 @@ public class AddCourseFrame extends StandardFrame implements ActionListener{
 			
 			try {
 				
-				int idNum = Integer.parseInt(id);
+				
 				if (!Pattern.matches("^[a-zA-Z0-9].{4,10}$", id)) {
 				    throw new FormException("Invalid id");
 				}else if (!(faculty.equals("BCS") || faculty.equals("BIBM"))) {
@@ -134,37 +135,62 @@ public class AddCourseFrame extends StandardFrame implements ActionListener{
 				Class.forName(DatabaseConstant.CLASSNAME);
 				Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
 				
-				String query = "INSERT INTO course (course_id, course_name, faculty, level, is_active)"
-						+ " VALUES"
-						+ " (?, ?, ?, ?, ?)";
+				String query1 = "SELECT course_id FROM course WHERE course_id = ?";
 				
-				PreparedStatement pst = conn.prepareStatement(query);
+				PreparedStatement pst1 = conn.prepareStatement(query1);
 				
 				int index = 1;
 				
-				pst.setString(index, course.getCourseId());
+				pst1.setString(index, course.getCourseId());	
+				
+				ResultSet result = pst1.executeQuery();
+
+				int rows = 0;
+				
+				while (result.next()) {
+					rows++;
+				}
+				
+				if (rows > 0) {
+					throw new FormException("Id already exists");
+				}
+				
+				String query2 = "INSERT INTO course (course_id, course_name, faculty, level, is_active)"
+						+ " VALUES"
+						+ " (?, ?, ?, ?, ?)";
+				
+				PreparedStatement pst2 = conn.prepareStatement(query2);
+				
+				index = 1;
+				
+				pst2.setString(index, course.getCourseId());
 				
 				index++;
 				
-				pst.setString(index, course.getCourseName());
+				pst2.setString(index, course.getCourseName());
 				
 				index++;
 				
-				pst.setString(index, course.getFaculty());
+				pst2.setString(index, course.getFaculty());
 				
 				index++;
 				
-				pst.setString(index, course.getLevel());
+				pst2.setString(index, course.getLevel());
 				
 				index++;
 				
-				pst.setString(index, "0");
+				pst2.setString(index, "0");
 				
-				int rowsAffected = pst.executeUpdate();
+				int rowsAffected = pst2.executeUpdate();
 				
 				if (rowsAffected < 1) {
 					throw new FormException("Please try again");
 				}
+				
+				JOptionPane.showMessageDialog(null, "Course Successfully Added", "Success", JOptionPane.INFORMATION_MESSAGE);
+		        
+				resetFields();
+				
 				
 			} catch (ClassNotFoundException | SQLException e1) {
 				String error = e1.getMessage();
@@ -204,5 +230,12 @@ public class AddCourseFrame extends StandardFrame implements ActionListener{
 		for(Component placeHolderComponent : allComponents) {
 			placeHolderComponent.setFont(new PlaceHolderFont());
 		}
+	}
+	
+	private void resetFields() {
+		courseNameTextField.setText("");
+		courseIdTextField.setText("");
+		facultyTextField.setText("");
+		levelTextField.setText("");		
 	}
 }

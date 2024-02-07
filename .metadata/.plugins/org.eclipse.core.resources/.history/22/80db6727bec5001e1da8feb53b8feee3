@@ -1,0 +1,50 @@
+package component.scrollpane;
+
+import java.awt.Color;
+
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+import component.panel.StandardPanel;
+import component.table.StandardTable;
+
+public class StandardScrollPane extends JScrollPane{
+	public StandardScrollPane() {
+		super();
+		settings();
+	}
+	
+	public StandardScrollPane(JTable table){
+		super(table);
+		settings();
+	}
+	
+	public StandardScrollPane(JPanel panel){
+		super(panel);
+		settings();
+	}
+	
+	private void settings(){
+		this.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
+	}
+	
+	private static StandardScrollPane createTable(StandardPanel panel, StandardTable table, Object[][] data, String[] columns) {
+		DefaultTableModel model = new DefaultTableModel() ;
+		model.setColumnIdentifiers(columns);
+		
+		for (int i = 0; i < data.length; i++) {
+			model.addRow(data[i]);
+		}
+		
+		table.setModel(model);
+		table.setFocusable(false);
+		
+		StandardScrollPane sp = new StandardScrollPane(table);
+		
+		sp.setBounds(100, 100, 500, 100);
+		sp.setVisible(true);
+		return sp;
+	}
+}

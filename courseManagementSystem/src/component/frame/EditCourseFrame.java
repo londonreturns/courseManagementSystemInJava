@@ -3,18 +3,27 @@ package component.frame;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.regex.Pattern;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import component.button.StandardButton;
+import exception.FormException;
 import font.BigBold;
 import font.PlaceHolderFont;
 import font.RegularFont;
 import font.SubHeadingFont;
+import utility.DatabaseConstant;
 import utility.TextPrompt;
 
 public class EditCourseFrame extends StandardFrame implements ActionListener{
@@ -32,6 +41,7 @@ public class EditCourseFrame extends StandardFrame implements ActionListener{
 	
 	static StandardButton okBtn = new StandardButton();
 	static StandardButton closeBtn = new StandardButton();
+	static StandardButton getDetailsBtn = new StandardButton();
 	
 	private int axisX = 8;
 	private int axisY = 110;
@@ -46,7 +56,7 @@ public class EditCourseFrame extends StandardFrame implements ActionListener{
 		titleLabel.setFont(new BigBold());
 		
 		String[] labelItems = {
-				"Course Name: ", "Course Id: ", "Faculty: ", "Level: "
+				"Course Id: ", "Course Name: ", "Faculty: ", "Level: "
 		};
 		
 		for (String menu : labelItems) {
@@ -63,7 +73,7 @@ public class EditCourseFrame extends StandardFrame implements ActionListener{
 		axisY = 110;
 		
 		Component[] fieldItems = {
-				courseNameTextField, courseIdTextField, facultyTextField, levelTextField
+				courseIdTextField, courseNameTextField, facultyTextField, levelTextField
 		};
 		
 		for (Component field : fieldItems) {
@@ -73,16 +83,20 @@ public class EditCourseFrame extends StandardFrame implements ActionListener{
 		}
 		
 		okBtn.setText("Confirm");
-		okBtn.setBounds(100, 275, 100, 50);
+		okBtn.setBounds(50, 275, 100, 35);
 		okBtn.addActionListener(this);
 		
+		getDetailsBtn.setText("Get Details");
+		getDetailsBtn.setBounds(200, 275, 100, 35);
+		getDetailsBtn.addActionListener(this);
+		
 		closeBtn.setText("Cancel");
-		closeBtn.setBounds(300, 275, 100, 50);
+		closeBtn.setBounds(350, 275, 100, 35);
 		closeBtn.addActionListener(this);
 		
 		ArrayList<Component> allComponents = new ArrayList<>(Arrays.asList(
-			courseNameTextField, courseIdTextField, facultyTextField, levelTextField,
-			okBtn, closeBtn
+				courseNameTextField, courseIdTextField, facultyTextField, levelTextField,
+			okBtn, getDetailsBtn, closeBtn
 		));	
 		for(Component comp : allComponents) {
 			this.add(comp);
@@ -106,12 +120,115 @@ public class EditCourseFrame extends StandardFrame implements ActionListener{
 		if (e.getSource() == okBtn) {
 			String name = courseNameTextField.getText().trim();
 			String id = courseIdTextField.getText().trim();
-			String faculty = facultyTextField.getText().trim();
+			String faculty = facultyTextField.getText().trim().toUpperCase();
 			String level = levelTextField.getText().trim();
-			System.out.println(name);
-			System.out.println(id);
-			System.out.println(faculty);
-			System.out.println(level);
+			
+			try {
+				if (!Pattern.matches("^[a-zA-Z0-9].{4,10}$", id)) {
+				    throw new FormException("Invalid id");
+				}else if (!(faculty.equals("BCS") || faculty.equals("BIBM"))) {
+				    throw new FormException("Invalid Faculty");
+				}else if(!Pattern.matches("^[3-6]{1}$", level)) {
+					throw new FormException("Invalid level");
+				}
+				
+				Class.forName(DatabaseConstant.CLASSNAME);
+				Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
+				
+				String query1 = "SELECT course_id FROM course WHERE course_id = ?";
+				
+				PreparedStatement pst1 = conn.prepareStatement(query1);
+				
+				int index = 1;
+				
+				pst1.setString(index, id);	
+				
+				ResultSet result = pst1.executeQuery();
+
+				int rows = 0;
+				
+				while (result.next()) {
+					rows++;
+				}
+				
+				if (rows == 0) {
+					throw new FormException();
+				}
+				
+				String query2 = "UPDATE course SET course_name=?, faculty=?, level=? WHERE course_id=?";
+	            
+	            PreparedStatement updateStatement = conn.prepareStatement(query2);
+	            updateStatement.setString(1, name);
+	            updateStatement.setString(2, faculty);
+	            updateStatement.setString(3, level);
+	            updateStatement.setString(4, id);
+	            
+	            int updatedRows = updateStatement.executeUpdate();
+
+	            if (updatedRows > 0) {
+	            	JOptionPane.showMessageDialog(null, "Course Successfully Updated", "Success", JOptionPane.INFORMATION_MESSAGE);
+	            } else {
+	                throw new FormException("Failed to update record");
+	            }
+				
+				conn.close();
+			} catch (ClassNotFoundException | SQLException e1) {
+				String error = e1.getMessage();
+	            System.out.println(e1);
+	            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+	        
+	            
+			}catch (FormException e1) {
+	            JOptionPane.showMessageDialog(null, "Id not found", "Error", JOptionPane.WARNING_MESSAGE);
+	        
+			}catch (Exception e1) {
+				String error = "Id error";
+	            System.out.println(e1);
+	            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+			}
+			
+		}else if (e.getSource() == getDetailsBtn){
+			String id = courseIdTextField.getText().trim();
+			
+			try {
+				Class.forName(DatabaseConstant.CLASSNAME);
+				Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
+				
+				String query1 = "SELECT * FROM course WHERE course_id = ?";
+				
+				PreparedStatement pst1 = conn.prepareStatement(query1);
+				
+				int index = 1;
+				
+				pst1.setString(index, id);	
+				
+				ResultSet result = pst1.executeQuery();
+
+				int rows = 0;
+				
+				while (result.next()) {
+					rows++;
+					String nameDb = result.getString("course_name");
+				    String facultyDb = result.getString("faculty");
+				    String levelDb = result.getString("level");
+
+				    courseNameTextField.setText(nameDb);
+					facultyTextField.setText(facultyDb);
+					levelTextField.setText(levelDb);
+				}
+				
+				if (rows == 0) {
+					throw new FormException();
+				}
+				
+				
+				
+			    conn.close();
+			}catch (Exception e1) {
+				String error = "Course id not found";
+	            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);	            
+			}
+			
 		}else {
 			removeAll();
 			dispose();
@@ -133,4 +250,5 @@ public class EditCourseFrame extends StandardFrame implements ActionListener{
 			placeHolderComponent.setFont(new PlaceHolderFont());
 		}
 	}
+	
 }
