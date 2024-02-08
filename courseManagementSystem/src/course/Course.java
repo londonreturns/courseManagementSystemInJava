@@ -5,6 +5,7 @@ public class Course {
 	private String courseName;
 	private String faculty;
 	private String level;
+	private String isEnabled;
 	
 	public Course() {
 	}
@@ -19,6 +20,10 @@ public class Course {
 
 	public Course(String courseName, String courseId, String faculty, String level) {
 		setCourse(courseName, courseId, faculty, level);
+	}
+	
+	public Course(String courseName, String courseId, String faculty, String level, String isActive) {
+		setCourse(courseName, courseId, faculty, level, isActive);
 	}
 
 	public String getCourseId() {
@@ -48,6 +53,14 @@ public class Course {
 		this.faculty = faculty;
 		this.level = level;
 	}
+	
+	private void setCourse(String courseName, String courseId, String faculty, String level, String isActive) {
+		this.courseName = courseName;
+		this.courseId = courseId;
+		this.faculty = faculty;
+		this.level = level;
+		this.isEnabled = isActive;
+	}
 
 	public String getFaculty() {
 		return faculty;
@@ -63,6 +76,14 @@ public class Course {
 
 	public void setLevel(String level) {
 		this.level = level;
+	}
+	
+	public String getIsEnabled() {
+		return isEnabled;
+	}
+	
+	public void setIsEnabled(String isActive) {
+		this.isEnabled = isActive;
 	}
 	
 }

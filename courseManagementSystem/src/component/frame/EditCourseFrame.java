@@ -126,6 +126,8 @@ public class EditCourseFrame extends StandardFrame implements ActionListener{
 			try {
 				if (!Pattern.matches("^[a-zA-Z0-9].{4,10}$", id)) {
 				    throw new FormException("Invalid id");
+				}else if (!Pattern.matches("^[a-zA-Z].{1,100}$", name)) {
+				    throw new FormException("Invalid name");
 				}else if (!(faculty.equals("BCS") || faculty.equals("BIBM"))) {
 				    throw new FormException("Invalid Faculty");
 				}else if(!Pattern.matches("^[3-6]{1}$", level)) {
@@ -170,7 +172,9 @@ public class EditCourseFrame extends StandardFrame implements ActionListener{
 	            } else {
 	                throw new FormException("Failed to update record");
 	            }
-				
+	            
+	            resetFields();
+	            
 				conn.close();
 			} catch (ClassNotFoundException | SQLException e1) {
 				String error = e1.getMessage();
@@ -179,7 +183,7 @@ public class EditCourseFrame extends StandardFrame implements ActionListener{
 	        
 	            
 			}catch (FormException e1) {
-	            JOptionPane.showMessageDialog(null, "Id not found", "Error", JOptionPane.WARNING_MESSAGE);
+	            JOptionPane.showMessageDialog(null, e1, "Error", JOptionPane.WARNING_MESSAGE);
 	        
 			}catch (Exception e1) {
 				String error = "Id error";
@@ -221,8 +225,6 @@ public class EditCourseFrame extends StandardFrame implements ActionListener{
 					throw new FormException();
 				}
 				
-				
-				
 			    conn.close();
 			}catch (Exception e1) {
 				String error = "Course id not found";
@@ -249,6 +251,13 @@ public class EditCourseFrame extends StandardFrame implements ActionListener{
 		for(Component placeHolderComponent : allComponents) {
 			placeHolderComponent.setFont(new PlaceHolderFont());
 		}
+	}
+	
+	private void resetFields() {
+		courseNameTextField.setText("");
+		courseIdTextField.setText("");
+		facultyTextField.setText("");
+		levelTextField.setText("");		
 	}
 	
 }

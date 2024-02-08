@@ -54,7 +54,7 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 	public MenuFrame(int x_coord, int y_coord, int width, int height, String typeOfUser){
 		super(x_coord, y_coord, width, height);
 		setElements(typeOfUser);
-		this.typeOfUser = typeOfUser;  // Update the instance variable
+		this.typeOfUser = typeOfUser;
 	}
 	
 	Student student = new Student();
@@ -76,11 +76,11 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 	
 	static StandardButton logOut = new StandardButton();
 	
-	static StandardButton addButton = new StandardButton();
-	static StandardButton editButton = new StandardButton();
-	static StandardButton enableButton = new StandardButton();
-	static StandardButton disableButton = new StandardButton();
-	static StandardButton removeButton = new StandardButton();
+	static StandardButton addCourseButton = new StandardButton();
+	static StandardButton editCourseButton = new StandardButton();
+	static StandardButton enableCourseButton = new StandardButton();
+	static StandardButton disableCourseButton = new StandardButton();
+	static StandardButton removeCourseButton = new StandardButton();
 	
 	boolean leftPanelInit = false;
 	boolean rightPanelInit = false;
@@ -315,11 +315,11 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					allCourseLabel.setBounds(40, 0, 400, 100);
 					
 					ArrayList<Course> courses = new ArrayList<Course>();
-					String[] columns = {"Course Name", "Course Id", "Faculty", "Level"};
+					String[] columns = {"Course Name", "Course Id", "Faculty", "Level", "Enabled"};
 					Class.forName(DatabaseConstant.CLASSNAME);
 					Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
 
-					String query = "SELECT course_id, course_name, faculty, level FROM course";
+					String query = "SELECT * FROM course";
 
 					PreparedStatement pst = conn.prepareStatement(query);
 					ResultSet result = pst.executeQuery();
@@ -329,15 +329,16 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					    String courseName = result.getString("course_name");
 					    String faculty = result.getString("faculty");
 					    String level = result.getString("level");
+					    String isEnabled = result.getString("is_active");
 
-					    Course course = new Course(courseName, courseId, faculty, level);
+					    Course course = new Course(courseName, courseId, faculty, level, isEnabled);
 					    courses.add(course);
 					}
 
 					Object[][] cData = new Object[courses.size()][];
 					for (int i = 0; i < courses.size(); i++) {
 					    Course tempCourse = courses.get(i);
-					    Object[] courseData = {tempCourse.getCourseName(), tempCourse.getCourseId(), tempCourse.getFaculty(), tempCourse.getLevel()};
+					    Object[] courseData = {tempCourse.getCourseName(), tempCourse.getCourseId(), tempCourse.getFaculty(), tempCourse.getLevel(), tempCourse.getIsEnabled()};
 					    cData[i] = courseData;
 					}
 
@@ -353,26 +354,28 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					columnModel.getColumn(facultyIndex).setMaxWidth(150);
 					int levelIndex = Arrays.asList(columns).indexOf("Level"); 
 					columnModel.getColumn(levelIndex).setMaxWidth(150);
+					int isEnabledIndex = Arrays.asList(columns).indexOf("Enabled"); 
+					columnModel.getColumn(isEnabledIndex).setMaxWidth(150);
 
-					sp.setBounds(20, 125, 600, 500);
+					sp.setBounds(10, 125, 655, 500);
 					courseTable.setUneditable();
 					
-					addButton.setText("Add course");
-					editButton.setText("Edit course");
-					enableButton.setText("Enable course");
-					disableButton.setText("Disable course");
-					removeButton.setText("Remove course");
+					addCourseButton.setText("Add");
+					editCourseButton.setText("Edit");
+					enableCourseButton.setText("Enable");
+					disableCourseButton.setText("Disable");
+					removeCourseButton.setText("Remove");
 					
 					ArrayList<StandardButton> buttons = new ArrayList<>(Arrays.asList(
-							addButton, editButton, enableButton, disableButton, removeButton
+							addCourseButton, editCourseButton, enableCourseButton, disableCourseButton, removeCourseButton
 					));
 					
-					axisX = 626;
+					axisX = 675;
 					axisY = 150;
 					
 					for (StandardButton button : buttons) {
 						button.addActionListener(this);
-						button.setBounds(axisX, axisY, 150, 35);
+						button.setBounds(axisX, axisY, 100, 35);
 						rightPanel.add(button);
 						axisY = incrementPosition(axisY);
 					}
@@ -430,12 +433,12 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 				bottomPanel.removeAll();
 				this.dispose();
 				Main.loginFrameDisplay();
-			}else if(e.getSource() == addButton){
+			}else if(e.getSource() == addCourseButton){
 				AddCourseFrame addCourseFrame = new AddCourseFrame(0, 0, 500, 400);
 				addCourseFrame.setVisible(true);
 				repaint();
 				revalidate();
-			}else if(e.getSource() == editButton) {
+			}else if(e.getSource() == editCourseButton) {
 				EditCourseFrame editCourseFrame = new EditCourseFrame(0, 0, 500, 400);
 				editCourseFrame.setVisible(true);
 				repaint();
