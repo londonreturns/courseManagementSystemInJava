@@ -29,7 +29,7 @@ public class StandardFrame extends JFrame{
 		setLocationRelativeTo(null);
 	}
 	
-	StandardFrame(int x_coord, int y_coord, int width, int height){
+	protected StandardFrame(int x_coord, int y_coord, int width, int height){
 		setTitle(title);
 		setBounds(x_coord, y_coord, width, height);
 		setLayout(null);

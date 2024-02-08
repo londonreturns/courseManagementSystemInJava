@@ -1,0 +1,253 @@
+package component.frame.teacher;
+
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.regex.Pattern;
+
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
+import component.button.StandardButton;
+import component.frame.StandardFrame;
+import exception.DatabaseException;
+import exception.FormException;
+import font.BigBold;
+import font.PlaceHolderFont;
+import font.RegularFont;
+import font.SubHeadingFont;
+import utility.DatabaseConstant;
+import utility.TextPrompt;
+
+public class UnassignCourseFrame extends StandardFrame implements ActionListener{
+	
+	public UnassignCourseFrame(int x_coord, int y_coord, int width, int height) {
+		super(x_coord, y_coord, width, height);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		setElements();
+	}
+
+	JTextField teacherIdTextField = new JTextField();
+	JTextField courseIdTextField = new JTextField();
+	
+	static StandardButton okBtn = new StandardButton();
+	static StandardButton closeBtn = new StandardButton();
+	
+	private int axisX = 8;
+	private int axisY = 110;
+	private final int width = 185;
+	private final int height = 32;
+	
+	public void setElements() {
+		JLabel titleLabel = new JLabel();
+		titleLabel.setText("Unassign course");
+		titleLabel.setBounds(0, 0, 500, 100);
+		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		titleLabel.setFont(new BigBold());
+		
+		String[] labelItems = {
+				"Teacher Id: ","Course Id: ",
+		};
+		
+		for (String menu : labelItems) {
+			JLabel menuLabels = new JLabel();
+			menuLabels.setText(menu);
+			menuLabels.setBounds(axisX, axisY, width, height);
+			menuLabels.setFont(new SubHeadingFont());
+			axisY = incrementPosition(axisY);
+			add(menuLabels);
+			((JLabel) menuLabels).setHorizontalAlignment(SwingConstants.RIGHT);
+		}
+		
+		axisX = 250;
+		axisY = 110;
+		
+		Component[] fieldItems = {
+				teacherIdTextField, courseIdTextField, 
+		};
+		
+		for (Component field : fieldItems) {
+			field.setBounds(axisX, axisY, width, height);
+			field.setFont(new RegularFont());
+			axisY = incrementPosition(axisY);
+		}
+		
+		okBtn.setText("Assign");
+		okBtn.setBounds(100, 275, 100, 35);
+		okBtn.addActionListener(this);
+		
+		closeBtn.setText("Cancel");
+		closeBtn.setBounds(300, 275, 100, 35);
+		closeBtn.addActionListener(this);
+		
+		ArrayList<Component> allComponents = new ArrayList<>(Arrays.asList(
+				teacherIdTextField, courseIdTextField, okBtn, closeBtn
+		));	
+		for(Component comp : allComponents) {
+			this.add(comp);
+		}
+		
+		add(titleLabel);
+		setPlaceHolders();
+	}
+	
+	public void setDefaultCloseOperation() {
+		removeAll();
+		dispose();
+	}
+	
+	private static int incrementPosition(int x) {
+		return x += 35;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == okBtn) {
+			String courseId = courseIdTextField.getText().trim();
+			String teacherId = teacherIdTextField.getText().trim();
+			try {
+				if (!Pattern.matches("^[a-zA-Z0-9].{4,10}$", courseId)) {
+				    throw new FormException("Invalid course id");
+				}else if (!Pattern.matches("^[0-9]{7}$", teacherId)) {
+				    throw new FormException("Invalid teacher id");
+				}
+				
+				Class.forName(DatabaseConstant.CLASSNAME);
+				Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
+				
+				String query1 = "SELECT course_id FROM course WHERE course_id = ?";
+				
+				PreparedStatement pst1 = conn.prepareStatement(query1);
+				
+				int index = 1;
+				
+				pst1.setString(index, courseId);	
+				
+				ResultSet result1 = pst1.executeQuery();
+
+				int rows = 0;
+				
+				while (result1.next()) {
+					rows++;
+				}
+				
+				if (rows == 0) {
+					throw new FormException();
+				}
+				
+				String query2 = "SELECT teacher_id FROM teacher WHERE teacher_id = ?";
+	            
+	            PreparedStatement pst2 = conn.prepareStatement(query2);
+	            
+	            index = 1;
+	            
+	            pst2.setString(index, teacherId);
+	            
+	            ResultSet result2 = pst2.executeQuery();
+
+	            rows = 0;
+				
+				while (result2.next()) {
+					rows++;
+				}
+				
+				if (rows == 0) {
+					throw new FormException();
+				}
+				
+				String query3 = "SELECT * FROM teacher_course WHERE teacher_id = ? AND course_id = ?";
+	            
+	            PreparedStatement pst3 = conn.prepareStatement(query3);
+	            
+	            index = 1;
+	            
+	            pst3.setString(index, teacherId);
+	            
+	            index++;
+	            
+	            pst3.setString(index, courseId);
+	            
+	            ResultSet result3 = pst3.executeQuery();
+
+	            rows = 0;
+				
+				while (result3.next()) {
+					rows++;
+				}
+				
+				if (rows == 0) {
+					throw new FormException("Already assgined.");
+				}
+				
+				String query4 = "INSERT INTO teacher_course (teacher_id, course_id) VALUES (?, ?)";
+				
+				PreparedStatement pst4 = conn.prepareStatement(query4);
+				
+				index = 1;
+				
+				pst4.setString(index, teacherId);
+				
+				index++;
+				
+				pst4.setString(index, courseId);
+	            
+				int rowsAffected = pst4.executeUpdate();
+
+			    if (rowsAffected > 0) {
+			        JOptionPane.showMessageDialog(null, "Sucessfully Assigned",
+			        		"Success", JOptionPane.INFORMATION_MESSAGE);
+			        resetFields();
+			    } else {
+			        throw new DatabaseException("Registration unsuccessful");
+			    }
+				
+			    
+			    
+	            resetFields();
+	            
+				conn.close();
+			} catch (ClassNotFoundException | SQLException e1) {
+	            JOptionPane.showMessageDialog(null, e1, "Error", JOptionPane.WARNING_MESSAGE);
+	        
+	            
+			}catch (FormException e1) {
+	            JOptionPane.showMessageDialog(null, e1, "Error", JOptionPane.WARNING_MESSAGE);
+	        
+			}catch (Exception e1) {
+				String error = "Id error";
+	            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+			}
+			
+		}
+		removeAll();
+		dispose();
+		
+	}
+	
+	private void setPlaceHolders() {
+		TextPrompt courseIdPlaceHolder = new TextPrompt("Course Id", courseIdTextField);
+		TextPrompt teacherIdPlaceHolder = new TextPrompt("Teacher Id", teacherIdTextField);
+		
+		ArrayList<Component> allComponents = new ArrayList<>(Arrays.asList(
+				courseIdPlaceHolder, teacherIdPlaceHolder));	
+		
+		for(Component placeHolderComponent : allComponents) {
+			placeHolderComponent.setFont(new PlaceHolderFont());
+		}
+	}
+	
+	private void resetFields() {
+		teacherIdTextField.setText("");
+		courseIdTextField.setText("");
+	}
+	
+}

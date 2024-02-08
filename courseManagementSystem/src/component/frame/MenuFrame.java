@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.geom.GeneralPath;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -31,6 +32,14 @@ import javax.swing.text.StyleContext.SmallAttributeSet;
 
 import component.button.MenuButton;
 import component.button.StandardButton;
+import component.frame.course.AddCourseFrame;
+import component.frame.course.DisableCourseFrame;
+import component.frame.course.EditCourseFrame;
+import component.frame.course.EnableCourseFrame;
+import component.frame.course.RemoveCourseFrame;
+import component.frame.student.GenerateReportFrame;
+import component.frame.teacher.AssignCourseFrame;
+import component.frame.teacher.UnassignCourseFrame;
 import component.panel.StandardPanel;
 import component.scrollpane.StandardScrollPane;
 import component.table.StandardTable;
@@ -57,6 +66,15 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 		this.typeOfUser = typeOfUser;
 	}
 	
+	private AddCourseFrame addCourseFrame;
+    private EditCourseFrame editCourseFrame;
+    private EnableCourseFrame enableCourseFrame;
+    private DisableCourseFrame disableCourseFrame;
+    private RemoveCourseFrame removeCourseFrame;
+    private GenerateReportFrame generateReportFrame;
+    private AssignCourseFrame assignCourseFrame;
+    private UnassignCourseFrame unassignCourseFrame;
+	
 	Student student = new Student();
 	Teacher teacher = new Teacher();
 	Admin admin = new Admin();
@@ -81,6 +99,11 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 	static StandardButton enableCourseButton = new StandardButton();
 	static StandardButton disableCourseButton = new StandardButton();
 	static StandardButton removeCourseButton = new StandardButton();
+	
+	static StandardButton generateReportButton = new StandardButton();
+	
+	static StandardButton assignCourseButton = new StandardButton();
+	static StandardButton unassignCourseButton = new StandardButton();
 	
 	boolean leftPanelInit = false;
 	boolean rightPanelInit = false;
@@ -391,9 +414,211 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 				break;
 			case "Student":
 				
+				try {
+					JLabel allStudentLabel = new JLabel();
+				    allStudentLabel.setText("All Students:");
+				    allStudentLabel.setFont(new BigBold());
+				    allStudentLabel.setBounds(40, 0, 400, 100);
+
+				    ArrayList<Student> students = new ArrayList<Student>();
+				    String[] columns = {"Name", "Id", "Faculty", "Level", "Courses"};
+				    Class.forName(DatabaseConstant.CLASSNAME);
+				    Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
+
+				    String query = "SELECT * FROM student";
+
+				    PreparedStatement pst = conn.prepareStatement(query);
+				    ResultSet result = pst.executeQuery();
+
+				    while (result.next()) {
+				        String studentId = result.getString("student_id");
+				        String studentName = result.getString("name");
+				        String faculty = result.getString("faculty");
+				        String level = result.getString("level");
+
+				        Student student = new Student();
+				        student.setName(studentName);
+				        student.setId(studentId);
+				        student.setFaculty(faculty);
+				        student.setLevel(level);
+
+				        String courseQuery = "SELECT course_id FROM student_course WHERE student_id = ?";
+				        PreparedStatement coursePst = conn.prepareStatement(courseQuery);
+				        coursePst.setString(1, studentId);
+				        ResultSet courseResult = coursePst.executeQuery();
+
+				        boolean studentHasCourses = false; // Flag to check if the student has any courses
+
+				        while (courseResult.next()) {
+				            studentHasCourses = true;
+
+				            String courseId = courseResult.getString("course_id");
+				            String courseNameQuery = "SELECT course_name FROM course WHERE course_id = ?";
+				            PreparedStatement courseNamePst = conn.prepareStatement(courseNameQuery);
+				            courseNamePst.setString(1, courseId);
+				            ResultSet courseNameResult = courseNamePst.executeQuery();
+
+				            while (courseNameResult.next()) {
+				                String courseName = courseNameResult.getString("course_name");
+
+				                
+				                Student courseStudent = new Student();
+				                courseStudent.setName(studentName);
+				                courseStudent.setId(studentId);
+				                courseStudent.setFaculty(faculty);
+				                courseStudent.setLevel(level);
+				                courseStudent.setCoursesString(courseName);
+
+				                students.add(courseStudent);
+				            }
+				        }
+
+				        
+				        if (!studentHasCourses) {
+				            students.add(student);
+				        }
+				    }
+
+				    Object[][] sData = new Object[students.size()][];
+				    for (int i = 0; i < students.size(); i++) {
+				        Student tempStudent = students.get(i);
+				        Object[] studentData = {tempStudent.getName(), tempStudent.getId(), tempStudent.getFaculty(), tempStudent.getLevel(), tempStudent.getCoursesString()};
+				        sData[i] = studentData;
+				    }
+
+					StandardTable courseTable = new StandardTable();
+					StandardScrollPane sp = createTable(rightPanel, courseTable, sData, columns);
+					
+					TableColumnModel columnModel = courseTable.getColumnModel();
+					int nameIndex = Arrays.asList(columns).indexOf("Name"); 
+					columnModel.getColumn(nameIndex).setMaxWidth(150);
+					int idIndex = Arrays.asList(columns).indexOf("Id"); 
+					columnModel.getColumn(idIndex).setMaxWidth(100);
+					int facultyIndex = Arrays.asList(columns).indexOf("Faculty"); 
+					columnModel.getColumn(facultyIndex).setMaxWidth(100);
+					int levelIndex = Arrays.asList(columns).indexOf("Level"); 
+					columnModel.getColumn(levelIndex).setMaxWidth(100);
+					int coursesIndex = Arrays.asList(columns).indexOf("Courses"); 
+					columnModel.getColumn(coursesIndex).setMaxWidth(600);
+
+					sp.setBounds(10, 125, 770, 500);
+					courseTable.setUneditable();
+					
+					generateReportButton.setText("Generate Report");
+					generateReportButton.addActionListener(this);
+					generateReportButton.setBounds(300, 645, 200, 35);
+					
+					rightPanel.add(generateReportButton);
+					rightPanel.add(allStudentLabel);
+					rightPanel.add(sp);
+					
+				}catch (SQLException sqle) {
+					String error = sqle.getMessage();
+		            System.out.println(sqle);
+		            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+				}
+
 				break;
 			case "Teacher":
 				
+				try {
+					JLabel allCourseLabel = new JLabel();
+					allCourseLabel.setText("All Teachers:");
+					allCourseLabel.setFont(new BigBold());
+					allCourseLabel.setBounds(40, 0, 400, 100);
+
+					ArrayList<Teacher> teachers = new ArrayList<Teacher>();
+					String[] columns = {"Name", "Id", "Courses"};
+					Class.forName(DatabaseConstant.CLASSNAME);
+					Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
+
+					String query = "SELECT * FROM teacher";
+
+					PreparedStatement pst = conn.prepareStatement(query);
+					ResultSet result = pst.executeQuery();
+
+					while (result.next()) {
+				        String teacherId = result.getString("teacher_id");
+				        String teacherName = result.getString("name");
+
+				        Teacher teacher = new Teacher();
+				        teacher.setName(teacherName);
+				        teacher.setId(teacherId);
+
+				        String courseQuery = "SELECT course_id FROM teacher_course WHERE teacher_id = ?";
+				        PreparedStatement coursePst = conn.prepareStatement(courseQuery);
+				        coursePst.setString(1, teacher.getId());
+				        ResultSet courseResult = coursePst.executeQuery();
+
+				        boolean teacherHasCourses = false; 
+				        
+				        while (courseResult.next()) {
+				            teacherHasCourses = true;
+
+				            String courseId = courseResult.getString("course_id");
+				            String courseNameQuery = "SELECT course_name FROM course WHERE course_id = ?";
+				            PreparedStatement courseNamePst = conn.prepareStatement(courseNameQuery);
+				            courseNamePst.setString(1, courseId);
+				            ResultSet courseNameResult = courseNamePst.executeQuery();
+
+				            while (courseNameResult.next()) {
+				                String courseName = courseNameResult.getString("course_name");
+
+				                
+				                Teacher courseTeacher = new Teacher();
+				                courseTeacher.setName(teacherName);
+				                courseTeacher.setId(teacherId);
+				                courseTeacher.setCoursesString(courseName);
+
+				                teachers.add(courseTeacher);
+				            }
+				        }
+
+				        
+				        if (!teacherHasCourses) {
+				            teachers.add(teacher);
+				        }
+				    }
+
+				    Object[][] sData = new Object[teachers.size()][];
+				    for (int i = 0; i < teachers.size(); i++) {
+				        Teacher tempTeacher = teachers.get(i);
+				        Object[] teacherData = {tempTeacher.getName(), tempTeacher.getId(), tempTeacher.getCoursesString()};
+				        sData[i] = teacherData;
+				    }
+
+					StandardTable courseTable = new StandardTable();
+					StandardScrollPane sp = createTable(rightPanel, courseTable, sData, columns);
+
+					TableColumnModel columnModel = courseTable.getColumnModel();
+					int nameIndex = Arrays.asList(columns).indexOf("Name");
+					columnModel.getColumn(nameIndex).setMaxWidth(150);
+					int idIndex = Arrays.asList(columns).indexOf("Id");
+					columnModel.getColumn(idIndex).setMaxWidth(100);
+					int coursesIndex = Arrays.asList(columns).indexOf("Courses");
+					columnModel.getColumn(coursesIndex).setMaxWidth(600);
+
+					sp.setBounds(10, 125, 770, 500);
+					courseTable.setUneditable();
+
+					assignCourseButton.setText("Assign Course");
+					assignCourseButton.addActionListener(this);
+					assignCourseButton.setBounds(150, 645, 200, 35);
+					
+					unassignCourseButton.setText("Unassign Course");
+					unassignCourseButton.addActionListener(this);
+					unassignCourseButton.setBounds(400, 645, 200, 35);
+
+					rightPanel.add(assignCourseButton);
+					rightPanel.add(unassignCourseButton);
+					rightPanel.add(allCourseLabel);
+					rightPanel.add(sp);
+					
+				}catch (SQLException sqle) {
+					String error = sqle.getMessage();
+		            System.out.println(sqle);
+		            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+				}
 				break;
 			case "Settings":
 				
@@ -423,8 +648,7 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 	}
 	
 	@Override
-	public void actionPerformed(ActionEvent e)  {
-		try {
+	public void actionPerformed(ActionEvent e) {
 			if(e.getSource() == logOut) {
 				System.out.println("LOG");
 				this.setVisible(false);
@@ -433,38 +657,113 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 				bottomPanel.removeAll();
 				this.dispose();
 				Main.loginFrameDisplay();
-			}else if(e.getSource() == addCourseButton){
-				AddCourseFrame addCourseFrame = new AddCourseFrame(0, 0, 500, 400);
-				addCourseFrame.setVisible(true);
-				repaint();
-				revalidate();
-			}else if(e.getSource() == editCourseButton) {
-				EditCourseFrame editCourseFrame = new EditCourseFrame(0, 0, 500, 400);
-				editCourseFrame.setVisible(true);
-				repaint();
-				revalidate();
-			}
-			else {
+			} else if (e.getSource() == addCourseButton) {
+			    if (addCourseFrame != null) {
+			    	addCourseFrame.removeAll();
+			        addCourseFrame.dispose();
+			    }
+			    addCourseFrame = new AddCourseFrame(0, 0, 500, 400);
+			    addCourseFrame.setVisible(true);
+			    addCourseFrame.toFront();
+			    repaint();
+			    revalidate();
+			} else if (e.getSource() == editCourseButton) {
+			    if (editCourseFrame != null) {
+			    	editCourseFrame.removeAll();
+			        editCourseFrame.dispose();
+			    }
+			    editCourseFrame = new EditCourseFrame(0, 0, 500, 400);
+			    editCourseFrame.setVisible(true);
+			    editCourseFrame.toFront();
+			    repaint();
+			    revalidate();
+			} else if (e.getSource() == enableCourseButton) {
+			    if (enableCourseFrame != null) {
+			    	enableCourseFrame.removeAll();
+			        enableCourseFrame.dispose();
+			    }
+			    enableCourseFrame = new EnableCourseFrame(0, 0, 500, 400);
+			    enableCourseFrame.setVisible(true);
+			    enableCourseFrame.toFront();
+			    repaint();
+			    revalidate();
+			} else if (e.getSource() == disableCourseButton) {
+			    if (disableCourseFrame != null) {
+			    	disableCourseFrame.removeAll();
+			        disableCourseFrame.dispose();
+			    }
+			    disableCourseFrame = new DisableCourseFrame(0, 0, 500, 400);
+			    disableCourseFrame.setVisible(true);
+			    disableCourseFrame.toFront();
+			    repaint();
+			    revalidate();
+			} else if (e.getSource() == removeCourseButton) {
+			    if (removeCourseFrame != null) {
+			    	removeCourseFrame.removeAll();
+			        removeCourseFrame.dispose();
+			    }
+			    removeCourseFrame = new RemoveCourseFrame(0, 0, 500, 400);
+			    removeCourseFrame.setVisible(true);
+			    removeCourseFrame.toFront();
+			    repaint();
+			    revalidate();
+			} else if (e.getSource() == generateReportButton) {
+			    if (generateReportFrame != null) {
+			    	generateReportFrame.removeAll();
+			        generateReportFrame.dispose();
+			    }
+			    generateReportFrame = new GenerateReportFrame(0, 0, 500, 400);
+			    generateReportFrame.setVisible(true);
+			    generateReportFrame.toFront();
+			    repaint();
+			    revalidate();
+			} else if (e.getSource() == assignCourseButton) {
+			    if (assignCourseFrame != null) {
+			    	assignCourseFrame.removeAll();
+			        assignCourseFrame.dispose();
+			    }
+			    assignCourseFrame = new AssignCourseFrame(0, 0, 500, 400);
+			    assignCourseFrame.setVisible(true);
+			    assignCourseFrame.toFront();
+			    repaint();
+			    revalidate();
+			}else if (e.getSource() == unassignCourseButton) {
+			    if (unassignCourseFrame != null) {
+			    	unassignCourseFrame.removeAll();
+			        unassignCourseFrame.dispose();
+			    }
+			    unassignCourseFrame = new UnassignCourseFrame(0, 0, 500, 400);
+			    unassignCourseFrame.setVisible(true);
+			    unassignCourseFrame.toFront();
+			    repaint();
+			    revalidate();
+			}else {
 				for (MenuButton menuButton : menuButtonList) {
 					if (e.getSource() == menuButton) {
 						newSelectedMenu(menuButton);
 					}
 				}
-				if (typeOfUser.equals("student")) {
-					changeRightPanel(student, selectedMenu);
-				}else if(typeOfUser.equals("teacher")){
-					changeRightPanel(teacher, selectedMenu);
-				}else {
-					changeRightPanel(admin, selectedMenu);
+				try {
+					changePanel(typeOfUser);
+				}catch(Exception exp) {
+					System.out.println(exp);
 				}
+				
 			}
-		}catch(Exception exp) {
-			String error = exp.getMessage();
-	        System.out.println(exp);
-	        JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
 		}
-	}
 	
+	
+	private void changePanel(String typeOfUser2) throws ClassNotFoundException{
+		if (typeOfUser.equals("student")) {
+			changeRightPanel(student, selectedMenu);
+		}else if(typeOfUser.equals("teacher")){
+			changeRightPanel(teacher, selectedMenu);
+		}else {
+			changeRightPanel(admin, selectedMenu);
+		}
+		
+	}
+
 	private static int incrementPosition(int x) {
 		return x += 100;
 	}

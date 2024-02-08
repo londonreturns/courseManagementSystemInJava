@@ -6,6 +6,7 @@ import course.Course;
 
 public class Teacher extends User{
 	private ArrayList<Course>courses;
+	private String coursesString;
 	
     public Teacher() {
         super();
@@ -22,6 +23,14 @@ public class Teacher extends User{
 	
 	public void removeCourse(Course course) {
 		courses.remove(course);
+	}
+
+	public String getCoursesString() {
+		return coursesString;
+	}
+
+	public void setCoursesString(String coursesString) {
+		this.coursesString = coursesString;
 	}
 	
 }

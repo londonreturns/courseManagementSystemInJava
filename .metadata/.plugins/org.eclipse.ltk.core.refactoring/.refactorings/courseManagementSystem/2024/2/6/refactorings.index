@@ -35,3 +35,12 @@
 1707305723620	Rename type 'EditCourse'
 1707306292168	Delete element
 1707308767052	Rename type 'FormExecption'
+1707363463042	Move compilation unit
+1707363466911	Move compilation unit
+1707368077140	Encapsulate field 'coursesString'
+1707370269868	Move compilation unit
+1707370377812	Move compilation unit
+1707370384672	Move compilation unit
+1707370442498	Rename type 'GenerateReport'
+1707375523842	Encapsulate field 'coursesString'
+1707376692318	Move compilation unit

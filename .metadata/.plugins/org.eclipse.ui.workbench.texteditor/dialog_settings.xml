@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="*"/>
+		<item key="selection" value="Action"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="action"/>
+			<item value="assignCourseButton"/>
+			<item value="assign c"/>
+			<item value="removeAll();"/>
+			<item value="insert"/>
+			<item value="student"/>
+			<item value="if (rows == 0)"/>
+			<item value="if (rows == 0) {"/>
+			<item value="&quot;0"/>
+			<item value="enable"/>
 			<item value="*"/>
 			<item value="setDefaultCloseOperation"/>
 			<item value="okBtn"/>
 			<item value="add"/>
 			<item value="array"/>
-			<item value="main"/>
-			<item value="incrementPosition"/>
-			<item value="this"/>
-			<item value="logout"/>
-			<item value="loug"/>
-			<item value="setele"/>
-			<item value="changeRightPanel"/>
-			<item value="logo"/>
-			<item value="change"/>
-			<item value="studentf"/>
 		</list>
 		<list key="replacehistory">
 			<item value="menu"/>

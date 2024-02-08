@@ -1,16 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="utility.MenuButton"/>
-    <fullyQualifiedTypeName name="javax.swing.text.html.HTMLDocument.Iterator"/>
-    <fullyQualifiedTypeName name="java.util.Iterator"/>
-    <fullyQualifiedTypeName name="user.Student"/>
-    <fullyQualifiedTypeName name="user.Admin"/>
-    <fullyQualifiedTypeName name="user.Teacher"/>
-    <fullyQualifiedTypeName name="utility.StudentFrame"/>
-    <fullyQualifiedTypeName name="utility.StandardButton"/>
-    <fullyQualifiedTypeName name="driver.Main"/>
-    <fullyQualifiedTypeName name="java.awt.Font"/>
-    <fullyQualifiedTypeName name="java.lang.Override"/>
     <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
     <fullyQualifiedTypeName name="java.awt.event.MouseListener"/>
     <fullyQualifiedTypeName name="javax.swing.table.DefaultTableModel"/>
@@ -47,10 +36,7 @@
     <fullyQualifiedTypeName name="javax.swing.JLabel"/>
     <fullyQualifiedTypeName name="font.BigBold"/>
     <fullyQualifiedTypeName name="font.SubHeadingFont"/>
-    <fullyQualifiedTypeName name="javax.swing.JTextField"/>
-    <fullyQualifiedTypeName name="component.frame.StandardFrame"/>
     <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
-    <fullyQualifiedTypeName name="component.button.StandardButton"/>
     <fullyQualifiedTypeName name="component.frame.CourseFrame"/>
     <fullyQualifiedTypeName name="component.frame.EditCourse"/>
     <fullyQualifiedTypeName name="course.Course"/>
@@ -60,4 +46,18 @@
     <fullyQualifiedTypeName name="exception.FormException"/>
     <fullyQualifiedTypeName name="javax.swing.JButton"/>
     <fullyQualifiedTypeName name="java.lang.String"/>
+    <fullyQualifiedTypeName name="component.frame.StandardFrame"/>
+    <fullyQualifiedTypeName name="component.frame.course.EnableCourseFrame"/>
+    <fullyQualifiedTypeName name="javax.swing.JTextField"/>
+    <fullyQualifiedTypeName name="component.frame.course.DisableCourseFrame"/>
+    <fullyQualifiedTypeName name="component.frame.course.RemoveCourseFrame"/>
+    <fullyQualifiedTypeName name="java.awt.geom.GeneralPath"/>
+    <fullyQualifiedTypeName name="component.frame.student.GenerateReportFrame"/>
+    <fullyQualifiedTypeName name="java.io.PrintWriter"/>
+    <fullyQualifiedTypeName name="component.button.StandardButton"/>
+    <fullyQualifiedTypeName name="component.frame.teacher.AssignCourseFrame"/>
+    <fullyQualifiedTypeName name="component.frame.teacher.UnassignCourseFrame"/>
+    <fullyQualifiedTypeName name="component.frame.course.AddCourseFrame"/>
+    <fullyQualifiedTypeName name="java.lang.SuppressWarnings"/>
+    <fullyQualifiedTypeName name="java.lang.ClassNotFoundException"/>
 </qualifiedTypeNameHistroy>

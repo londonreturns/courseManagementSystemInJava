@@ -8,6 +8,7 @@ public class Student extends User{
 	private String faculty;
 	private String level;
 	private ArrayList<Course> courses;
+	private String coursesString; 
 	
 	public Student(){
 		super();
@@ -61,5 +62,13 @@ public class Student extends User{
 
 	public void setCourse(String course, String courseId) {
 		courses.add(new Course(course, courseId));
+	}
+
+	public String getCoursesString() {
+		return coursesString;
+	}
+
+	public void setCoursesString(String coursesString) {
+		this.coursesString = coursesString;
 	}
 }
