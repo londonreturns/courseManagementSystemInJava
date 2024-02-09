@@ -42,6 +42,7 @@ import component.frame.module.AddModuleFrame;
 import component.frame.module.EditModuleFrame;
 import component.frame.module.RemoveModuleFrame;
 import component.frame.student.GenerateReportFrame;
+import component.frame.student.MarkStudentFrame;
 import component.frame.teacher.AssignModuleFrame;
 import component.frame.teacher.UnassignModuleFrame;
 import component.panel.StandardPanel;
@@ -83,6 +84,8 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
     private AddModuleFrame addModuleFrame;
     private EditModuleFrame editModuleFrame;
     private RemoveModuleFrame removeModuleFrame;
+    
+    private MarkStudentFrame markStudentFrame;
 	
 	Student student = new Student();
 	Teacher teacher = new Teacher();
@@ -118,6 +121,8 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 	static StandardButton assignModuleButton = new StandardButton();
 	static StandardButton unassignModuleButton = new StandardButton();
 	
+	static StandardButton markStudentButton = new StandardButton();
+	
 	boolean leftPanelInit = false;
 	boolean rightPanelInit = false;
 	boolean bottomPanelInit = false;
@@ -144,10 +149,10 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 		
 		switch (typeOfUser) {
 	            case "student":
-	                menuItems = new String[] {"Dashboard", "Course", "Teacher"};
+	                menuItems = new String[] {"Dashboard", "Module", "Teacher"};
 	                break;
 	            case "teacher":
-	                menuItems = new String[] {"Dashboard", "Course", "Student"};
+	                menuItems = new String[] {"Dashboard", "Module", "Student"};
 	                break;
 	            case "admin":
 	                menuItems = new String[] {"Dashboard", "Course", "Module", "Student", "Teacher"};
@@ -310,7 +315,7 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 //				}
 				
 				
-			case "Course":
+			case "Module":
 				JLabel text2 = new JLabel(student.getId());
 				text2.setBounds(0, 0, 100, 100);
 				rightPanel.add(text2);
@@ -336,12 +341,273 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 		rightPanel.removeAll();
 		switch(menu) {
 			case "Dashboard":
+				try {
+					JLabel nameLabel = new JLabel("Name:");
+					nameLabel.setBounds(40, 0, 120, 100);
+					nameLabel.setFont(new BigBold());
+					nameLabel.setHorizontalAlignment(SwingConstants.LEFT);
+
+					JLabel idLabel = new JLabel("Id:");
+					idLabel.setBounds(480, 0, 60, 100);
+					idLabel.setFont(new BigBold());
+					idLabel.setHorizontalAlignment(SwingConstants.LEFT);
+					
+					JLabel studentLabel = new JLabel("No. of students:");
+					JLabel moduleLabel = new JLabel("No. of modules:");
+					
+					ArrayList<JLabel> labels = new ArrayList<>(Arrays.asList(
+							studentLabel, moduleLabel
+					));	
+					
+					axisX = 75;
+					axisY = 250;
+					
+					for(JLabel label : labels) {
+						label.setBounds(axisX, axisY, 400, 100);
+						label.setFont(new BigBold());
+						label.setHorizontalAlignment(SwingConstants.RIGHT);
+						axisY += 100;
+						rightPanel.add(label);
+					}
+
+					JLabel name = new JLabel(teacher.getName());
+					name.setBounds(170, 0, 400, 100);
+					name.setFont(new SmallBold());
+
+					JLabel id = new JLabel(teacher.getId());
+					id.setBounds(550, 0, 400, 100);
+					id.setFont(new SmallBold());
+					
+					Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
+
+					// Query to count the number of modules that the teacher teaches
+					String countModulesQuery = "SELECT COUNT(DISTINCT tm.module_id) AS module_count " +
+					                           "FROM teacher_module tm " +
+					                           "INNER JOIN module m ON tm.module_id = m.module_id " +
+					                           "WHERE tm.teacher_id = ?";
+					PreparedStatement countModulesPst = conn.prepareStatement(countModulesQuery);
+					countModulesPst.setString(1, teacher.getId());
+					ResultSet moduleCountResult = countModulesPst.executeQuery();
+					int numberOfModules = 0;
+					if (moduleCountResult.next()) {
+					    numberOfModules = moduleCountResult.getInt("module_count");
+					}
+
+					// Query to count the number of students enrolled in modules that the teacher teaches
+					String countStudentsQuery = "SELECT COUNT(DISTINCT se.student_id) AS student_count " +
+					                            "FROM student_enrollment se " +
+					                            "INNER JOIN teacher_module tm ON se.module_id = tm.module_id " +
+					                            "WHERE tm.teacher_id = ?";
+					PreparedStatement countStudentsPst = conn.prepareStatement(countStudentsQuery);
+					countStudentsPst.setString(1, teacher.getId());
+					ResultSet studentCountResult = countStudentsPst.executeQuery();
+					int numberOfStudents = 0;
+					if (studentCountResult.next()) {
+					    numberOfStudents = studentCountResult.getInt("student_count");
+					}
+					
+					JLabel numberStudents = new JLabel(Integer.toString(numberOfStudents));
+					JLabel numberModules = new JLabel(Integer.toString(numberOfModules));
+					
+					ArrayList<JLabel> numbers = new ArrayList<>(Arrays.asList(
+							numberStudents, numberModules
+					));	
+					
+					axisX = 505;
+					axisY = 250;
+					
+					for(JLabel label : numbers) {
+						label.setBounds(axisX, axisY, 400, 100);
+						label.setFont(new SmallBold());
+						label.setHorizontalAlignment(SwingConstants.LEFT);
+						axisY += 100;
+						rightPanel.add(label);
+					}
+					
+					conn.close();
+					rightPanel.add(nameLabel);
+					rightPanel.add(idLabel);
+					rightPanel.add(name);
+					rightPanel.add(id);
+					rightPanel.validate();
+					rightPanel.repaint();
+					
+				}catch(Exception exp) {
+					
+				}
 				break;
-			case "Course":
+			case "Module":
+				try {
+					
+					JLabel allCourseLabel = new JLabel();
+					allCourseLabel.setText("Modules:");
+					allCourseLabel.setFont(new BigBold());
+					allCourseLabel.setBounds(40, 0, 400, 100);
+					
+					ArrayList<Module_> modules = new ArrayList<Module_>();
+	
+					String[] columns = {"Module Name", "Module Id", "Course", "Level", "Semester"};
+					Class.forName(DatabaseConstant.CLASSNAME);
+					Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
+	
+					String query = "SELECT m.module_id, m.module_name, m.semester, m.level, m.course_id, c.course_name " +
+				               "FROM module m " +
+				               "INNER JOIN teacher_module tm ON m.module_id = tm.module_id " +
+				               "INNER JOIN course c ON m.course_id = c.course_id " +
+				               "WHERE tm.teacher_id = ?";
+
+					PreparedStatement pst = conn.prepareStatement(query);
+					pst.setString(1, teacher.getId());
+					ResultSet result = pst.executeQuery();
+	
+					while (result.next()) {
+					    Module_ module = new Module_();
+	
+					    int moduleId = result.getInt("module_id");
+					    String moduleName = result.getString("module_name");
+					    int semester = result.getInt("semester");
+					    int level = result.getInt("level");
+					    int courseId = result.getInt("course_id");
+					    String courseName = result.getString("course_name");
+	
+					    module.setModuleId(moduleId);
+					    module.setModuleName(moduleName);
+					    module.setSemester(semester);
+					    module.setLevel(level);
+	
+					    Course course = new Course();
+					    course.setCourseId(Integer.toString(courseId));
+					    course.setCourseName(courseName);
+	
+					    module.setCourse(course);
+	
+					    modules.add(module);
+					}
+
+					
+					conn.close();
+	
+					Object[][] cData = new Object[modules.size()][];
+					for (int i = 0; i < modules.size(); i++) {
+					    Module_ tempModule = modules.get(i);
+					    Object[] moduleData = {tempModule.getModuleName(), tempModule.getModuleId(), tempModule.getCourse().getCourseName(), tempModule.getLevel(), tempModule.getSemester()};
+					    cData[i] = moduleData;
+					}
+	
+					StandardTable moduleTable = new StandardTable();
+					StandardScrollPane sp = createTable(rightPanel, moduleTable, cData, columns);
+	
+					sp.setBounds(10, 125, 770, 550);
+					moduleTable.setUneditable();
+					
+					rightPanel.add(allCourseLabel);
+					rightPanel.add(sp);
+				
+				}catch (SQLException sqle) {
+					String error = sqle.getMessage();
+		            System.out.println(sqle);
+		            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+				}	
 				break;
 			case "Student":
+				
+				try {
+					JLabel allStudentLabel = new JLabel();
+					allStudentLabel.setText("Students:");
+					allStudentLabel.setFont(new BigBold());
+					allStudentLabel.setBounds(40, 0, 400, 100);
+
+					ArrayList<Student> students = new ArrayList<Student>();
+					String[] columns = {"Name", "Id", "Module", "Course", "Marks"}; // Added "Marks" column
+					Class.forName(DatabaseConstant.CLASSNAME);
+					Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
+
+					String query = "SELECT s.*, m.module_name, c.course_name, se.marks " +
+					               "FROM student_enrollment se " +
+					               "JOIN student s ON se.student_id = s.student_id " +
+					               "JOIN module m ON se.module_id = m.module_id " +
+					               "JOIN course c ON se.course_id = c.course_id " +
+					               "JOIN teacher_module tm ON m.module_id = tm.module_id " +
+					               "WHERE tm.teacher_id = ?";
+
+					PreparedStatement pst = conn.prepareStatement(query);
+					pst.setString(1, teacher.getId());
+					ResultSet result = pst.executeQuery();
+
+					while (result.next()) {
+					    String studentId = result.getString("student_id");
+					    String studentName = result.getString("name");
+					    String moduleName = result.getString("module_name");
+					    String courseName = result.getString("course_name");
+					    int marks = result.getInt("marks"); // Added "marks" column
+
+					    Student student = new Student();
+					    student.setName(studentName);
+					    student.setId(studentId);
+
+					    Module_ module = new Module_();
+					    module.setModuleName(moduleName);
+					    student.addModule(module);
+
+					    Course course = new Course();
+					    course.setCourseName(courseName);
+					    student.setCourse(course);
+					    
+					    // Set marks for each module
+					    module.setMarks(marks);
+
+					    students.add(student);
+					}
+
+					Object[][] sData = new Object[students.size()][];
+					int rowIndex = 0; // Variable to keep track of the current row index
+
+					for (int i = 0; i < students.size(); i++) {
+					    Student tempStudent = students.get(i);
+
+					    // Get modules for the current student
+					    ArrayList<Module_> studentModules = tempStudent.getModules();
+
+					    // Create separate rows for each module
+					    for (int j = 0; j < studentModules.size(); j++) {
+					        Object[] studentData = {
+					            tempStudent.getName(),
+					            tempStudent.getId(),
+					            studentModules.get(j).getModuleName(),
+					            tempStudent.getCourse().getCourseName(),
+					            studentModules.get(j).getMarks() // Added marks for each module
+					        };
+					        sData[rowIndex++] = studentData;
+					    }
+					}
+
+					StandardTable studentTable = new StandardTable();
+					StandardScrollPane sp = createTable(rightPanel, studentTable, sData, columns);
+
+					sp.setBounds(10, 125, 770, 500);
+					studentTable.setUneditable();
+
+					markStudentButton.setText("Mark Student");
+					markStudentButton.addActionListener(this);
+					markStudentButton.setBounds(300, 645, 200, 35);
+
+					rightPanel.add(markStudentButton);
+					rightPanel.add(allStudentLabel);
+					rightPanel.add(sp);
+
+
+					
+				}catch (SQLException sqle) {
+					String error = sqle.getMessage();
+					System.out.println(sqle);
+					JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+				}
 				break;
+				
 		}
+		rightPanel.repaint();
+		rightPanel.validate();
+		add(rightPanel);	
 	}
 	
 	public void changeRightPanel(Admin admin, String menu) throws ClassNotFoundException {
@@ -464,8 +730,6 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 				rightPanel.validate();
 				rightPanel.repaint();
 				
-				break;
-				
 			}catch (Exception exp){
 				JOptionPane.showMessageDialog(null, exp, "Error", JOptionPane.WARNING_MESSAGE);
 			
@@ -478,7 +742,7 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 				try {
 					
 					JLabel allCourseLabel = new JLabel();
-					allCourseLabel.setText("All courses:");
+					allCourseLabel.setText("All Courses:");
 					allCourseLabel.setFont(new BigBold());
 					allCourseLabel.setBounds(40, 0, 400, 100);
 					
@@ -551,7 +815,7 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 				try {
 					
 					JLabel allCourseLabel = new JLabel();
-					allCourseLabel.setText("All modules:");
+					allCourseLabel.setText("All Modules:");
 					allCourseLabel.setFont(new BigBold());
 					allCourseLabel.setBounds(40, 0, 400, 100);
 					
@@ -724,9 +988,6 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					rightPanel.add(sp);
 					
 				}catch (SQLException sqle) {
-					String error = sqle.getMessage();
-		            System.out.println(sqle);
-		            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
 				}
 
 				break;
@@ -976,6 +1237,16 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 			    removeModuleFrame = new RemoveModuleFrame(0, 0, 500, 400);
 			    removeModuleFrame.setVisible(true);
 			    removeModuleFrame.toFront();
+			    repaint();
+			    revalidate();
+			}else if (e.getSource() == markStudentButton) {
+			    if (markStudentFrame != null) {
+			    	markStudentFrame.removeAll();
+			    	markStudentFrame.dispose();
+			    }
+			    markStudentFrame = new MarkStudentFrame(0, 0, 500, 400, teacher);
+			    markStudentFrame.setVisible(true);
+			    markStudentFrame.toFront();
 			    repaint();
 			    revalidate();
 			}else {

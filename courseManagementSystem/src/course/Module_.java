@@ -6,6 +6,7 @@ public class Module_ {
     private int level;
     private int semester;
     private Course course;
+    private int marks;
     
 	public int getModuleId() {
 		return moduleId;
@@ -36,5 +37,11 @@ public class Module_ {
 	}
 	public void setSemester(int semester) {
 		this.semester = semester;
+	}
+	public int getMarks() {
+		return marks;
+	}
+	public void setMarks(int marks) {
+		this.marks = marks;
 	}
 }

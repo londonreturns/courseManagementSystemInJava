@@ -1,10 +1,14 @@
 package user;
 
+import java.util.ArrayList;
+
 import course.Course;
+import course.Module_;
 
 public class Student extends User{
 	private String level;
 	private Course course;
+	private ArrayList<Module_> modules = new ArrayList<>();
 	
 	public String getLevel() {
 		return level;
@@ -35,4 +39,15 @@ public class Student extends User{
 		System.out.println(this.getLevel());
 	}
 
+	public ArrayList<Module_> getModules() {
+		return modules;
+	}
+
+	public void setModules(ArrayList<Module_> module) {
+		this.modules = module;
+	}
+	
+	public void addModule(Module_ module) {
+		modules.add(module);
+	}
 }

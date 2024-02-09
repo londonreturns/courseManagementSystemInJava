@@ -59,3 +59,7 @@
 1707468765467	Rename type 'AddModule'
 1707477983606	Rename type 'AssignCourseFrame'
 1707477993159	Rename type 'UnassignCourseFrame'
+1707493418020	Encapsulate field 'module'
+1707493887407	Rename type 'MarkStudent'
+1707495293306	Encapsulate field 'teacher'
+1707495929811	Encapsulate field 'marks'
