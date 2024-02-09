@@ -1,0 +1,20 @@
+package course;
+
+public class Module {
+	private int moduleId;
+    private String moduleName;
+    private String level;
+    private Course course;
+	public int getModuleId() {
+		return moduleId;
+	}
+	public void setModuleId(int moduleId) {
+		this.moduleId = moduleId;
+	}
+	public String getModuleName() {
+		return moduleName;
+	}
+	public void setModuleName(String moduleName) {
+		this.moduleName = moduleName;
+	}
+}

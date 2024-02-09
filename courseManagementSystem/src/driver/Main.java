@@ -54,7 +54,7 @@ public class Main {
 	public static void studentFrameDisplay(JFrame previousFrame, Student student) {
 		StudentFrame studentFrame = new StudentFrame(250, 150, 1200, 800);
 		studentFrame.typeOfUser = student.getTypeOfUser();
-	    studentFrame.setVisible(true);  // Set studentFrame visible
+	    studentFrame.setVisible(true);
 
 	    previousFrame.setVisible(false);
 	    if (!studentFrame.init) {
@@ -73,7 +73,8 @@ public class Main {
 	public static void teacherFrameDisplay(JFrame previousFrame, Teacher teacher) {
 		TeacherFrame teacherFrame = new TeacherFrame(250, 150, 1200, 800);
 		teacherFrame.typeOfUser = teacher.getTypeOfUser();
-	    teacherFrame.setVisible(true);  // Set teacherFrame visible
+	    teacherFrame.setVisible(true);
+	    
 	    previousFrame.setVisible(false);
 	    if (!teacherFrame.init) {
 	        teacherFrame.init = true;
@@ -92,6 +93,7 @@ public class Main {
 		AdminFrame adminFrame = new AdminFrame(250, 150, 1200, 800);
 		adminFrame.typeOfUser = admin.getTypeOfUser();
 		adminFrame.setVisible(true); 
+		
 	    previousFrame.setVisible(false);
 	    if (!adminFrame.init) {
 	    	adminFrame.init = true;

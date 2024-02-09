@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="Action"/>
+		<item key="selection" value="After"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="after"/>
+			<item value="changeP"/>
+			<item value="setDefaultCloseOperation"/>
+			<item value="resetFields"/>
+			<item value="invalid"/>
+			<item value="SELECT"/>
+			<item value="select"/>
+			<item value="combo"/>
+			<item value="course"/>
+			<item value="faculty"/>
+			<item value="fcaulty"/>
 			<item value="action"/>
 			<item value="assignCourseButton"/>
 			<item value="assign c"/>
 			<item value="removeAll();"/>
-			<item value="insert"/>
-			<item value="student"/>
-			<item value="if (rows == 0)"/>
-			<item value="if (rows == 0) {"/>
-			<item value="&quot;0"/>
-			<item value="enable"/>
-			<item value="*"/>
-			<item value="setDefaultCloseOperation"/>
-			<item value="okBtn"/>
-			<item value="add"/>
-			<item value="array"/>
 		</list>
 		<list key="replacehistory">
 			<item value="menu"/>
@@ -32,8 +32,8 @@
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="1465"/>
-		<item key="DIALOG_Y_ORIGIN" value="520"/>
+		<item key="DIALOG_X_ORIGIN" value="1783"/>
+		<item key="DIALOG_Y_ORIGIN" value="744"/>
 		<item key="DIALOG_WIDTH" value="511"/>
 		<item key="DIALOG_HEIGHT" value="523"/>
 		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-18|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>

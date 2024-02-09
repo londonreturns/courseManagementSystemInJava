@@ -45,12 +45,13 @@ import com.toedter.calendar.JDateChooser;
 
 import component.button.StandardButton;
 import component.panel.StandardPanel;
+import course.Course;
 import driver.*;
 import exception.DatabaseException;
 import exception.DateException;
 import exception.FormException;
 
-public class RegisterFrame extends StandardFrame implements ActionListener,  ItemListener{
+public class RegisterFrame extends StandardFrame implements ItemListener, MouseListener{
 	
 	JPanel registerPanel = new StandardPanel(100, 75, 450, 550);
 	JLabel registerTitle = new JLabel();
@@ -74,9 +75,7 @@ public class RegisterFrame extends StandardFrame implements ActionListener,  Ite
 	
 	public JComboBox<String> typeOfUserCombo = new JComboBox<String>(typeOfUsers);
 	
-	String[] faculties = {"BCS", "BIBM"};
-	
-	JComboBox<String> facultyCombo = new JComboBox<String>(faculties);
+	JComboBox<String> coursesCombo = new JComboBox<String>();
 	
 	JPasswordField passwordPasswordField = new JPasswordField();
 	JPasswordField confirmPasswordField = new JPasswordField();
@@ -144,7 +143,7 @@ public class RegisterFrame extends StandardFrame implements ActionListener,  Ite
 			
 			Component[] fieldItems = {
 					nameTextField, emailTextField, passwordPasswordField, confirmPasswordField,
-					contactNumberField, dateOfBirthDate, typeOfUserCombo, facultyCombo
+					contactNumberField, dateOfBirthDate, typeOfUserCombo, coursesCombo
 			};
 			
 			for (Component field : fieldItems) {
@@ -156,11 +155,26 @@ public class RegisterFrame extends StandardFrame implements ActionListener,  Ite
 			typeOfUserCombo.setBackground(Color.white);
 			typeOfUserCombo.addItemListener(this);
 			
-			facultyCombo.setBackground(Color.white);
+			coursesCombo.setBackground(Color.white);
+			
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
+			String query = "SELECT DISTINCT course_name FROM course WHERE is_active = 1";
+			PreparedStatement pst = conn.prepareStatement(query);
+			
+			ResultSet result = pst.executeQuery();
+			
+			while (result.next()) {
+				String courseName = result.getString("course_name");
+
+		        coursesCombo.addItem(courseName);
+			}
+			
+			conn.close();
 			
 			okBtnRegister.setText("Register");
 			okBtnRegister.setBounds(150, 450, 150, 35);
-			okBtnRegister.addActionListener(this);
+			okBtnRegister.addMouseListener(this);
 			
 			loginLabel.setText("Already have an account?");
 			loginLabel.setForeground(new Color(0x321D2F));
@@ -198,7 +212,7 @@ public class RegisterFrame extends StandardFrame implements ActionListener,  Ite
 					confirmPasswordLabel, contactNumberLabel, dateOfBirthLabel, typeOfUserLabel,
 					facultyLabel, nameTextField, emailTextField, passwordPasswordField,
 					confirmPasswordField, contactNumberField,
-					dateOfBirthDate, okBtnRegister, loginLabel, typeOfUserCombo, facultyCombo));	
+					dateOfBirthDate, okBtnRegister, loginLabel, typeOfUserCombo, coursesCombo));	
 			for(Component comp : allComponents) {
 				registerPanel.add(comp);
 			}
@@ -235,16 +249,45 @@ public class RegisterFrame extends StandardFrame implements ActionListener,  Ite
 		if (e.getSource() == typeOfUserCombo && e.getStateChange() == ItemEvent.SELECTED) {
 			if (typeOfUserCombo.getSelectedIndex() == 0) {
 	            facultyLabel.setVisible(true);
-	            facultyCombo.setVisible(true);
+	            coursesCombo.setVisible(true);
 	        } else {
-	            facultyCombo.setVisible(false);
+	        	coursesCombo.setVisible(false);
 	            facultyLabel.setVisible(false);
 	        }
 		}
 	}
 	
+	
+	
+	private void resetFields() {
+		nameTextField.setText("");
+		emailTextField.setText("");
+		contactNumberField.setText("");
+		dateOfBirthDate.setDate(null);				
+		typeOfUserCombo.setSelectedIndex(0);		
+		coursesCombo.setSelectedIndex(0);		
+		passwordPasswordField.setText("");
+		confirmPasswordField.setText("");
+	}
+
+	private static int incrementPosition(int x) {
+		return x += 35;
+	}
+
 	@Override
-	public void actionPerformed(ActionEvent e){
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
 		if (e.getSource() == okBtnRegister) {
 			try {
 				String name = nameTextField.getText().trim();
@@ -255,8 +298,6 @@ public class RegisterFrame extends StandardFrame implements ActionListener,  Ite
 				String user = ((String) typeOfUserCombo.getSelectedItem()).toLowerCase();
 				
 				Date dateOfBirth =  dateOfBirthDate.getDate();
-				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-				String dob = dateFormat.format(dateOfBirth);
 				LocalDate convertedDob = dateOfBirth.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
 				LocalDate today = LocalDate.now();
 				
@@ -280,7 +321,6 @@ public class RegisterFrame extends StandardFrame implements ActionListener,  Ite
 				String id = "";
 				
 				if(user.equals("student")) {					
-					String faculty = (String) facultyCombo.getSelectedItem();
 					System.out.println(user);
 					try {						
 						Class.forName(DatabaseConstant.CLASSNAME);
@@ -310,13 +350,7 @@ public class RegisterFrame extends StandardFrame implements ActionListener,  Ite
 							
 						}
 
-						String level;
-						
-						if(faculty.equals("BCS")) {
-							level = "4";
-						}else {
-							level = "5";
-						}
+						String level = "4";
 						
 						Student student1 = new Student();
 						student1.setName(name);
@@ -326,12 +360,11 @@ public class RegisterFrame extends StandardFrame implements ActionListener,  Ite
 						student1.setContact(contactNumber);
 						student1.setTypeOfUser(user);
 						student1.setDateOfBirth(new java.sql.Date(dateOfBirth.getTime()));
-						student1.setFaculty(faculty);
 						student1.setLevel(level);
 						
-						String query = "INSERT INTO " + student1.getTypeOfUser() + " (student_id, name, email, password, contact, dob, faculty, level)"
+						String query = "INSERT INTO " + student1.getTypeOfUser() + " (student_id, name, email, password, contact, dob)"
 								+ " VALUES"
-								+ " (?, ?, ?, ?, ?, ?, ?, ?)";
+								+ " (?, ?, ?, ?, ?, ?)";
 						
 						PreparedStatement pst = conn.prepareStatement(query);
 						
@@ -359,14 +392,6 @@ public class RegisterFrame extends StandardFrame implements ActionListener,  Ite
 						
 						pst.setDate(index, student1.getDateOfBirth());
 						
-						index++;
-						
-						pst.setString(index, student1.getFaculty());
-						
-						index++;						
-
-						pst.setString(index, student1.getLevel());
-						
 						int rowsAffected = pst.executeUpdate();
 						
 						query = "INSERT INTO user (student_id, name, type_of_user)"
@@ -389,13 +414,96 @@ public class RegisterFrame extends StandardFrame implements ActionListener,  Ite
 						
 						rowsAffected += pst.executeUpdate();
 
-					    if (rowsAffected > 0) {
-					        JOptionPane.showMessageDialog(null, "Registration successful!"
-					        		+ "\nYour id is " + id, "Success", JOptionPane.INFORMATION_MESSAGE);
-					        resetFields();
-					    } else {
-					        throw new DatabaseException("Registration unsuccessful");
-					    }
+					    if (rowsAffected == 0) {
+					    	throw new DatabaseException("Registration unsuccessful");
+					        
+					    } 
+					    
+					    query = "SELECT course_id FROM course WHERE course_name = ?";
+						
+						pst = conn.prepareStatement(query);
+						
+						index = 1;
+						
+						pst.setString(index, (String)coursesCombo.getSelectedItem());
+						
+						ResultSet result = pst.executeQuery();
+						
+						int courseId = 0;
+						
+						while (result.next()) {
+							courseId = result.getInt("course_id");
+						}
+						
+						query = "SELECT module_id, level, semester FROM module WHERE course_id = ?";
+						
+						pst = conn.prepareStatement(query);
+						
+						index = 1;
+						
+						pst.setInt(index, courseId);
+						
+						result = pst.executeQuery();
+						
+						while (result.next()) {
+							Boolean currentlyStuding = false;
+							int moduleId = result.getInt("module_id");
+							
+							int levelDb = result.getInt("level");
+							
+							int semester = result.getInt("semester");
+							if (levelDb == 4) {
+								currentlyStuding = true;
+							}
+							
+							query = "INSERT INTO student_enrollment "
+									+ "(student_id, course_id, module_id, semester, "
+									+ "level, marks, currently_studying)"
+									+ " VALUES"
+									+ " (?, ?, ?, ?, ?, ?, ?)";
+							
+							pst = conn.prepareStatement(query);
+							
+							index = 1;
+							
+							pst.setString(index, student1.getId());
+							
+							index++;
+							
+							pst.setInt(index, courseId);
+							
+							index++;
+							
+							pst.setInt(index, moduleId);
+							
+							index++;
+							
+							pst.setInt(index, semester);
+							
+							index++;
+							
+							pst.setInt(index, levelDb);
+							
+							index++;
+							
+							pst.setInt(index, 0);
+							
+							index++;
+							
+							pst.setBoolean(index, currentlyStuding);
+							
+							rowsAffected += pst.executeUpdate();
+
+						    if (rowsAffected == 0) {
+						    	throw new DatabaseException("Registration unsuccessful");
+						        
+						    } 
+						}
+					    
+					    JOptionPane.showMessageDialog(null, "Registration successful!"
+				        		+ "\nYour id is " + id, "Success", JOptionPane.INFORMATION_MESSAGE);
+				        resetFields();
+				        
 					    conn.close();
 			        } catch (DatabaseException dbExp) {
 			            String error = dbExp.getMessage();
@@ -634,20 +742,17 @@ public class RegisterFrame extends StandardFrame implements ActionListener,  Ite
 			}
 		}	
 	}
-	
-	private void resetFields() {
-		nameTextField.setText("");
-		emailTextField.setText("");
-		contactNumberField.setText("");
-		dateOfBirthDate.setDate(null);				
-		typeOfUserCombo.setSelectedIndex(0);		
-		facultyCombo.setSelectedIndex(0);		
-		passwordPasswordField.setText("");
-		confirmPasswordField.setText("");
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
-	private static int incrementPosition(int x) {
-		return x += 35;
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

@@ -3,6 +3,8 @@ package component.frame.student;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.PrintWriter;
 import java.io.File;
 import java.sql.Connection;
@@ -30,7 +32,7 @@ import font.SubHeadingFont;
 import utility.DatabaseConstant;
 import utility.TextPrompt;
 
-public class GenerateReportFrame extends StandardFrame implements ActionListener{
+public class GenerateReportFrame extends StandardFrame implements ActionListener, MouseListener{
 	
 	public GenerateReportFrame(int x_coord, int y_coord, int width, int height) {
 		super(x_coord, y_coord, width, height);
@@ -88,11 +90,11 @@ public class GenerateReportFrame extends StandardFrame implements ActionListener
 		
 		okBtn.setText("Generate");
 		okBtn.setBounds(50, 275, 100, 35);
-		okBtn.addActionListener(this);
+		okBtn.addMouseListener(this);
 		
 		getDetailsBtn.setText("Get Details");
 		getDetailsBtn.setBounds(200, 275, 100, 35);
-		getDetailsBtn.addActionListener(this);
+		getDetailsBtn.addMouseListener(this);
 		
 		closeBtn.setText("Cancel");
 		closeBtn.setBounds(350, 275, 100, 35);
@@ -121,6 +123,42 @@ public class GenerateReportFrame extends StandardFrame implements ActionListener
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		removeAll();
+		dispose();
+		
+	}
+	
+	private void setPlaceHolders() {
+		TextPrompt idPlaceHolder = new TextPrompt("Id", studentIdTextField);
+		
+		ArrayList<Component> allComponents = new ArrayList<>(Arrays.asList(
+				idPlaceHolder));	
+		
+		for(Component placeHolderComponent : allComponents) {
+			placeHolderComponent.setFont(new PlaceHolderFont());
+		}
+	}
+	
+	private void resetFields() {
+		studentNameTextField.setText("");
+		studentIdTextField.setText("");
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
 		if (e.getSource() == okBtn) {
 			String id = studentIdTextField.getText().trim();
 			try {
@@ -144,27 +182,27 @@ public class GenerateReportFrame extends StandardFrame implements ActionListener
 	            }
 
 	            // If the student exists, retrieve marks and course name from student_course and course tables
-	            String getMarksAndCourseQuery = "SELECT sc.marks, c.course_name " +
-	                                            "FROM student_course sc " +
-	                                            "INNER JOIN course c ON sc.course_id = c.course_id " +
-	                                            "WHERE sc.student_id = ?";
-	            PreparedStatement getMarksAndCoursePst = conn.prepareStatement(getMarksAndCourseQuery);
-	            getMarksAndCoursePst.setString(1, id);
+	            String getMarksAndModuleNameQuery = "SELECT se.marks, m.module_name " +
+                        "FROM student_enrollment se " +
+                        "INNER JOIN module m ON se.module_id = m.module_id " +
+                        "WHERE se.student_id = ?";
 
-	            ResultSet marksAndCourseResult = getMarksAndCoursePst.executeQuery();
+	            PreparedStatement getMarksAndModulePst = conn.prepareStatement(getMarksAndModuleNameQuery);
+	            getMarksAndModulePst.setString(1, id);
 
-	            // Write to CSV file
+	            ResultSet marksAndModuleResult = getMarksAndModulePst.executeQuery();
+
+	            
 	            File csvFile = new File("studentMarks/" + id + ".csv");
 	            try (PrintWriter writer = new PrintWriter(csvFile)) {
-	                // Write header
+
 	                writer.println("Course Name, Marks");
+	                
+	                while (marksAndModuleResult.next()) {
+	                    String moduleName = marksAndModuleResult.getString("module_name");
+	                    int marks = marksAndModuleResult.getInt("marks");
 
-	                // Write data
-	                while (marksAndCourseResult.next()) {
-	                    String courseName = marksAndCourseResult.getString("course_name");
-	                    int marks = marksAndCourseResult.getInt("marks");
-
-	                    writer.println(courseName + "," + marks);
+	                    writer.println(moduleName + "," + marks);
 	                }
 	            }
 
@@ -176,11 +214,8 @@ public class GenerateReportFrame extends StandardFrame implements ActionListener
 
 	            resetFields();
 	            
-	        } catch (ClassNotFoundException | SQLException | FormException | java.io.FileNotFoundException e1) {
-	            e1.printStackTrace();
-	            JOptionPane.showMessageDialog(null, "Error Generating Report", "Error", JOptionPane.ERROR_MESSAGE);
-	            // Handle exceptions appropriately
-	        }
+			}catch (Exception e1) {
+			}
 			
 		}else if (e.getSource() == getDetailsBtn){
 			String id = studentIdTextField.getText().trim();
@@ -214,31 +249,22 @@ public class GenerateReportFrame extends StandardFrame implements ActionListener
 				
 			    conn.close();
 			}catch (Exception e1) {
-				String error = "Course id not found";
-				System.out.println(e1);
-	            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);	            
 			}
 			
 		}
-		removeAll();
-		dispose();
 		
 	}
-	
-	private void setPlaceHolders() {
-		TextPrompt idPlaceHolder = new TextPrompt("Id", studentIdTextField);
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
 		
-		ArrayList<Component> allComponents = new ArrayList<>(Arrays.asList(
-				idPlaceHolder));	
-		
-		for(Component placeHolderComponent : allComponents) {
-			placeHolderComponent.setFont(new PlaceHolderFont());
-		}
 	}
-	
-	private void resetFields() {
-		studentNameTextField.setText("");
-		studentIdTextField.setText("");
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

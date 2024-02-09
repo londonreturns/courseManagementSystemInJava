@@ -1,37 +1,23 @@
 package course;
 
+import java.util.ArrayList;
+
 public class Course {
 	private String courseId;
 	private String courseName;
-	private String faculty;
-	private String level;
-	private String isEnabled;
+	private ArrayList<Module_> modules;
+	private boolean isActive;
 	
 	public Course() {
-	}
+        this.modules = new ArrayList<>();
+    }
 	
-	public Course(String courseName) {
-		setCourseName(courseName);
-	}
-	
-	public Course(String courseName, String courseId) {
-		setCourse(courseName, courseId);
-	}
-
-	public Course(String courseName, String courseId, String faculty, String level) {
-		setCourse(courseName, courseId, faculty, level);
-	}
-	
-	public Course(String courseName, String courseId, String faculty, String level, String isActive) {
-		setCourse(courseName, courseId, faculty, level, isActive);
-	}
-
 	public String getCourseId() {
 		return courseId;
 	}
 	
-	public void setCourseId(String id) {
-		this.courseId = id;
+	public void setCourseId(String courseId) {
+		this.courseId = courseId;
 	}
 	
 	public String getCourseName() {
@@ -42,48 +28,26 @@ public class Course {
 		this.courseName = courseName;
 	}
 	
-	public void setCourse(String course, String courseId) {
-		this.courseName = course;
-		this.courseId = courseId;
+	public ArrayList<Module_> getModules() {
+		return modules;
 	}
 	
-	public void setCourse(String courseName, String courseId, String faculty, String level) {
-		this.courseName = courseName;
-		this.courseId = courseId;
-		this.faculty = faculty;
-		this.level = level;
+	public void setModules(ArrayList<Module_> modules) {
+		this.modules = modules;
 	}
 	
-	private void setCourse(String courseName, String courseId, String faculty, String level, String isActive) {
-		this.courseName = courseName;
-		this.courseId = courseId;
-		this.faculty = faculty;
-		this.level = level;
-		this.isEnabled = isActive;
+	public void setModule(Module_ module) {
+		modules.add(module);
 	}
 
-	public String getFaculty() {
-		return faculty;
+	public boolean isActive() {
+		return isActive;
 	}
 
-	public void setFaculty(String faculty) {
-		this.faculty = faculty;
-	}
-
-	public String getLevel() {
-		return level;
-	}
-
-	public void setLevel(String level) {
-		this.level = level;
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
 	}
 	
-	public String getIsEnabled() {
-		return isEnabled;
-	}
-	
-	public void setIsEnabled(String isActive) {
-		this.isEnabled = isActive;
-	}
+		
 	
 }

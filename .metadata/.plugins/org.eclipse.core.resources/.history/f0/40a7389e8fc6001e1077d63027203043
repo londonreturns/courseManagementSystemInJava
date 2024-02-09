@@ -1,0 +1,48 @@
+package user;
+
+
+import course.Course;
+
+public class Student extends User{
+	private String faculty;
+	private String level;
+	private Course course;
+	
+	public String getFaculty() {
+		return faculty;
+	}
+	
+	public void setFaculty(String faculty) {
+		this.faculty = faculty;
+	}
+	
+	public String getLevel() {
+		return level;
+	}
+	
+	public void setLevel(String level) {
+		this.level = level;
+	}	
+	
+	@Override
+	public void displayDetails() {
+		System.out.println(this.getName());
+		System.out.println(this.getId());
+		System.out.println(this.getEmail());
+		System.out.println(this.getPassword());
+		System.out.println(this.getContact());
+		System.out.println(this.getTypeOfUser());
+		System.out.println(this.getDateOfBirth());
+		System.out.println(this.getFaculty());
+		System.out.println(this.getLevel());
+	}
+
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
+	}
+	
+}

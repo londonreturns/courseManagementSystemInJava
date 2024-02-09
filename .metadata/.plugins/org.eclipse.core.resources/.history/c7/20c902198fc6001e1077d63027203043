@@ -1,0 +1,15 @@
+package course;
+
+public class Course {
+	private String courseId;
+	private String courseName;
+	public String getCourseId() {
+		return courseId;
+	}
+	public void setCourseId(String courseId) {
+		this.courseId = courseId;
+	}
+	
+		
+	
+}

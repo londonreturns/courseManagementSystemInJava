@@ -1,0 +1,26 @@
+package user;
+
+import java.util.ArrayList;
+
+import course.Module_;
+
+public class Teacher extends User{
+	private ArrayList<Module_> modules;
+
+	public Teacher() {
+	    this.modules = new ArrayList<>();
+	}
+	
+	public ArrayList<Module_> getModules() {
+		return modules;
+	}
+
+	public void setModules(ArrayList<Module_> modules) {
+		this.modules = modules;
+	}
+	
+	public void addModule(Module_ module) {
+		modules.add(module);
+	}
+	
+}

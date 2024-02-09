@@ -1,0 +1,27 @@
+package user;
+
+import java.util.ArrayList;
+
+import course.Course;
+
+public class Teacher extends User{
+	private ArrayList<Module> modules;
+	private String coursesString;
+	
+    public String getCoursesString() {
+		return coursesString;
+	}
+
+	public void setCoursesString(String coursesString) {
+		this.coursesString = coursesString;
+	}
+
+	public ArrayList<Module> getModules() {
+		return modules;
+	}
+
+	public void setModules(ArrayList<Module> modules) {
+		this.modules = modules;
+	}
+	
+}

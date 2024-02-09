@@ -3,6 +3,8 @@ package component.frame.course;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -27,7 +29,7 @@ import font.SubHeadingFont;
 import utility.DatabaseConstant;
 import utility.TextPrompt;
 
-public class EnableCourseFrame extends StandardFrame implements ActionListener{
+public class EnableCourseFrame extends StandardFrame implements ActionListener, MouseListener{
 	
 	public EnableCourseFrame(int x_coord, int y_coord, int width, int height) {
 		super(x_coord, y_coord, width, height);
@@ -87,11 +89,11 @@ public class EnableCourseFrame extends StandardFrame implements ActionListener{
 		
 		okBtn.setText("Enable");
 		okBtn.setBounds(50, 275, 100, 35);
-		okBtn.addActionListener(this);
+		okBtn.addMouseListener(this);
 		
 		getDetailsBtn.setText("Get Details");
 		getDetailsBtn.setBounds(200, 275, 100, 35);
-		getDetailsBtn.addActionListener(this);
+		getDetailsBtn.addMouseListener(this);
 		
 		closeBtn.setText("Cancel");
 		closeBtn.setBounds(350, 275, 100, 35);
@@ -120,6 +122,43 @@ public class EnableCourseFrame extends StandardFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		removeAll();
+		dispose();
+		
+	}
+	
+	private void setPlaceHolders() {
+		TextPrompt idPlaceHolder = new TextPrompt("Id", courseIdTextField);
+		
+		ArrayList<Component> allComponents = new ArrayList<>(Arrays.asList(
+				idPlaceHolder));	
+		
+		for(Component placeHolderComponent : allComponents) {
+			placeHolderComponent.setFont(new PlaceHolderFont());
+		}
+	}
+	
+	private void resetFields() {
+		courseNameTextField.setText("");
+		courseIdTextField.setText("");
+		isEnabledTextField.setText("");
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
 		if (e.getSource() == okBtn) {
 			String id = courseIdTextField.getText().trim();
 			String isEnabled = "1";
@@ -168,20 +207,8 @@ public class EnableCourseFrame extends StandardFrame implements ActionListener{
 	            resetFields();
 	            
 				conn.close();
-			} catch (ClassNotFoundException | SQLException e1) {
-				String error = e1.getMessage();
-	            System.out.println(e1);
-	            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
-	        
-	            
-			}catch (FormException e1) {
-	            JOptionPane.showMessageDialog(null, e1, "Error", JOptionPane.WARNING_MESSAGE);
-	        
-			}catch (Exception e1) {
-				String error = "Id error";
-	            System.out.println(e1);
-	            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
-			}
+			} catch (Exception e1) {
+				}
 			
 		}else if (e.getSource() == getDetailsBtn){
 			String id = courseIdTextField.getText().trim();
@@ -205,10 +232,10 @@ public class EnableCourseFrame extends StandardFrame implements ActionListener{
 				while (result.next()) {
 					rows++;
 					String nameDb = result.getString("course_name");
-				    String isEnabled = result.getString("is_active");
+				    Boolean isEnabled = result.getBoolean("is_active");
 
 				    courseNameTextField.setText(nameDb);
-					isEnabledTextField.setText(isEnabled);
+					isEnabledTextField.setText(String.valueOf(isEnabled));
 				}
 				
 				if (rows == 0) {
@@ -217,32 +244,21 @@ public class EnableCourseFrame extends StandardFrame implements ActionListener{
 				
 			    conn.close();
 			}catch (Exception e1) {
-				String error = "Course id not found";
-				System.out.println(e1);
-	            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);	            
-			}
+				}
 			
 		}
-		removeAll();
-		dispose();
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
-	
-	private void setPlaceHolders() {
-		TextPrompt idPlaceHolder = new TextPrompt("Id", courseIdTextField);
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
 		
-		ArrayList<Component> allComponents = new ArrayList<>(Arrays.asList(
-				idPlaceHolder));	
-		
-		for(Component placeHolderComponent : allComponents) {
-			placeHolderComponent.setFont(new PlaceHolderFont());
-		}
-	}
-	
-	private void resetFields() {
-		courseNameTextField.setText("");
-		courseIdTextField.setText("");
-		isEnabledTextField.setText("");
 	}
 	
 }

@@ -1,0 +1,258 @@
+package component.frame.module;
+
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.regex.Pattern;
+
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
+import component.button.StandardButton;
+import component.frame.StandardFrame;
+import driver.Main;
+import exception.FormException;
+import font.BigBold;
+import font.PlaceHolderFont;
+import font.RegularFont;
+import font.SubHeadingFont;
+import utility.DatabaseConstant;
+import utility.TextPrompt;
+
+public class EditModuleFrame extends StandardFrame implements ActionListener, MouseListener{
+	
+	public EditModuleFrame(int x_coord, int y_coord, int width, int height) {
+		super(x_coord, y_coord, width, height);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		setElements();
+		toFront();
+	}
+	
+	JTextField moduleIdTextField = new JTextField();
+	JTextField moduleNameTextField = new JTextField();
+	JTextField semesterTextField = new JTextField();
+	JTextField levelTextField = new JTextField();
+	
+	static StandardButton okBtn = new StandardButton();
+	static StandardButton closeBtn = new StandardButton();
+	static StandardButton getDetailsBtn = new StandardButton();
+	
+	private int axisX = 8;
+	private int axisY = 110;
+	private final int width = 185;
+	private final int height = 32;
+	
+	public void setElements() {
+		JLabel titleLabel = new JLabel();
+		titleLabel.setText("Edit a module");
+		titleLabel.setBounds(0, 0, 500, 100);
+		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		titleLabel.setFont(new BigBold());
+		
+		String[] labelItems = {
+				"Module id: ", "Module Name: ", "Semester", "Level"
+		};
+		
+		for (String menu : labelItems) {
+			JLabel menuLabels = new JLabel();
+			menuLabels.setText(menu);
+			menuLabels.setBounds(axisX, axisY, width, height);
+			menuLabels.setFont(new SubHeadingFont());
+			axisY = incrementPosition(axisY);
+			add(menuLabels);
+			((JLabel) menuLabels).setHorizontalAlignment(SwingConstants.RIGHT);
+		}
+		
+		axisX = 250;
+		axisY = 110;
+		
+		Component[] fieldItems = {
+				moduleIdTextField, moduleNameTextField, semesterTextField, levelTextField
+		};
+		
+		for (Component field : fieldItems) {
+			field.setBounds(axisX, axisY, width, height);
+			field.setFont(new RegularFont());
+			axisY = incrementPosition(axisY);
+		}
+		
+		okBtn.setText("Confirm");
+		okBtn.setBounds(50, 275, 100, 35);
+		okBtn.addMouseListener(this);
+		
+		getDetailsBtn.setText("Get Details");
+		getDetailsBtn.setBounds(200, 275, 100, 35);
+		getDetailsBtn.addMouseListener(this);
+		
+		closeBtn.setText("Cancel");
+		closeBtn.setBounds(350, 275, 100, 35);
+		closeBtn.addActionListener(this);
+		
+		ArrayList<Component> allComponents = new ArrayList<>(Arrays.asList(
+				moduleIdTextField, moduleNameTextField, semesterTextField, levelTextField,
+			okBtn, getDetailsBtn, closeBtn
+		));	
+		for(Component comp : allComponents) {
+			this.add(comp);
+		}
+		
+		add(titleLabel);
+		setPlaceHolders();
+	}
+	
+	public void setDefaultCloseOperation() {
+		setVisible(false);
+		removeAll();
+		dispose();
+	}
+	
+	private static int incrementPosition(int x) {
+		return x += 35;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		setDefaultCloseOperation();
+		
+	}
+	
+	private void setPlaceHolders() {
+		TextPrompt idPlaceHolder = new TextPrompt("Name", moduleIdTextField);
+		TextPrompt namePlaceHolder = new TextPrompt("Id", moduleNameTextField);
+		TextPrompt semesterPlaceHolder = new TextPrompt("Semester", semesterTextField);
+		TextPrompt levelPlaceHolder = new TextPrompt("Level", levelTextField);
+		
+		ArrayList<Component> allComponents = new ArrayList<>(Arrays.asList(
+				idPlaceHolder, namePlaceHolder, semesterPlaceHolder, levelPlaceHolder));	
+		
+		for(Component placeHolderComponent : allComponents) {
+			placeHolderComponent.setFont(new PlaceHolderFont());
+		}
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		if (e.getSource() == okBtn) {
+			String name = moduleNameTextField.getText().trim();
+			String id = moduleIdTextField.getText().trim();
+			String semester = semesterTextField.getText().trim();
+			String level = levelTextField.getText().trim();
+			
+			try {
+				
+				Class.forName(DatabaseConstant.CLASSNAME);
+				Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
+				
+				String query1 = "SELECT module_id FROM module WHERE module_id = ?";
+				
+				PreparedStatement pst1 = conn.prepareStatement(query1);
+				
+				int index = 1;
+				
+				pst1.setString(index, id);	
+				
+				ResultSet result = pst1.executeQuery();
+
+				int rows = 0;
+				
+				while (result.next()) {
+					rows++;
+				}
+				
+				if (rows == 0) {
+					throw new FormException();
+				}
+				
+				String updateModuleQuery = "UPDATE module SET module_name = ?, semester_number = ?, level_number = ? WHERE module_id = ?";
+			    PreparedStatement updateModuleStatement = conn.prepareStatement(updateModuleQuery);
+			    updateModuleStatement.setString(1, name);
+			    updateModuleStatement.setString(2, semester);
+			    updateModuleStatement.setString(3, level);
+			    updateModuleStatement.setString(4, id);
+
+			    updateModuleStatement.executeUpdate();
+
+	            setDefaultCloseOperation();
+				conn.close();
+			} catch (Exception e1) {
+				}
+		}else {
+			String id = moduleIdTextField.getText().trim();
+			
+			try {
+				Class.forName(DatabaseConstant.CLASSNAME);
+				Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
+				
+				String query1 = "SELECT * FROM module WHERE module_id = ?";
+				
+				PreparedStatement pst1 = conn.prepareStatement(query1);
+				
+				int index = 1;
+				
+				pst1.setString(index, id);	
+				
+				ResultSet result = pst1.executeQuery();
+
+				int rows = 0;
+				
+				while (result.next()) {
+					rows++;
+					String nameDb = result.getString("module_name");
+					String semesterDb = result.getString("semester");
+					String facultyDb = result.getString("faculty");
+					
+					moduleNameTextField.setText(nameDb);
+					semesterTextField.setText(semesterDb);
+					levelTextField.setText(facultyDb);
+				}
+				
+				if (rows == 0) {
+					throw new FormException();
+				}
+				
+			    conn.close();
+			}catch (Exception e1) {
+				
+			}
+		}
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+}

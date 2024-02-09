@@ -1,0 +1,8 @@
+package course;
+
+public class Module {
+	private int moduleId;
+    private String moduleName;
+    private String level;
+    private Course course;
+}

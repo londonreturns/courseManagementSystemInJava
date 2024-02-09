@@ -26,6 +26,7 @@ import color.Color1;
 import color.Color5;
 import component.button.StandardButton;
 import component.panel.StandardPanel;
+import course.Course;
 import driver.Main;
 import exception.DatabaseException;
 import exception.FormException;
@@ -212,6 +213,7 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 						        if(user1.getTypeOfUser().equals("student")) {
 						        	System.out.println("Student");
 						        	Student student1 = new Student();
+						        	Course course1 = new Course();
 						        	student1.setName(result.getString("name"));
 									student1.setId(result.getString("student_id"));
 									student1.setEmail(result.getString("email"));
@@ -219,8 +221,6 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 									student1.setContact(result.getString("contact"));
 									student1.setTypeOfUser("student");
 									student1.setDateOfBirth(result.getDate("dob"));
-									student1.setFaculty(result.getString(7));
-									student1.setLevel(result.getString(8));
 							        Main.studentFrameDisplay(this, student1);
 						        }else if(user1.getTypeOfUser().equals("teacher")) {
 						        	Teacher teacher1 = new Teacher();

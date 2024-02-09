@@ -1,36 +1,38 @@
 package user;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import course.Course;
+import course.Module_;
 
 public class Teacher extends User{
-	private ArrayList<Course>courses;
-	private String coursesString;
-	
-    public Teacher() {
-        super();
-        this.courses = new ArrayList<>();
-    }
-	
-    public ArrayList<Course> getCourses() {
-		return courses;
+	private ArrayList<Module_> modules;
+
+	public Teacher() {
+	    this.modules = new ArrayList<>();
 	}
 	
-	public void setCourse(Course course) {
-		courses.add(course);
-	}
-	
-	public void removeCourse(Course course) {
-		courses.remove(course);
+	public ArrayList<Module_> getModules() {
+		return modules;
 	}
 
-	public String getCoursesString() {
-		return coursesString;
+	public void setModules(ArrayList<Module_> modules) {
+		this.modules = modules;
 	}
+	
+	public void addModule(Module_ module) {
+		modules.add(module);
+	}
+	
+	public List<String> getModuleNames() {
+	    List<String> moduleNames = new ArrayList<>();
 
-	public void setCoursesString(String coursesString) {
-		this.coursesString = coursesString;
+	    // Iterate through the modules for the teacher
+	    for (Module_ module : getModules()) {
+	        moduleNames.add(module.getModuleName());
+	    }
+
+	    return moduleNames;
 	}
 	
 }

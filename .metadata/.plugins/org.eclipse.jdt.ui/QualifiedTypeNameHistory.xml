@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
-    <fullyQualifiedTypeName name="java.awt.event.MouseListener"/>
-    <fullyQualifiedTypeName name="javax.swing.table.DefaultTableModel"/>
-    <fullyQualifiedTypeName name="utility.StandardTable"/>
-    <fullyQualifiedTypeName name="java.awt.ScrollPane"/>
     <fullyQualifiedTypeName name="javax.swing.JScrollPane"/>
     <fullyQualifiedTypeName name="javax.swing.JTable"/>
     <fullyQualifiedTypeName name="javax.swing.JPanel"/>
@@ -28,7 +23,6 @@
     <fullyQualifiedTypeName name="java.awt.Component"/>
     <fullyQualifiedTypeName name="component.AdminFrame"/>
     <fullyQualifiedTypeName name="java.sql.SQLException"/>
-    <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="component.StandardButton"/>
     <fullyQualifiedTypeName name="component.StandardFrame"/>
     <fullyQualifiedTypeName name="component.frame.addCourseFrame"/>
@@ -39,7 +33,6 @@
     <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
     <fullyQualifiedTypeName name="component.frame.CourseFrame"/>
     <fullyQualifiedTypeName name="component.frame.EditCourse"/>
-    <fullyQualifiedTypeName name="course.Course"/>
     <fullyQualifiedTypeName name="exception.FormExecption"/>
     <fullyQualifiedTypeName name="component.scrollpane.StandardScrollPane"/>
     <fullyQualifiedTypeName name="java.lang.Exception"/>
@@ -60,4 +53,11 @@
     <fullyQualifiedTypeName name="component.frame.course.AddCourseFrame"/>
     <fullyQualifiedTypeName name="java.lang.SuppressWarnings"/>
     <fullyQualifiedTypeName name="java.lang.ClassNotFoundException"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="java.sql.Connection"/>
+    <fullyQualifiedTypeName name="java.awt.event.MouseAdapter"/>
+    <fullyQualifiedTypeName name="java.awt.event.MouseListener"/>
+    <fullyQualifiedTypeName name="course.Module"/>
+    <fullyQualifiedTypeName name="course.Module_"/>
+    <fullyQualifiedTypeName name="course.Course"/>
 </qualifiedTypeNameHistroy>

@@ -1,0 +1,311 @@
+package component.frame;
+
+import font.HeadingFont;
+import font.SubHeadingFont;
+import user.Admin;
+import user.Student;
+import user.Teacher;
+import utility.DatabaseConstant;
+import utility.TextPrompt;
+import font.RegularFont;
+import font.PlaceHolderFont;
+
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.regex.Pattern;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
+import com.toedter.calendar.JDateChooser;
+
+import component.button.StandardButton;
+import component.panel.StandardPanel;
+import course.Course;
+import driver.*;
+import exception.DatabaseException;
+import exception.DateException;
+import exception.FormException;
+
+public class RegisterFrame extends StandardFrame implements ActionListener, ItemListener, MouseListener{
+	
+	JPanel registerPanel = new StandardPanel(100, 75, 450, 550);
+	JLabel registerTitle = new JLabel();
+	
+	JLabel nameLabel = new JLabel();
+	JLabel emailLabel = new JLabel();
+	JLabel passwordLabel = new JLabel();
+	JLabel confirmPasswordLabel = new JLabel();
+	JLabel contactNumberLabel = new JLabel();
+	JLabel dateOfBirthLabel = new JLabel();
+	JLabel typeOfUserLabel = new JLabel();
+	JLabel facultyLabel = new JLabel();
+	
+	JTextField nameTextField = new JTextField();
+	JTextField emailTextField = new JTextField();
+	JTextField contactNumberField = new JTextField();
+	
+	JDateChooser dateOfBirthDate = new JDateChooser();
+	
+	String[] typeOfUsers = {"Student", "Teacher", "Admin"};
+	
+	public JComboBox<String> typeOfUserCombo = new JComboBox<String>(typeOfUsers);
+	
+	JComboBox<String> coursesCombo = new JComboBox<String>();
+	
+	JPasswordField passwordPasswordField = new JPasswordField();
+	JPasswordField confirmPasswordField = new JPasswordField();
+	
+	JLabel loginLabel = new JLabel();
+	
+	JButton okBtnRegister = new StandardButton();
+	
+	private int axisX = 8;
+	private int axisY = 110;
+	private final int width = 185;
+	private final int height = 32;
+	
+	public RegisterFrame(){
+		super();
+	}
+	
+	public RegisterFrame(int x_coord, int y_coord, int width, int height){
+		super(x_coord, y_coord, width, height);
+	}
+	
+	public RegisterFrame(int x_coord, int y_coord, int width, int height, Color color){
+		super(x_coord, y_coord, width, height, color);
+	}
+	
+	public void setRegisterElements() {
+		try {
+			registerTitle.setText("Register");
+			registerTitle.setBounds(185, 10, 175, 35);
+			registerTitle.setFont(new HeadingFont());
+			
+			String[] labelItems = {
+					"Name: ", "Email: ", "Password: ", "Confirm Password: ", "Contact Number: ",
+					"Date of Birth: ", "User Type: "
+			};
+			
+			for (String menu : labelItems) {
+				JLabel menuLabels = new JLabel();
+				menuLabels.setText(menu);
+				menuLabels.setBounds(axisX, axisY, width, height);
+				menuLabels.setFont(new SubHeadingFont());
+				axisY = incrementPosition(axisY);
+				registerPanel.add(menuLabels);
+				((JLabel) menuLabels).setHorizontalAlignment(SwingConstants.RIGHT);
+			}
+			
+			facultyLabel.setText("Faculty: ");
+			facultyLabel.setFont(new SubHeadingFont());
+			facultyLabel.setVisible(true);
+			facultyLabel.setBounds(axisX, axisY, width, height);
+			
+			registerPanel.add(facultyLabel);
+			
+			setPlaceHolders();
+			
+			ArrayList<Component> allLabelComponents = new ArrayList<>(Arrays.asList(
+					nameLabel, emailLabel, passwordLabel, confirmPasswordLabel,
+					contactNumberLabel, dateOfBirthLabel, typeOfUserLabel, facultyLabel));
+			for(Component labelComponent : allLabelComponents) {
+				((JLabel) labelComponent).setHorizontalAlignment(SwingConstants.RIGHT);
+			}
+
+			axisX = 250;
+			axisY = 115;
+			
+			Component[] fieldItems = {
+					nameTextField, emailTextField, passwordPasswordField, confirmPasswordField,
+					contactNumberField, dateOfBirthDate, typeOfUserCombo, coursesCombo
+			};
+			
+			for (Component field : fieldItems) {
+				field.setBounds(axisX, axisY, width, height);
+				field.setFont(new RegularFont());
+				axisY = incrementPosition(axisY);
+			}
+			
+			typeOfUserCombo.setBackground(Color.white);
+			typeOfUserCombo.addItemListener(this);
+			
+			coursesCombo.setBackground(Color.white);
+			
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
+			String query = "SELECT DISTINCT course_name FROM course WHERE is_active = 1";
+			PreparedStatement pst = conn.prepareStatement(query);
+			
+			ResultSet result = pst.executeQuery();
+			
+			while (result.next()) {
+				String courseName = result.getString("course_name");
+
+		        coursesCombo.addItem(courseName);
+			}
+			
+			conn.close();
+			
+			okBtnRegister.setText("Register");
+			okBtnRegister.setBounds(150, 450, 150, 35);
+			okBtnRegister.addMouseListener(this);
+			
+			loginLabel.setText("Already have an account?");
+			loginLabel.setForeground(new Color(0x321D2F));
+			loginLabel.setBounds(150, 400, 175, 25);
+			loginLabel.addMouseListener(new MouseListener() {
+				
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					Main.loginFrameDisplay();
+				}
+
+				@Override
+				public void mouseClicked(MouseEvent e) {}
+
+				@Override
+				public void mousePressed(MouseEvent e) {}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+//					registrationLabel.setFont(new Font("Dialog", Font.BOLD, 13));
+					loginLabel.setForeground(new Color(0xF4D160));
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+//					registrationLabel.setFont(new Font("Dialog", Font.BOLD, 12));
+					loginLabel.setForeground(new Color(0x321D2F));
+				}
+			});
+			
+			registerPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+			
+			ArrayList<Component> allComponents = new ArrayList<>(Arrays.asList(
+					registerTitle, nameLabel, emailLabel, passwordLabel,
+					confirmPasswordLabel, contactNumberLabel, dateOfBirthLabel, typeOfUserLabel,
+					facultyLabel, nameTextField, emailTextField, passwordPasswordField,
+					confirmPasswordField, contactNumberField,
+					dateOfBirthDate, okBtnRegister, loginLabel, typeOfUserCombo, coursesCombo));	
+			for(Component comp : allComponents) {
+				registerPanel.add(comp);
+			}
+			
+			add(registerPanel);
+		}catch(NullPointerException npe) {
+			
+		}catch(Exception e) {
+			
+		}finally {
+			axisX = 8;
+			axisY = 110;
+		}
+	}
+		
+
+	private void setPlaceHolders() {
+		TextPrompt namePlaceHolder = new TextPrompt("Name", nameTextField);
+		TextPrompt emailPlaceHolder = new TextPrompt("Email", emailTextField);
+		TextPrompt passwordPlaceHolder = new TextPrompt("*********", passwordPasswordField);
+		TextPrompt confirmPasswordPlaceHolder = new TextPrompt("*********", confirmPasswordField);
+		TextPrompt contactNumberPlaceHolder = new TextPrompt("0123456789", contactNumberField);
+		
+		ArrayList<Component> allComponents = new ArrayList<>(Arrays.asList(
+				namePlaceHolder, emailPlaceHolder, passwordPlaceHolder,
+				confirmPasswordPlaceHolder, contactNumberPlaceHolder));	
+		
+		for(Component placeHolderComponent : allComponents) {
+			placeHolderComponent.setFont(new PlaceHolderFont());
+		}
+	}
+
+	public void itemStateChanged(ItemEvent e) {
+		if (e.getSource() == typeOfUserCombo && e.getStateChange() == ItemEvent.SELECTED) {
+			if (typeOfUserCombo.getSelectedIndex() == 0) {
+	            facultyLabel.setVisible(true);
+	            coursesCombo.setVisible(true);
+	        } else {
+	        	coursesCombo.setVisible(false);
+	            facultyLabel.setVisible(false);
+	        }
+		}
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e){
+		
+	}
+	
+	private void resetFields() {
+		nameTextField.setText("");
+		emailTextField.setText("");
+		contactNumberField.setText("");
+		dateOfBirthDate.setDate(null);				
+		typeOfUserCombo.setSelectedIndex(0);		
+		coursesCombo.setSelectedIndex(0);		
+		passwordPasswordField.setText("");
+		confirmPasswordField.setText("");
+	}
+
+	private static int incrementPosition(int x) {
+		return x += 35;
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+}
