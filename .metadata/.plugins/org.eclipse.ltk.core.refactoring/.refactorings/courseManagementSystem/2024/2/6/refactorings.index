@@ -63,3 +63,4 @@
 1707493887407	Rename type 'MarkStudent'
 1707495293306	Encapsulate field 'teacher'
 1707495929811	Encapsulate field 'marks'
+1707536537032	Encapsulate field 'isMandatory'

@@ -158,7 +158,7 @@ public class RemoveModuleFrame extends StandardFrame implements ActionListener, 
 		if (e.getSource() == okBtn) {
 			String id = moduleIdTextField.getText().trim();
 			try {
-				if (!Pattern.matches("^[0-9].{1,10}$", id)) {
+				if (!Pattern.matches("^[0-9].{0,10}$", id)) {
 				    throw new FormException("Invalid id");
 				}
 				

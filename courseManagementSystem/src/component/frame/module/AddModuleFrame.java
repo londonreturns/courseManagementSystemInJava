@@ -167,7 +167,7 @@ public class AddModuleFrame extends StandardFrame implements ActionListener, Mou
 			try {
 				
 				if (!Pattern.matches("^[a-zA-Z0-9].{4,50}$", name)) {
-				    throw new FormException("Invalid id");
+				    throw new FormException("Invalid name");
 				}else if(!Pattern.matches("^[12]$", semester)) {
 					throw new FormException("Invalid semester");
 				}else if(!Pattern.matches("^[456]$", level)) {
@@ -177,68 +177,113 @@ public class AddModuleFrame extends StandardFrame implements ActionListener, Mou
 				}
 				
 				Module_ module = new Module_();
+				module.setLevel(Integer.parseInt(level));
 				module.setModuleName(name);
 				module.setSemester(Integer.parseInt(semester));
-				module.setLevel(Integer.parseInt(level));
-				
+				Course course = new Course();
+				course.setCourseId(courseId);
+				module.setCourse(course);
+
 				Class.forName(DatabaseConstant.CLASSNAME);
 				Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
 				
-				String query1 = "SELECT course_id FROM course WHERE course_id = ?";
-				
-				PreparedStatement pst1 = conn.prepareStatement(query1);
-				
-				int index = 1;
-				
-				pst1.setString(index, courseId);	
-				
-				ResultSet result = pst1.executeQuery();
+				// Inside the try block
+				if (module.getLevel() == 4 || module.getLevel() == 5) {
+					
+					module.setMandatory(true);
+					
+				    // Check the number of compulsory modules for level 4 and 5
+				    int maxCompulsoryModules = 8;
+				    
+				    String countQuery = "SELECT COUNT(*) AS total FROM module WHERE level = ? AND semester = ? AND is_mandatory = 1";
+				    
+				    PreparedStatement countPst = conn.prepareStatement(countQuery);
+				    countPst.setInt(1, module.getLevel());
+				    countPst.setInt(2, module.getSemester());
+				    
+				    ResultSet countResult = countPst.executeQuery();
+				    countResult.next();
+				    
+				    int compulsoryModulesCount = countResult.getInt("total");
+				    
+				    if (compulsoryModulesCount >= maxCompulsoryModules) {
+				        throw new FormException("Exceeded maximum number of compulsory modules for the specified level and semester");
+				    }
+				}
 
-				int rows = 0;
-				
-				while (result.next()) {
-					rows++;
+				if (module.getLevel() == 6) {
+				    // Check the number of compulsory modules for level 6
+				    int maxCompulsoryModulesLevel6 = 2;
+
+				    String countQueryLevel6 = "SELECT COUNT(*) AS total FROM module WHERE level = ? AND is_mandatory = 1";
+
+				    PreparedStatement countPstLevel6 = conn.prepareStatement(countQueryLevel6);
+				    countPstLevel6.setInt(1, module.getLevel());
+
+				    ResultSet countResultLevel6 = countPstLevel6.executeQuery();
+				    countResultLevel6.next();
+
+				    int compulsoryModulesCountLevel6 = countResultLevel6.getInt("total");
+
+				    if (compulsoryModulesCountLevel6 < maxCompulsoryModulesLevel6) {
+				        // The first two modules are compulsory
+				        module.setMandatory(true);
+				    } else {
+				        // After the first two modules, set the rest as optional
+				        module.setMandatory(false);
+
+				        // Check total number of modules (compulsory + non-compulsory)
+				        String totalModulesQuery = "SELECT COUNT(*) AS totalModules FROM module WHERE level = ?";
+				        PreparedStatement totalModulesPst = conn.prepareStatement(totalModulesQuery);
+				        totalModulesPst.setInt(1, module.getLevel());
+
+				        ResultSet totalModulesResult = totalModulesPst.executeQuery();
+				        totalModulesResult.next();
+
+				        int totalModulesCount = totalModulesResult.getInt("totalModules");
+
+				        if (totalModulesCount >= 5) {
+				            throw new FormException("Exceeded maximum number of modules for Level 6");
+				        }
+				    }
 				}
-				
-				if (rows == 0) {
-					throw new FormException("Course does not exists");
-				}
-				
-				String query2 = "INSERT INTO module (module_name, course_id, semester, level)"
-						+ " VALUES"
-						+ " (?, ?, ?, ?)";
-				
+
+				String query2 = "INSERT INTO module (module_name, course_id, semester, level, is_mandatory) VALUES (?, ?, ?, ?, ?)";
+
 				PreparedStatement pst2 = conn.prepareStatement(query2);
-				
-				index = 1;
-				
+
+				int index = 1;
+
 				pst2.setString(index, module.getModuleName());
-				
+
 				index++;
-				
+
 				pst2.setInt(index, Integer.parseInt(courseId));
-				
+
 				index++;
-				
+
 				pst2.setInt(index, module.getSemester());
-				
+
 				index++;
-				
+
 				pst2.setInt(index, module.getLevel());
-				
+
+				index++;
+
+				pst2.setBoolean(index, module.isMandatory());
+
 				int rowsAffected = pst2.executeUpdate();
-				
+
 				if (rowsAffected < 1) {
-					throw new FormException("Please try again");
+				    throw new FormException("Please try again");
 				}
-				
+
 				JOptionPane.showMessageDialog(null, "Module Successfully Added", "Success", JOptionPane.INFORMATION_MESSAGE);
-		        
+
 				resetFields();
 				
-				
 			} catch(Exception exp) {
-				
+				System.out.println(exp);
 			}
 			
 			

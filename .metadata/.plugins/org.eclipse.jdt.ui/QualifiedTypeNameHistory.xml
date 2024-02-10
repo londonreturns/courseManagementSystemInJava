@@ -1,15 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="javax.swing.JScrollPane"/>
-    <fullyQualifiedTypeName name="javax.swing.JTable"/>
-    <fullyQualifiedTypeName name="javax.swing.JPanel"/>
-    <fullyQualifiedTypeName name="font.RegularFont"/>
-    <fullyQualifiedTypeName name="utility.StandardScrollPane"/>
-    <fullyQualifiedTypeName name="java.util.Collections"/>
-    <fullyQualifiedTypeName name="javax.swing.table.TableColumnModel"/>
-    <fullyQualifiedTypeName name="java.util.Arrays"/>
-    <fullyQualifiedTypeName name="java.awt.Color"/>
-    <fullyQualifiedTypeName name="Color.Color1"/>
     <fullyQualifiedTypeName name="Color.Color5"/>
     <fullyQualifiedTypeName name="Color.Color0"/>
     <fullyQualifiedTypeName name="Color.Color4"/>
@@ -27,7 +17,6 @@
     <fullyQualifiedTypeName name="component.StandardFrame"/>
     <fullyQualifiedTypeName name="component.frame.addCourseFrame"/>
     <fullyQualifiedTypeName name="component.frame.AddCourseFrame"/>
-    <fullyQualifiedTypeName name="javax.swing.JLabel"/>
     <fullyQualifiedTypeName name="font.BigBold"/>
     <fullyQualifiedTypeName name="font.SubHeadingFont"/>
     <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
@@ -41,23 +30,34 @@
     <fullyQualifiedTypeName name="java.lang.String"/>
     <fullyQualifiedTypeName name="component.frame.StandardFrame"/>
     <fullyQualifiedTypeName name="component.frame.course.EnableCourseFrame"/>
-    <fullyQualifiedTypeName name="javax.swing.JTextField"/>
     <fullyQualifiedTypeName name="component.frame.course.DisableCourseFrame"/>
     <fullyQualifiedTypeName name="component.frame.course.RemoveCourseFrame"/>
     <fullyQualifiedTypeName name="java.awt.geom.GeneralPath"/>
     <fullyQualifiedTypeName name="component.frame.student.GenerateReportFrame"/>
     <fullyQualifiedTypeName name="java.io.PrintWriter"/>
-    <fullyQualifiedTypeName name="component.button.StandardButton"/>
     <fullyQualifiedTypeName name="component.frame.teacher.AssignCourseFrame"/>
     <fullyQualifiedTypeName name="component.frame.teacher.UnassignCourseFrame"/>
     <fullyQualifiedTypeName name="component.frame.course.AddCourseFrame"/>
     <fullyQualifiedTypeName name="java.lang.SuppressWarnings"/>
     <fullyQualifiedTypeName name="java.lang.ClassNotFoundException"/>
-    <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="java.sql.Connection"/>
     <fullyQualifiedTypeName name="java.awt.event.MouseAdapter"/>
     <fullyQualifiedTypeName name="java.awt.event.MouseListener"/>
     <fullyQualifiedTypeName name="course.Module"/>
+    <fullyQualifiedTypeName name="component.frame.module.EditModuleFrame"/>
+    <fullyQualifiedTypeName name="component.frame.module.RemoveModuleFrame"/>
+    <fullyQualifiedTypeName name="component.frame.module.AddModuleFrame"/>
+    <fullyQualifiedTypeName name="com.toedter.calendar.JDateChooser"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="java.sql.DriverManager"/>
+    <fullyQualifiedTypeName name="javax.swing.JLabel"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="component.frame.student.MarkStudentFrame"/>
+    <fullyQualifiedTypeName name="javax.swing.JTextField"/>
+    <fullyQualifiedTypeName name="user.Teacher"/>
     <fullyQualifiedTypeName name="course.Module_"/>
     <fullyQualifiedTypeName name="course.Course"/>
+    <fullyQualifiedTypeName name="component.button.StandardButton"/>
+    <fullyQualifiedTypeName name="javax.swing.JColorChooser"/>
+    <fullyQualifiedTypeName name="javax.swing.JComboBox"/>
 </qualifiedTypeNameHistroy>

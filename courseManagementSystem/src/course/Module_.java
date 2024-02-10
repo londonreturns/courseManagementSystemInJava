@@ -7,6 +7,7 @@ public class Module_ {
     private int semester;
     private Course course;
     private int marks;
+    private boolean isMandatory;
     
 	public int getModuleId() {
 		return moduleId;
@@ -43,5 +44,11 @@ public class Module_ {
 	}
 	public void setMarks(int marks) {
 		this.marks = marks;
+	}
+	public boolean isMandatory() {
+		return isMandatory;
+	}
+	public void setMandatory(boolean isMandatory) {
+		this.isMandatory = isMandatory;
 	}
 }

@@ -362,9 +362,9 @@ public class RegisterFrame extends StandardFrame implements ItemListener, MouseL
 						student1.setDateOfBirth(new java.sql.Date(dateOfBirth.getTime()));
 						student1.setLevel(level);
 						
-						String query = "INSERT INTO " + student1.getTypeOfUser() + " (student_id, name, email, password, contact, dob)"
+						String query = "INSERT INTO " + student1.getTypeOfUser() + " (student_id, name, email, password, contact, dob, level)"
 								+ " VALUES"
-								+ " (?, ?, ?, ?, ?, ?)";
+								+ " (?, ?, ?, ?, ?, ?, ?)";
 						
 						PreparedStatement pst = conn.prepareStatement(query);
 						
@@ -391,6 +391,10 @@ public class RegisterFrame extends StandardFrame implements ItemListener, MouseL
 						index++;
 						
 						pst.setDate(index, student1.getDateOfBirth());
+						
+						index++;
+						
+						pst.setString(index, level);
 						
 						int rowsAffected = pst.executeUpdate();
 						
@@ -457,47 +461,48 @@ public class RegisterFrame extends StandardFrame implements ItemListener, MouseL
 							}
 							
 							query = "INSERT INTO student_enrollment "
-									+ "(student_id, course_id, module_id, semester, "
-									+ "level, marks, currently_studying)"
-									+ " VALUES"
-									+ " (?, ?, ?, ?, ?, ?, ?)";
-							
+							        + "(student_id, course_id, module_id, semester, "
+							        + "level, marks, currently_studying)"
+							        + " VALUES"
+							        + " (?, ?, ?, ?, ?, ?, ?)";
+
 							pst = conn.prepareStatement(query);
-							
+
 							index = 1;
+
 							
 							pst.setString(index, student1.getId());
-							
+
 							index++;
-							
+
 							pst.setInt(index, courseId);
-							
+
 							index++;
-							
+
 							pst.setInt(index, moduleId);
-							
+
 							index++;
-							
+
 							pst.setInt(index, semester);
-							
+
 							index++;
-							
+
 							pst.setInt(index, levelDb);
-							
+
 							index++;
-							
+
 							pst.setInt(index, 0);
-							
+
 							index++;
-							
+
 							pst.setBoolean(index, currentlyStuding);
-							
+
 							rowsAffected += pst.executeUpdate();
 
-						    if (rowsAffected == 0) {
-						    	throw new DatabaseException("Registration unsuccessful");
-						        
-						    } 
+							if (rowsAffected == 0) {
+							    throw new DatabaseException("Registration unsuccessful");
+							}
+
 						}
 					    
 					    JOptionPane.showMessageDialog(null, "Registration successful!"

@@ -118,106 +118,100 @@ public class AssignModuleFrame extends StandardFrame implements ActionListener{
 				if (!Pattern.matches("^[0-9]{7}$", teacherId)) {
 				    throw new FormException("Invalid teacher id");
 				}
-				
+
 				Class.forName(DatabaseConstant.CLASSNAME);
 				Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
-				
+
+				// Check if the teacher already has 4 modules assigned
+				String countModulesQuery = "SELECT COUNT(*) AS module_count FROM teacher_module WHERE teacher_id = ?";
+				PreparedStatement countModulesPst = conn.prepareStatement(countModulesQuery);
+				countModulesPst.setString(1, teacherId);
+				ResultSet countModulesResult = countModulesPst.executeQuery();
+
+				int currentModuleCount = 0;
+				if (countModulesResult.next()) {
+				    currentModuleCount = countModulesResult.getInt("module_count");
+				}
+
+				if (currentModuleCount >= 4) {
+				    throw new FormException("Teacher already has 4 modules assigned.");
+				}
+
 				String query1 = "SELECT module_id FROM module WHERE module_id = ?";
-				
 				PreparedStatement pst1 = conn.prepareStatement(query1);
-				
 				int index = 1;
-				
-				pst1.setString(index, moduleId);	
-				
+				pst1.setString(index, moduleId);
 				ResultSet result1 = pst1.executeQuery();
 
 				int rows = 0;
-				
+
 				while (result1.next()) {
-					rows++;
+				    rows++;
 				}
-				
+
 				if (rows == 0) {
-					throw new FormException();
+				    throw new FormException("Invalid module id");
 				}
-				
+
 				String query2 = "SELECT teacher_id FROM teacher WHERE teacher_id = ?";
-	            
-	            PreparedStatement pst2 = conn.prepareStatement(query2);
-	            
-	            index = 1;
-	            
-	            pst2.setString(index, teacherId);
-	            
-	            ResultSet result2 = pst2.executeQuery();
-
-	            rows = 0;
-				
-				while (result2.next()) {
-					rows++;
-				}
-				
-				if (rows == 0) {
-					throw new FormException();
-				}
-				
-				String query3 = "SELECT * FROM teacher_module WHERE teacher_id = ? AND module_id = ?";
-	            
-	            PreparedStatement pst3 = conn.prepareStatement(query3);
-	            
-	            index = 1;
-	            
-	            pst3.setString(index, teacherId);
-	            
-	            index++;
-	            
-	            pst3.setString(index, moduleId);
-	            
-	            ResultSet result3 = pst3.executeQuery();
-
-	            rows = 0;
-				
-				while (result3.next()) {
-					rows++;
-				}
-				
-				if (rows > 0) {
-					throw new FormException("Already assgined.");
-				}
-				
-				String query4 = "INSERT INTO teacher_module (teacher_id, module_id) VALUES (?, ?)";
-				
-				PreparedStatement pst4 = conn.prepareStatement(query4);
-				
+				PreparedStatement pst2 = conn.prepareStatement(query2);
 				index = 1;
-				
-				pst4.setString(index, teacherId);
-				
+				pst2.setString(index, teacherId);
+				ResultSet result2 = pst2.executeQuery();
+
+				rows = 0;
+
+				while (result2.next()) {
+				    rows++;
+				}
+
+				if (rows == 0) {
+				    throw new FormException("Invalid teacher id");
+				}
+
+				String query3 = "SELECT * FROM teacher_module WHERE teacher_id = ? AND module_id = ?";
+				PreparedStatement pst3 = conn.prepareStatement(query3);
+				index = 1;
+				pst3.setString(index, teacherId);
 				index++;
-				
+				pst3.setString(index, moduleId);
+				ResultSet result3 = pst3.executeQuery();
+
+				rows = 0;
+
+				while (result3.next()) {
+				    rows++;
+				}
+
+				if (rows > 0) {
+				    throw new FormException("Already assigned.");
+				}
+
+				String query4 = "INSERT INTO teacher_module (teacher_id, module_id) VALUES (?, ?)";
+				PreparedStatement pst4 = conn.prepareStatement(query4);
+				index = 1;
+				pst4.setString(index, teacherId);
+				index++;
 				pst4.setString(index, moduleId);
-	            
+
 				int rowsAffected = pst4.executeUpdate();
 
-			    if (rowsAffected > 0) {
-			        JOptionPane.showMessageDialog(null, "Sucessfully Assigned",
-			        		"Success", JOptionPane.INFORMATION_MESSAGE);
-			        resetFields();
-			    } else {
-			        throw new DatabaseException("Unsuccessful. Please try again");
-			    }
-				
-			    
-			    
-	            resetFields();
-	            
+				if (rowsAffected > 0) {
+				    JOptionPane.showMessageDialog(null, "Successfully Assigned",
+				            "Success", JOptionPane.INFORMATION_MESSAGE);
+				    resetFields();
+				} else {
+				    throw new DatabaseException("Unsuccessful. Please try again");
+				}
+
+				resetFields();
+
 				conn.close();
-				
 				removeAll();
 				dispose();
+
 			} catch (ClassNotFoundException | SQLException | DatabaseException | FormException e1) {
-	            
+	            System.out.println(e1);
 			}
 			
 		}else {

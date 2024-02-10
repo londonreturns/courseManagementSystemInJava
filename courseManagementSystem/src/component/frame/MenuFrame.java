@@ -21,6 +21,8 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -123,6 +125,11 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 	
 	static StandardButton markStudentButton = new StandardButton();
 	
+	static StandardButton goUpYearButton = new StandardButton();
+	static StandardButton selectOptionalModuleButton = new StandardButton();
+	
+	static JComboBox<String> optionalModuleComboBox = new JComboBox<String>();
+	
 	boolean leftPanelInit = false;
 	boolean rightPanelInit = false;
 	boolean bottomPanelInit = false;
@@ -213,122 +220,303 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 		rightPanel.removeAll();
 		switch (menu) {
 			case "Dashboard":				
-//				try {
-//					String[] columns = {"Course Name", "Course Id"};
-//					Class.forName(DatabaseConstant.CLASSNAME);
-//					Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
-//					
-//					String query1 = "SELECT course_id FROM student_course WHERE student_id = ?";
-//					
-//					PreparedStatement pst1 = conn.prepareStatement(query1);
-//					
-//					pst1.setString(1, student.getId());
-//					
-//					ResultSet result1 = pst1.executeQuery();
-//					while (result1.next()) {
-//					    String courseId = result1.getString("course_id");
-//					    String query2 = "SELECT course_name FROM course WHERE course_id = ?";
-//					    
-//					    PreparedStatement pst = conn.prepareStatement(query2);
-//						
-//						pst.setString(1, courseId);
-//						
-//						ResultSet result2 = pst.executeQuery();
-//						result2.next();
-//						Course course = new Course(result2.getString("course_name"), courseId);
-//						student.setCourse(course);
-//					}
-//					
-//					ArrayList<Course> course = student.getCourses();
-//					
-//					Object[][] data = new Object[course.size()][];
-//					for (int i = 0; i < course.size(); i++) {
-//					    Course tempCourse = course.get(i);
-//					    Object[] courseData = {tempCourse.getCourseName(), tempCourse.getCourseId()};
-//					    data[i] = courseData;
-//					}
-//			        
-//					JLabel nameLabel = new JLabel("Name:");
-//					nameLabel.setBounds(40, 0, 120, 100);
-//					nameLabel.setFont(new BigBold());
-//					nameLabel.setHorizontalAlignment(SwingConstants.LEFT);
-//
-//					JLabel idLabel = new JLabel("Id:");
-//					idLabel.setBounds(480, 0, 60, 100);
-//					idLabel.setFont(new BigBold());
-//					idLabel.setHorizontalAlignment(SwingConstants.LEFT);
-//
-//					JLabel numberOfCourseLabel = new JLabel("No. of courses currently enrolled:");
-//					numberOfCourseLabel.setBounds(40, 150, 530, 100);
-//					numberOfCourseLabel.setFont(new BigBold());
-//					numberOfCourseLabel.setHorizontalAlignment(SwingConstants.LEFT);
-//
-//					JLabel name = new JLabel(student.getName());
-//					name.setBounds(170, 0, 400, 100);
-//					name.setFont(new SmallBold());
-//
-//					JLabel id = new JLabel(student.getId());
-//					id.setBounds(550, 0, 400, 100);
-//					id.setFont(new SmallBold());
-//
-//					JLabel numberOfCourse = new JLabel(student.getNumberOfCourses());
-//					numberOfCourse.setBounds(580, 150, 100, 100);
-//					numberOfCourse.setFont(new SmallBold());
-//
-//					
-//					System.out.println(student.getNumberOfCourses());
-//					
-//					StandardTable table = new StandardTable();
-//					
-//					StandardScrollPane sp = createTable(rightPanel, table, data, columns);
-//					
-//					TableColumnModel columnModel = table.getColumnModel();
-//					int columnIndex = Arrays.asList(columns).indexOf("Course Id"); 
-//					columnModel.getColumn(columnIndex).setMaxWidth(150);
-//					
-//					sp.setBounds(200, 350, 400, 200);
-//					
-//					table.setUneditable();
-//					
-//					rightPanel.add(sp);
-//					rightPanel.add(nameLabel);
-//					rightPanel.add(idLabel);
-//					rightPanel.add(numberOfCourseLabel);
-//					rightPanel.add(name);
-//					rightPanel.add(id);
-//					rightPanel.add(numberOfCourse);
-//					rightPanel.validate();
-//					rightPanel.repaint();
-//					
-//					course.removeAll(course);
-//					
-//					break;
-//					
-//				}catch (ClassNotFoundException cnfe) {
-//					String error = cnfe.getMessage();
-//		            System.out.println(cnfe);
-//		            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
-//				}catch (SQLException sqle) {
-//					String error = sqle.getMessage();
-//		            System.out.println(sqle);
-//		            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
-//				}
+				try {
+					JLabel nameLabel = new JLabel("Name:");
+					nameLabel.setBounds(40, 0, 120, 100);
+					nameLabel.setFont(new BigBold());
+					nameLabel.setHorizontalAlignment(SwingConstants.LEFT);
+
+					JLabel idLabel = new JLabel("Id:");
+					idLabel.setBounds(480, 0, 60, 100);
+					idLabel.setFont(new BigBold());
+					idLabel.setHorizontalAlignment(SwingConstants.LEFT);
+
+					JLabel moduleLabel = new JLabel("No. of modules:");
+
+					ArrayList<JLabel> labels = new ArrayList<>(Arrays.asList(
+					        moduleLabel
+					));
+
+					axisX = 75;
+					axisY = 250;
+
+					for (JLabel label : labels) {
+					    label.setBounds(axisX, axisY, 400, 100);
+					    label.setFont(new BigBold());
+					    label.setHorizontalAlignment(SwingConstants.RIGHT);
+					    axisY += 100;
+					    rightPanel.add(label);
+					}
+
+					JLabel name = new JLabel(student.getName());
+					name.setBounds(170, 0, 400, 100);
+					name.setFont(new SmallBold());
+
+					JLabel id = new JLabel(student.getId());
+					id.setBounds(550, 0, 400, 100);
+					id.setFont(new SmallBold());
+
+				    Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
+
+				    String countModulesQuery = "SELECT COUNT(DISTINCT se.module_id) AS module_count " +
+				            "FROM student_enrollment se " +
+				            "WHERE se.student_id = ? AND se.currently_studying = true";
+				    
+				    PreparedStatement countModulesPst = conn.prepareStatement(countModulesQuery);
+				    countModulesPst.setString(1, student.getId());
+				    ResultSet moduleCountResult = countModulesPst.executeQuery();
+				    int numberOfModules = 0;
+				    if (moduleCountResult.next()) {
+				        numberOfModules = moduleCountResult.getInt("module_count");
+				    }
+
+				    JLabel numberModules = new JLabel(Integer.toString(numberOfModules));
+
+				    ArrayList<JLabel> numbers = new ArrayList<>(Arrays.asList(
+				            numberModules
+				    ));
+
+				    axisX = 505;
+				    axisY = 250;
+
+				    for (JLabel label : numbers) {
+				        label.setBounds(axisX, axisY, 400, 100);
+				        label.setFont(new SmallBold());
+				        label.setHorizontalAlignment(SwingConstants.LEFT);
+				        axisY += 100;
+				        rightPanel.add(label);
+				    }
+
+				    conn.close();
+
+					rightPanel.add(nameLabel);
+					rightPanel.add(idLabel);
+					rightPanel.add(name);
+					rightPanel.add(id);
+					rightPanel.validate();
+					rightPanel.repaint();
+					
+					break;
+				}catch (Exception cnfe) {
+					JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
+					
+				}
 				
 				
 			case "Module":
-				JLabel text2 = new JLabel(student.getId());
-				text2.setBounds(0, 0, 100, 100);
-				rightPanel.add(text2);
+				
+				try {
+					JLabel allCourseLabel = new JLabel();
+					allCourseLabel.setText("Modules:");
+					allCourseLabel.setFont(new BigBold());
+					allCourseLabel.setBounds(40, 0, 400, 100);
+
+					ArrayList<Module_> modules = new ArrayList<Module_>();
+
+					String[] columns = {"Module Name", "Module Id", "Course", "Level", "Semester", "Marks"}; // Added "Marks" column
+					Class.forName(DatabaseConstant.CLASSNAME);
+					Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
+
+					String query = "SELECT m.module_id, m.module_name, m.semester, m.level, m.course_id, c.course_name, se.marks " +
+				               "FROM student_enrollment se " +
+				               "INNER JOIN module m ON se.module_id = m.module_id " +
+				               "INNER JOIN course c ON m.course_id = c.course_id " +
+				               "WHERE se.student_id = ? AND se.currently_studying = true";
+
+					PreparedStatement pst = conn.prepareStatement(query);
+					pst.setString(1, student.getId());
+					ResultSet result = pst.executeQuery();
+
+					while (result.next()) {
+					    Module_ module = new Module_();
+
+					    int moduleId = result.getInt("module_id");
+					    String moduleName = result.getString("module_name");
+					    int semester = result.getInt("semester");
+					    int level = result.getInt("level");
+					    int courseId = result.getInt("course_id");
+					    String courseName = result.getString("course_name");
+					    int marks = result.getInt("marks");
+
+					    module.setModuleId(moduleId);
+					    module.setModuleName(moduleName);
+					    module.setSemester(semester);
+					    module.setLevel(level);
+
+					    Course course = new Course();
+					    course.setCourseId(Integer.toString(courseId));
+					    course.setCourseName(courseName);
+
+					    module.setCourse(course);
+					    module.setMarks(marks);
+
+					    modules.add(module);
+					}
+
+					
+
+					Object[][] cData = new Object[modules.size()][];
+					for (int i = 0; i < modules.size(); i++) {
+					    Module_ tempModule = modules.get(i);
+					    Object[] moduleData = {
+					        tempModule.getModuleName(),
+					        tempModule.getModuleId(),
+					        tempModule.getCourse().getCourseName(),
+					        tempModule.getLevel(),
+					        tempModule.getSemester(),
+					        tempModule.getMarks()
+					    };
+					    cData[i] = moduleData;
+					}
+
+					StandardTable moduleTable = new StandardTable();
+					StandardScrollPane sp = createTable(rightPanel, moduleTable, cData, columns);
+
+					sp.setBounds(10, 125, 770, 500);
+					moduleTable.setUneditable();
+					
+					String level = student.getLevel();
+					
+					
+					
+					if((level.equals("4") || level.equals("5"))) {
+						goUpYearButton.setText("Go next year");
+						goUpYearButton.setBounds(300, 645, 200, 35);
+						goUpYearButton.addActionListener(this);
+						rightPanel.add(goUpYearButton);
+					}else {
+						optionalModuleComboBox.removeAllItems();
+						query = "SELECT currently_studying FROM student_enrollment WHERE level = 6 AND currently_studying = 1";
+						pst = conn.prepareStatement(query);
+						
+						result = pst.executeQuery();
+						
+						int rows = 0;
+						
+						while (result.next()) {
+							rows++;
+						}
+						
+						try {
+							if (rows != 4) {
+								query = "SELECT m.module_id FROM module m" +
+							               " LEFT JOIN student_enrollment se ON m.module_id = se.module_id" +
+							               " WHERE m.level = 6 AND m.is_mandatory = 0 AND (se.currently_studying IS NULL OR se.currently_studying = 0)";
+
+								pst = conn.prepareStatement(query);
+								
+								result = pst.executeQuery();
+								
+								while (result.next()) {
+									String moduleId = result.getString("module_id");
+
+							        optionalModuleComboBox.addItem(moduleId);
+								}
+								
+								
+								selectOptionalModuleButton.setText("Select module");
+								selectOptionalModuleButton.setBounds(400, 645, 200, 35);
+								selectOptionalModuleButton.addActionListener(this);
+								
+								optionalModuleComboBox.setBounds(275, 645, 100, 35);
+								
+								rightPanel.add(selectOptionalModuleButton);
+								rightPanel.add(optionalModuleComboBox);
+							}
+						}catch (Exception exp) {
+							System.out.println(exp);
+						}
+						
+					}
+
+					rightPanel.add(allCourseLabel);
+					rightPanel.add(sp);
+					conn.close();
+				}catch(Exception exp) {
+					JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
+					
+				}
 				break;
 			case "Teacher":
-//				JLabel text3 = new JLabel(student.getFaculty());
-//				text3.setBounds(0, 0, 100, 100);
-//				rightPanel.add(text3);
-				break;
-			case "Settings":
-				JLabel text4 = new JLabel(student.getEmail());
-				text4.setBounds(0, 0, 100, 100);
-				rightPanel.add(text4);
+				
+				try {
+					JLabel allTeachersLabel = new JLabel();
+					allTeachersLabel.setText("Teachers:");
+					allTeachersLabel.setFont(new BigBold());
+					allTeachersLabel.setBounds(40, 0, 400, 100);
+
+					ArrayList<Teacher> teachers = new ArrayList<Teacher>();
+
+					// Updated columns array to include "Module Name"
+					String[] columns = {"Teacher Id", "Teacher Name", "Module Name"};
+					Class.forName(DatabaseConstant.CLASSNAME);
+					Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
+
+					String query = "SELECT t.teacher_id, t.name AS teacher_name, m.module_name " +
+					               "FROM teacher_module tm " +
+					               "INNER JOIN teacher t ON tm.teacher_id = t.teacher_id " +
+					               "INNER JOIN module m ON tm.module_id = m.module_id " +
+					               "INNER JOIN student_enrollment se ON m.module_id = se.module_id " +
+					               "WHERE se.student_id = ? AND se.currently_studying = true";
+
+					PreparedStatement pst = conn.prepareStatement(query);
+					pst.setString(1, student.getId());
+					ResultSet result = pst.executeQuery();
+
+					while (result.next()) {
+					    Teacher teacher = new Teacher();
+
+					    String teacherId = result.getString("teacher_id");
+					    String teacherName = result.getString("teacher_name");
+					    String moduleName = result.getString("module_name");
+
+					    teacher.setId(teacherId);
+					    teacher.setName(teacherName);
+
+					    // Add the module to the teacher
+					    Module_ module = new Module_();
+					    module.setModuleName(moduleName);
+					    teacher.addModule(module);
+
+					    teachers.add(teacher);
+					}
+
+					conn.close();
+
+					Object[][] tData = new Object[teachers.size()][];
+					int rowIndex = 0; // Variable to keep track of the current row index
+
+					for (int i = 0; i < teachers.size(); i++) {
+					    Teacher tempTeacher = teachers.get(i);
+
+					    // Get modules for the current teacher
+					    ArrayList<Module_> teacherModules = tempTeacher.getModules();
+
+					    // Create separate rows for each module
+					    for (int j = 0; j < teacherModules.size(); j++) {
+					        Object[] teacherData = {
+					            tempTeacher.getId(),
+					            tempTeacher.getName(),
+					            teacherModules.get(j).getModuleName()
+					        };
+					        tData[rowIndex++] = teacherData;
+					    }
+					}
+
+					StandardTable teacherTable = new StandardTable();
+					StandardScrollPane sp = createTable(rightPanel, teacherTable, tData, columns);
+
+					sp.setBounds(10, 125, 770, 550);
+					teacherTable.setUneditable();
+
+					rightPanel.add(allTeachersLabel);
+					rightPanel.add(sp);
+
+				} catch (Exception exp) {
+					System.out.println(exp);
+				    JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
+				}
+
 				break;
 		}
 		rightPanel.repaint();
@@ -337,6 +525,7 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 	}
 	
 	public void changeRightPanel(Teacher teacher, String menu) throws ClassNotFoundException {
+		removeActionListeners();
 		this.teacher = teacher;
 		rightPanel.removeAll();
 		switch(menu) {
@@ -433,6 +622,7 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					rightPanel.repaint();
 					
 				}catch(Exception exp) {
+					JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
 					
 				}
 				break;
@@ -611,6 +801,7 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 	}
 	
 	public void changeRightPanel(Admin admin, String menu) throws ClassNotFoundException {
+		removeActionListeners();
 		this.admin = admin;
 		rightPanel.removeAll();
 		switch (menu) {
@@ -955,15 +1146,18 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 				                Course course = new Course();
 				                course.setCourseName(courseName);
 				                student.setCourse(course);
-
-				                students.add(student);
 				            }
 				        }
 
-				        
+				        // Check if the student has courses; if not, set a default Course object
 				        if (!studentHasCourses) {
-				            students.add(student);
+				            // Set a default Course object or handle it as needed
+				            Course defaultCourse = new Course();
+				            defaultCourse.setCourseName("No Course");
+				            student.setCourse(defaultCourse);
 				        }
+
+				        students.add(student);
 				    }
 
 				    Object[][] sData = new Object[students.size()][];
@@ -1127,6 +1321,8 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 				rightPanel.removeAll();
 				leftPanel.removeAll();
 				bottomPanel.removeAll();
+				removeActionListeners();;
+				this.removeAll();
 				this.dispose();
 				Main.loginFrameDisplay();
 			} else if (e.getSource() == addCourseButton) {
@@ -1249,7 +1445,114 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 			    markStudentFrame.toFront();
 			    repaint();
 			    revalidate();
-			}else {
+			}else if (e.getSource() == goUpYearButton) {
+			    int passMark = 40;
+			    try {
+			    	Class.forName("com.mysql.jdbc.Driver");
+					Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
+					
+					String countQuery = "SELECT COUNT(*) AS totalModules FROM student_enrollment WHERE student_id = ? AND currently_studying = true";
+
+					try (PreparedStatement countPst = conn.prepareStatement(countQuery)) {
+					    countPst.setString(1, student.getId());
+					    ResultSet countResult = countPst.executeQuery();
+					    countResult.next();
+					    int totalModules = countResult.getInt("totalModules");
+
+					    // Check if the student has passed in more than half of the modules
+					    String passQuery = "SELECT COUNT(*) AS passedModules FROM student_enrollment se" +
+					            " INNER JOIN module m ON se.module_id = m.module_id" +
+					            " WHERE se.student_id = ? AND se.currently_studying = true AND se.marks >= ? AND m.is_mandatory = 1";
+
+					    try (PreparedStatement passPst = conn.prepareStatement(passQuery)) {
+					        passPst.setString(1, student.getId());
+					        passPst.setInt(2, passMark);
+					        ResultSet passResult = passPst.executeQuery();
+					        passResult.next();
+					        int passedModules = passResult.getInt("passedModules");
+
+					        // Determine if the student has passed or failed based on the count
+					        String result = passedModules >= totalModules / 2 ? "Pass" : "Fail";
+
+					        if (result.equals("Pass")) {
+					            // Update student's level to the next level
+					            String updateLevelQuery = "UPDATE student SET level = level + 1 WHERE student_id = ?";
+					            try (PreparedStatement updateLevelPst = conn.prepareStatement(updateLevelQuery)) {
+					                updateLevelPst.setString(1, student.getId());
+					                int rowsAffected = updateLevelPst.executeUpdate();
+
+					                if (rowsAffected > 0) {
+					                    System.out.println("Student level updated to the next level");
+
+					                    // Set currently_studying to 0 for old level's modules
+					                    String updateOldModulesQuery = "UPDATE student_enrollment SET currently_studying = 0 WHERE student_id = ? AND level = ?";
+					                    try (PreparedStatement updateOldModulesPst = conn.prepareStatement(updateOldModulesQuery)) {
+					                        updateOldModulesPst.setString(1, student.getId());
+					                        updateOldModulesPst.setInt(2, Integer.parseInt(student.getLevel()));
+					                        updateOldModulesPst.executeUpdate();
+					                        System.out.println("Old level modules marked as not currently studying");
+					                    }
+
+					                    // Set currently_studying to 1 for new level's compulsory modules
+					                    String updateNewCompulsoryModulesQuery = "UPDATE student_enrollment se" +
+					                            " INNER JOIN module m ON se.module_id = m.module_id" +
+					                            " SET se.currently_studying = 1" +
+					                            " WHERE se.student_id = ? AND se.level = ? AND m.is_mandatory = 1";
+					                    try (PreparedStatement updateNewCompulsoryModulesPst = conn.prepareStatement(updateNewCompulsoryModulesQuery)) {
+					                        updateNewCompulsoryModulesPst.setString(1, student.getId());
+					                        updateNewCompulsoryModulesPst.setInt(2, Integer.parseInt(student.getLevel()) + 1);
+					                        updateNewCompulsoryModulesPst.executeUpdate();
+					                        System.out.println("New level compulsory modules marked as currently studying");
+					                    }
+					                    int oldLevel = Integer.parseInt(student.getLevel());
+					                    int newLevel = oldLevel + 1;
+					                    student.setId(Integer.toString(newLevel));
+					                } else {
+					                    System.out.println("Failed to update student level");
+					                }
+					            }
+					        } else {
+					            JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
+					        }
+					    }
+					}
+
+
+
+
+		            conn.close();
+		        } catch (Exception exp) {
+		            exp.printStackTrace();
+		        }
+			}
+			else if(e.getSource() == selectOptionalModuleButton){
+				int moduleId = Integer.parseInt(((String) optionalModuleComboBox.getSelectedItem()));
+				try {
+					Class.forName(DatabaseConstant.CLASSNAME);
+					Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
+
+					String query = "UPDATE student_enrollment SET currently_studying = 1 WHERE student_id = ? AND module_id = ?";
+				    
+				    PreparedStatement pst = conn.prepareStatement(query);
+				    pst.setString(1, student.getId());
+				    pst.setInt(2, moduleId);
+
+				    // Execute the update query
+				    int rowsAffected = pst.executeUpdate();
+
+				    // Check if the update was successful
+				    if (rowsAffected > 0) {
+				    	optionalModuleComboBox.removeItem(optionalModuleComboBox.getSelectedItem());
+				        System.out.println("Successfully updated currently_studying to 1 for student " + student.getId() + " and module " + moduleId);
+				    } else {
+				        System.out.println("Update failed. No matching records found for student " + student.getId() + " and module " + moduleId);
+				    }
+					
+				} catch (Exception exp) {
+					
+				}
+			}
+			else {
 				for (MenuButton menuButton : menuButtonList) {
 					if (e.getSource() == menuButton) {
 						newSelectedMenu(menuButton);
@@ -1281,6 +1584,16 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 		return x += 100;
 	}
 
-	
+	private void removeActionListeners() {
+		StandardButton[] buttons = {
+				addCourseButton, editCourseButton, enableCourseButton, disableCourseButton,
+				removeCourseButton, addModuleButton, editModuleButton, removeModuleButton,
+				generateReportButton, assignModuleButton, unassignModuleButton,
+				markStudentButton, goUpYearButton, selectOptionalModuleButton
+		};
+		for(StandardButton button : buttons) {
+			button.removeActionListener(this);
+		}
+	}
 	
 }

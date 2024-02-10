@@ -213,13 +213,13 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 						        if(user1.getTypeOfUser().equals("student")) {
 						        	System.out.println("Student");
 						        	Student student1 = new Student();
-						        	Course course1 = new Course();
 						        	student1.setName(result.getString("name"));
 									student1.setId(result.getString("student_id"));
 									student1.setEmail(result.getString("email"));
 									student1.setPassword(result.getString("password"));                  
 									student1.setContact(result.getString("contact"));
 									student1.setTypeOfUser("student");
+									student1.setLevel(result.getString("level"));
 									student1.setDateOfBirth(result.getDate("dob"));
 							        Main.studentFrameDisplay(this, student1);
 						        }else if(user1.getTypeOfUser().equals("teacher")) {
