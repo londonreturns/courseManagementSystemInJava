@@ -1,14 +1,8 @@
 package component.frame;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.geom.GeneralPath;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -16,22 +10,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
-import javax.swing.text.StyleContext.SmallAttributeSet;
 
 import component.button.MenuButton;
 import component.button.StandardButton;
@@ -54,7 +40,6 @@ import course.Course;
 import course.Module_;
 import driver.Main;
 import font.BigBold;
-import font.RegularFont;
 import font.SmallBold;
 import font.SubHeadingFont;
 import user.Admin;
@@ -297,9 +282,10 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					rightPanel.repaint();
 					
 					break;
-				}catch (Exception cnfe) {
-					JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
-					
+				}catch (SQLException sqle) {
+		            JOptionPane.showMessageDialog(null, "Database Error", "Error", JOptionPane.WARNING_MESSAGE);
+				}catch (Exception exp) {
+		            JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
 				}
 				
 				
@@ -423,8 +409,10 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 								rightPanel.add(selectOptionalModuleButton);
 								rightPanel.add(optionalModuleComboBox);
 							}
+						}catch (SQLException sqle) {
+				            JOptionPane.showMessageDialog(null, "Database Error", "Error", JOptionPane.WARNING_MESSAGE);
 						}catch (Exception exp) {
-							System.out.println(exp);
+				            JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
 						}
 						
 					}
@@ -512,9 +500,10 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					rightPanel.add(allTeachersLabel);
 					rightPanel.add(sp);
 
-				} catch (Exception exp) {
-					System.out.println(exp);
-				    JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
+				}catch (SQLException sqle) {
+		            JOptionPane.showMessageDialog(null, "Database Error", "Error", JOptionPane.WARNING_MESSAGE);
+				}catch (Exception exp) {
+		            JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
 				}
 
 				break;
@@ -621,9 +610,10 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					rightPanel.validate();
 					rightPanel.repaint();
 					
-				}catch(Exception exp) {
-					JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
-					
+				}catch (SQLException sqle) {
+		            JOptionPane.showMessageDialog(null, "Database Error", "Error", JOptionPane.WARNING_MESSAGE);
+				}catch (Exception exp) {
+		            JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
 				}
 				break;
 			case "Module":
@@ -694,9 +684,9 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					rightPanel.add(sp);
 				
 				}catch (SQLException sqle) {
-					String error = sqle.getMessage();
-		            System.out.println(sqle);
-		            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+		            JOptionPane.showMessageDialog(null, "Database Error", "Error", JOptionPane.WARNING_MESSAGE);
+				}catch (Exception exp) {
+		            JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
 				}	
 				break;
 			case "Student":
@@ -788,9 +778,9 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 
 					
 				}catch (SQLException sqle) {
-					String error = sqle.getMessage();
-					System.out.println(sqle);
-					JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+		            JOptionPane.showMessageDialog(null, "Database Error", "Error", JOptionPane.WARNING_MESSAGE);
+				}catch (Exception exp) {
+		            JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
 				}
 				break;
 				
@@ -921,12 +911,11 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 				rightPanel.validate();
 				rightPanel.repaint();
 				
-			}catch (Exception exp){
-				JOptionPane.showMessageDialog(null, exp, "Error", JOptionPane.WARNING_MESSAGE);
-			
+			}catch (SQLException sqle) {
+	            JOptionPane.showMessageDialog(null, "Database Error", "Error", JOptionPane.WARNING_MESSAGE);
+			}catch (Exception exp) {
+	            JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
 			}
-				
-				
 				
 				break;
 			case "Course":
@@ -996,9 +985,9 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					rightPanel.add(sp);
 					
 				}catch (SQLException sqle) {
-					String error = sqle.getMessage();
-		            System.out.println(sqle);
-		            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+		            JOptionPane.showMessageDialog(null, "Database Error", "Error", JOptionPane.WARNING_MESSAGE);
+				}catch (Exception exp) {
+		            JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
 				}
 				break;
 			case "Module":
@@ -1092,9 +1081,9 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					rightPanel.add(sp);
 					
 				}catch (SQLException sqle) {
-					String error = sqle.getMessage();
-		            System.out.println(sqle);
-		            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+		            JOptionPane.showMessageDialog(null, "Database Error", "Error", JOptionPane.WARNING_MESSAGE);
+				}catch (Exception exp) {
+		            JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
 				}
 
 				break;
@@ -1182,6 +1171,9 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					rightPanel.add(sp);
 					
 				}catch (SQLException sqle) {
+		            JOptionPane.showMessageDialog(null, "Database Error", "Error", JOptionPane.WARNING_MESSAGE);
+				}catch (Exception exp) {
+		            JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
 				}
 
 				break;
@@ -1284,9 +1276,9 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					rightPanel.add(sp);
 					
 				}catch (SQLException sqle) {
-					String error = sqle.getMessage();
-		            System.out.println(sqle);
-		            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+		            JOptionPane.showMessageDialog(null, "Database Error", "Error", JOptionPane.WARNING_MESSAGE);
+				}catch (Exception exp) {
+		            JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
 				}
 				break;
 		}
@@ -1521,9 +1513,11 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 
 
 		            conn.close();
-		        } catch (Exception exp) {
-		            exp.printStackTrace();
-		        }
+		        }catch (SQLException sqle) {
+		            JOptionPane.showMessageDialog(null, "Database Error", "Error", JOptionPane.WARNING_MESSAGE);
+				}catch (Exception exp) {
+		            JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
+				}
 			}
 			else if(e.getSource() == selectOptionalModuleButton){
 				int moduleId = Integer.parseInt(((String) optionalModuleComboBox.getSelectedItem()));
@@ -1560,8 +1554,8 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 				}
 				try {
 					changePanel(typeOfUser);
-				}catch(Exception exp) {
-					System.out.println(exp);
+				}catch (Exception exp) {
+		            JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
 				}
 				
 			}

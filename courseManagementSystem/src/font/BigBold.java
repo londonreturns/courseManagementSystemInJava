@@ -4,8 +4,8 @@ import java.awt.Font;
 
 public class BigBold extends Font{
 	
-		public BigBold() {
-			super("Helvetica", Font.BOLD, 32);
-		}
+	public BigBold() {
+		super("Helvetica", Font.BOLD, 32);
+	}
 
 }

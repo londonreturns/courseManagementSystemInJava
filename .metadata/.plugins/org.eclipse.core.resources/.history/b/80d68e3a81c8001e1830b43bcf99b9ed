@@ -1,0 +1,9 @@
+package color;
+
+import java.awt.Color;
+
+public class Color extends Color{
+	public Color0(){
+		super(0x000000);
+	}
+}

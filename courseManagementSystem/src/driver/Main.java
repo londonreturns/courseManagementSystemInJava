@@ -63,9 +63,7 @@ public class Main {
 	    try {
 	        studentFrame.changeRightPanel(student, "Dashboard");
 	    } catch (Exception exp) {
-	        String error = exp.getMessage();
-	        System.out.println(exp);
-	        JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+	        JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
 	    }
 		
 	}
@@ -84,7 +82,7 @@ public class Main {
 	    } catch (Exception exp) {
 	        String error = exp.getMessage();
 	        System.out.println(exp);
-	        JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+	        JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
 	    }
 		
 	}
@@ -103,7 +101,7 @@ public class Main {
 	    } catch (Exception exp) {
 	        String error = exp.getMessage();
 	        System.out.println(exp);
-	        JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+	        JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
 	    }
 	}
 	

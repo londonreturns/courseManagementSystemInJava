@@ -10,7 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.regex.Pattern;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -210,8 +209,15 @@ public class UnassignModuleFrame extends StandardFrame implements ActionListener
 			    
 	            resetFields();
 	            
-			} catch (ClassNotFoundException | SQLException | DatabaseException | FormException e1) {
-	            
+			}catch (SQLException sqle) {
+				JOptionPane.showMessageDialog(null, "Database Error", "Error", JOptionPane.WARNING_MESSAGE);
+			}catch (FormException fe) {
+				String error = fe.getMessage();
+				JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+			}catch (ClassNotFoundException exp) {
+				JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
+			}catch (Exception exp) {
+				JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
 			}
 			
 		}else {

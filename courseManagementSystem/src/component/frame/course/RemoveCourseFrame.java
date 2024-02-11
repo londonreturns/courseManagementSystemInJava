@@ -249,14 +249,17 @@ public class RemoveCourseFrame extends StandardFrame implements ActionListener, 
 				}
 				
 				if (rows == 0) {
-					throw new FormException();
+					throw new FormException("Course id not found");
 				}
 				
 			    conn.close();
-			}catch (Exception e1) {
-				String error = "Course id not found";
-				System.out.println(e1);
-	            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);	            
+			}catch (SQLException sqle) {
+				JOptionPane.showMessageDialog(null, "Database Error", "Error", JOptionPane.WARNING_MESSAGE);
+			}catch (FormException fe) {
+				String error = fe.getMessage();
+				JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+			}catch (Exception exp) {
+				JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
 			}
 			
 		}

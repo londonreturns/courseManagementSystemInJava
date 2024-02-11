@@ -1,10 +1,8 @@
 package component.frame.course;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Connection;
@@ -14,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.regex.Pattern;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -23,7 +20,6 @@ import javax.swing.SwingConstants;
 
 import component.button.StandardButton;
 import component.frame.StandardFrame;
-import driver.Main;
 import exception.FormException;
 import font.BigBold;
 import font.PlaceHolderFont;
@@ -179,7 +175,7 @@ public class EditCourseFrame extends StandardFrame implements ActionListener, Mo
 				}
 				
 				if (rows == 0) {
-					throw new FormException();
+					throw new FormException("Id not found");
 				}
 				
 				String query2 = "UPDATE course SET course_name=? WHERE course_id=?";
@@ -192,8 +188,11 @@ public class EditCourseFrame extends StandardFrame implements ActionListener, Mo
 
 	            setDefaultCloseOperation();
 				conn.close();
-			} catch (Exception e1) {
-				}
+			}catch (SQLException sqle) {
+				JOptionPane.showMessageDialog(null, "Database Error", "Error", JOptionPane.WARNING_MESSAGE);
+			}catch (Exception exp) {
+				JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
+			}
 		}else {
 			String id = courseIdTextField.getText().trim();
 			
@@ -221,12 +220,17 @@ public class EditCourseFrame extends StandardFrame implements ActionListener, Mo
 				}
 				
 				if (rows == 0) {
-					throw new FormException();
+					throw new FormException("Id not found");
 				}
 				
 			    conn.close();
-			}catch (Exception e1) {
-				
+			}catch (SQLException sqle) {
+				JOptionPane.showMessageDialog(null, "Database Error", "Error", JOptionPane.WARNING_MESSAGE);
+			}catch (FormException fe) {
+				String error = fe.getMessage();
+				JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+			}catch (Exception exp) {
+				JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
 			}
 		}
 		

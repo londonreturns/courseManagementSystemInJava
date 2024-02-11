@@ -4,8 +4,8 @@ import java.awt.Font;
 
 public class SmallBold extends Font{
 	
-		public SmallBold() {
-			super("Helvetica", Font.BOLD, 22);
-		}
+	public SmallBold() {
+		super("Helvetica", Font.BOLD, 22);
+	}
 
 }

@@ -1,9 +1,6 @@
 package component.frame.teacher;
 
-import java.awt.Color;
-
 import component.frame.MenuFrame;
-import user.Teacher;
 
 public class TeacherFrame  extends MenuFrame{
 

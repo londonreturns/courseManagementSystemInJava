@@ -210,8 +210,15 @@ public class AssignModuleFrame extends StandardFrame implements ActionListener{
 				removeAll();
 				dispose();
 
-			} catch (ClassNotFoundException | SQLException | DatabaseException | FormException e1) {
-	            System.out.println(e1);
+			}catch (SQLException sqle) {
+				JOptionPane.showMessageDialog(null, "Database Error", "Error", JOptionPane.WARNING_MESSAGE);
+			}catch (FormException fe) {
+				String error = fe.getMessage();
+				JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+			}catch (ClassNotFoundException exp) {
+				JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
+			}catch (Exception exp) {
+				JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
 			}
 			
 		}else {

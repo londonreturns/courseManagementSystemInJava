@@ -1,7 +1,5 @@
 package component.scrollpane;
 
-import java.awt.Color;
-
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;

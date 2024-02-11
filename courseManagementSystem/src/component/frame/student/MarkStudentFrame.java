@@ -200,8 +200,15 @@ public class MarkStudentFrame extends StandardFrame implements ActionListener{
 			    conn.close();
 			    removeAll();
 			    dispose();
-			} catch (ClassNotFoundException | SQLException | DatabaseException | FormException e1) {
-			    e1.printStackTrace(); // Handle the exception appropriately (e.g., log or display an error message)
+			}catch (SQLException sqle) {
+				JOptionPane.showMessageDialog(null, "Database Error", "Error", JOptionPane.WARNING_MESSAGE);
+			}catch (FormException fe) {
+				String error = fe.getMessage();
+				JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+			}catch (ClassNotFoundException exp) {
+				JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
+			}catch (Exception exp) {
+				JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
 			}
 			
 		}else {

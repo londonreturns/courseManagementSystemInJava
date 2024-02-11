@@ -211,7 +211,7 @@ public class AddCourseFrame extends StandardFrame implements ActionListener, Mou
 				int rowsAffected = pst2.executeUpdate();
 				
 				if (rowsAffected < 1) {
-					throw new FormException("Please try again");
+					throw new FormException("Id not found");
 				}
 				
 				JOptionPane.showMessageDialog(null, "Course Successfully Added", "Success", JOptionPane.INFORMATION_MESSAGE);
@@ -219,8 +219,13 @@ public class AddCourseFrame extends StandardFrame implements ActionListener, Mou
 				resetFields();
 				
 				
-			} catch(Exception exp) {
-				
+			}catch (SQLException sqle) {
+				JOptionPane.showMessageDialog(null, "Database Error", "Error", JOptionPane.WARNING_MESSAGE);
+			}catch (FormException fe) {
+				String error = fe.getMessage();
+				JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+			}catch (Exception exp) {
+				JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
 			}
 			
 			

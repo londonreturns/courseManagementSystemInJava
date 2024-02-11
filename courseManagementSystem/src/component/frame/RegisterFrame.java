@@ -12,8 +12,6 @@ import font.PlaceHolderFont;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
@@ -23,8 +21,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,7 +41,6 @@ import com.toedter.calendar.JDateChooser;
 
 import component.button.StandardButton;
 import component.panel.StandardPanel;
-import course.Course;
 import driver.*;
 import exception.DatabaseException;
 import exception.DateException;

@@ -200,8 +200,14 @@ public class RemoveModuleFrame extends StandardFrame implements ActionListener, 
 	            resetFields();
 	            
 				conn.close();
-			} catch (Exception e1) {
-				}
+			}catch (SQLException sqle) {
+				JOptionPane.showMessageDialog(null, "Database Error", "Error", JOptionPane.WARNING_MESSAGE);
+			}catch (FormException fe) {
+				String error = fe.getMessage();
+				JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+			}catch (Exception exp) {
+				JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
+			}
 			
 		}else if (e.getSource() == getDetailsBtn){
 			String id = moduleIdTextField.getText().trim();
@@ -230,12 +236,14 @@ public class RemoveModuleFrame extends StandardFrame implements ActionListener, 
 				}
 				
 				if (rows == 0) {
-					throw new FormException();
+					throw new SQLException();
 				}
 				
 			    conn.close();
-			}catch (Exception e1) {
-				
+			}catch (SQLException sqle) {
+				JOptionPane.showMessageDialog(null, "Database Error", "Error", JOptionPane.WARNING_MESSAGE);
+			}catch (Exception exp) {
+				JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
 			}
 			
 		}

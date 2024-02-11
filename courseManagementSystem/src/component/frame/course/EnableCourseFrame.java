@@ -187,7 +187,7 @@ public class EnableCourseFrame extends StandardFrame implements ActionListener, 
 				}
 				
 				if (rows == 0) {
-					throw new FormException();
+					throw new FormException("Id not found");
 				}
 				
 				String query2 = "UPDATE course SET is_active = ? WHERE course_id = ?";
@@ -207,8 +207,14 @@ public class EnableCourseFrame extends StandardFrame implements ActionListener, 
 	            resetFields();
 	            
 				conn.close();
-			} catch (Exception e1) {
-				}
+			}catch (SQLException sqle) {
+				JOptionPane.showMessageDialog(null, "Database Error", "Error", JOptionPane.WARNING_MESSAGE);
+			}catch (FormException fe) {
+				String error = fe.getMessage();
+				JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+			}catch (Exception exp) {
+				JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
+			}
 			
 		}else if (e.getSource() == getDetailsBtn){
 			String id = courseIdTextField.getText().trim();
@@ -239,12 +245,18 @@ public class EnableCourseFrame extends StandardFrame implements ActionListener, 
 				}
 				
 				if (rows == 0) {
-					throw new FormException();
+					throw new FormException("Failed to get details");
 				}
 				
 			    conn.close();
-			}catch (Exception e1) {
-				}
+			}catch (SQLException sqle) {
+				JOptionPane.showMessageDialog(null, "Database Error", "Error", JOptionPane.WARNING_MESSAGE);
+			}catch (FormException fe) {
+				String error = fe.getMessage();
+				JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+			}catch (Exception exp) {
+				JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
+			}
 			
 		}
 	}

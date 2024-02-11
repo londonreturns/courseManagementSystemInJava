@@ -14,7 +14,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.regex.Pattern;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -23,7 +22,6 @@ import javax.swing.SwingConstants;
 
 import component.button.StandardButton;
 import component.frame.StandardFrame;
-import course.Course;
 import exception.FormException;
 import font.BigBold;
 import font.PlaceHolderFont;
@@ -214,7 +212,13 @@ public class GenerateReportFrame extends StandardFrame implements ActionListener
 
 	            resetFields();
 	            
-			}catch (Exception e1) {
+			}catch (SQLException sqle) {
+				JOptionPane.showMessageDialog(null, "Database Error", "Error", JOptionPane.WARNING_MESSAGE);
+			}catch (FormException fe) {
+				String error = fe.getMessage();
+				JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+			}catch (Exception exp) {
+				JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
 			}
 			
 		}else if (e.getSource() == getDetailsBtn){
@@ -244,11 +248,17 @@ public class GenerateReportFrame extends StandardFrame implements ActionListener
 				}
 				
 				if (rows == 0) {
-					throw new FormException();
+					throw new FormException("Changes not made");
 				}
 				
 			    conn.close();
-			}catch (Exception e1) {
+			}catch (SQLException sqle) {
+				JOptionPane.showMessageDialog(null, "Database Error", "Error", JOptionPane.WARNING_MESSAGE);
+			}catch (FormException fe) {
+				String error = fe.getMessage();
+				JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+			}catch (Exception exp) {
+				JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
 			}
 			
 		}
