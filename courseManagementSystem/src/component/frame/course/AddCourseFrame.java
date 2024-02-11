@@ -104,6 +104,7 @@ public class AddCourseFrame extends StandardFrame implements ActionListener, Mou
 	}
 	
 	public void setDefaultCloseOperation() {
+		removeActionListeners();
 		removeAll();
 		dispose();
 	}
@@ -243,5 +244,16 @@ public class AddCourseFrame extends StandardFrame implements ActionListener, Mou
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	
+	private void removeActionListeners() {
+		StandardButton[] buttons = {
+				okBtn, closeBtn
+		};
+		for(StandardButton button : buttons) {
+			button.removeActionListener(this);
+			button.removeMouseListener(this);
+		}
 	}
 }

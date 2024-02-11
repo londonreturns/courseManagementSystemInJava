@@ -106,6 +106,7 @@ public class MarkStudentFrame extends StandardFrame implements ActionListener{
 	}
 	
 	public void setDefaultCloseOperation() {
+		removeActionListeners();
 		removeAll();
 		dispose();
 	}
@@ -113,7 +114,6 @@ public class MarkStudentFrame extends StandardFrame implements ActionListener{
 	private static int incrementPosition(int x) {
 		return x += 35;
 	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == okBtn) {
@@ -198,8 +198,6 @@ public class MarkStudentFrame extends StandardFrame implements ActionListener{
 			    }
 
 			    conn.close();
-			    removeAll();
-			    dispose();
 			}catch (SQLException sqle) {
 				JOptionPane.showMessageDialog(null, "Database Error", "Error", JOptionPane.WARNING_MESSAGE);
 			}catch (FormException fe) {
@@ -211,12 +209,9 @@ public class MarkStudentFrame extends StandardFrame implements ActionListener{
 				JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
 			}
 			
-		}else {
-			removeAll();
-			dispose();
 		}
 		
-		
+		setDefaultCloseOperation();
 	}
 	
 	private void setPlaceHolders() {
@@ -245,6 +240,15 @@ public class MarkStudentFrame extends StandardFrame implements ActionListener{
 
 	public void setTeacher(Teacher teacher) {
 		this.teacher = teacher;
+	}
+	
+	private void removeActionListeners() {
+		StandardButton[] buttons = {
+				okBtn, closeBtn
+		};
+		for(StandardButton button : buttons) {
+			button.removeActionListener(this);
+		}
 	}
 	
 }

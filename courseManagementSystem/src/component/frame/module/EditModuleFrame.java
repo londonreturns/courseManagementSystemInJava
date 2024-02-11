@@ -110,7 +110,7 @@ public class EditModuleFrame extends StandardFrame implements ActionListener, Mo
 	}
 	
 	public void setDefaultCloseOperation() {
-		setVisible(false);
+		removeActionListeners();
 		removeAll();
 		dispose();
 	}
@@ -120,7 +120,8 @@ public class EditModuleFrame extends StandardFrame implements ActionListener, Mo
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e){
+		
 		setDefaultCloseOperation();
 		
 	}
@@ -271,4 +272,13 @@ public class EditModuleFrame extends StandardFrame implements ActionListener, Mo
 		
 	}
 	
+	private void removeActionListeners() {
+		StandardButton[] buttons = {
+				okBtn, closeBtn, getDetailsBtn
+		};
+		for(StandardButton button : buttons) {
+			button.removeActionListener(this);
+			button.removeMouseListener(this);
+		}
+	}
 }

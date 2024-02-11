@@ -1,0 +1,320 @@
+package component.frame.module;
+
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.regex.Pattern;
+
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
+import component.button.StandardButton;
+import component.frame.StandardFrame;
+import course.Course;
+import course.Module_;
+import exception.FormException;
+import font.BigBold;
+import font.PlaceHolderFont;
+import font.RegularFont;
+import font.SubHeadingFont;
+import utility.DatabaseConstant;
+import utility.TextPrompt;
+
+public class AddModuleFrame extends StandardFrame implements ActionListener, MouseListener{
+	
+	public AddModuleFrame(int x_coord, int y_coord, int width, int height) {
+		super(x_coord, y_coord, width, height);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		setElements();
+	}
+	
+	JTextField moduleNameTextField = new JTextField();
+	JTextField courseIdTextField = new JTextField();
+	JTextField semesterTextField = new JTextField();
+	JTextField levelTextField = new JTextField();
+	
+	static StandardButton okBtn = new StandardButton();
+	static StandardButton closeBtn = new StandardButton();
+	
+	private int axisX = 8;
+	private int axisY = 110;
+	private final int width = 185;
+	private final int height = 32;
+	
+	public void setElements() {
+		JLabel titleLabel = new JLabel();
+		titleLabel.setText("Add a module");
+		titleLabel.setBounds(0, 0, 500, 100);
+		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		titleLabel.setFont(new BigBold());
+		
+		String[] labelItems = {
+				"Module Name: ", "Course Id: ", "Semester: ", "Level: "
+		};
+		
+		for (String menu : labelItems) {
+			JLabel menuLabels = new JLabel();
+			menuLabels.setText(menu);
+			menuLabels.setBounds(axisX, axisY, width, height);
+			menuLabels.setFont(new SubHeadingFont());
+			axisY = incrementPosition(axisY);
+			add(menuLabels);
+			((JLabel) menuLabels).setHorizontalAlignment(SwingConstants.RIGHT);
+		}
+		
+		axisX = 250;
+		axisY = 110;
+		
+		Component[] fieldItems = {
+				moduleNameTextField, courseIdTextField, semesterTextField, levelTextField
+		};
+		
+		for (Component field : fieldItems) {
+			field.setBounds(axisX, axisY, width, height);
+			field.setFont(new RegularFont());
+			axisY = incrementPosition(axisY);
+		}
+		
+		okBtn.setText("Confirm");
+		okBtn.setBounds(100, 275, 100, 35);
+		okBtn.addMouseListener(this);
+		
+		closeBtn.setText("Cancel");
+		closeBtn.setBounds(300, 275, 100, 35);
+		closeBtn.addActionListener(this);
+		
+		ArrayList<Component> allComponents = new ArrayList<>(Arrays.asList(
+				moduleNameTextField, courseIdTextField, semesterTextField, levelTextField,
+			okBtn, closeBtn
+		));	
+		for(Component comp : allComponents) {
+			this.add(comp);
+		}
+		
+		add(titleLabel);
+		setPlaceHolders();
+	}
+	
+	public void setDefaultCloseOperation() {
+		removeActionListeners();
+		removeAll();
+		dispose();
+	}
+	
+	private static int incrementPosition(int x) {
+		return x += 35;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e){
+		
+		setDefaultCloseOperation();
+		
+	}
+	
+	private void setPlaceHolders() {
+		TextPrompt namePlaceHolder = new TextPrompt("Module", moduleNameTextField);
+		TextPrompt semesterPlaceHolder = new TextPrompt("Semester", semesterTextField);
+		TextPrompt courseIdPlaceHolder = new TextPrompt("Course", courseIdTextField);
+		TextPrompt levelPlaceHolder = new TextPrompt("Level", levelTextField);
+		
+		ArrayList<Component> allComponents = new ArrayList<>(Arrays.asList(
+				namePlaceHolder, courseIdPlaceHolder, semesterPlaceHolder, levelPlaceHolder
+				));	
+		
+		for(Component placeHolderComponent : allComponents) {
+			placeHolderComponent.setFont(new PlaceHolderFont());
+		}
+	}
+	
+	private void resetFields() {
+		moduleNameTextField.setText("");
+		courseIdTextField.setText("");
+		semesterTextField.setText("");
+		levelTextField.setText("");
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		if (e.getSource() == okBtn) {
+			String name = moduleNameTextField.getText().trim();
+			String semester = semesterTextField.getText().trim();
+			String level = levelTextField.getText().trim();
+			String courseId = courseIdTextField.getText().trim();
+			
+			try {
+				
+				if (!Pattern.matches("^[a-zA-Z0-9].{4,50}$", name)) {
+				    throw new FormException("Invalid name");
+				}else if(!Pattern.matches("^[12]$", semester)) {
+					throw new FormException("Invalid semester");
+				}else if(!Pattern.matches("^[456]$", level)) {
+					throw new FormException("Invalid level");
+				}if (!Pattern.matches("^[a-zA-Z0-9].{4,10}$", courseId)) {
+				    throw new FormException("Invalid id");
+				}
+				
+				Module_ module = new Module_();
+				module.setLevel(Integer.parseInt(level));
+				module.setModuleName(name);
+				module.setSemester(Integer.parseInt(semester));
+				Course course = new Course();
+				course.setCourseId(courseId);
+				module.setCourse(course);
+
+				Class.forName(DatabaseConstant.CLASSNAME);
+				Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
+				
+				// Inside the try block
+				if (module.getLevel() == 4 || module.getLevel() == 5) {
+					
+					module.setMandatory(true);
+					
+				    // Check the number of compulsory modules for level 4 and 5
+				    int maxCompulsoryModules = 8;
+				    
+				    String countQuery = "SELECT COUNT(*) AS total FROM module WHERE level = ? AND semester = ? AND is_mandatory = 1";
+				    
+				    PreparedStatement countPst = conn.prepareStatement(countQuery);
+				    countPst.setInt(1, module.getLevel());
+				    countPst.setInt(2, module.getSemester());
+				    
+				    ResultSet countResult = countPst.executeQuery();
+				    countResult.next();
+				    
+				    int compulsoryModulesCount = countResult.getInt("total");
+				    
+				    if (compulsoryModulesCount >= maxCompulsoryModules) {
+				        throw new FormException("Exceeded maximum number of compulsory modules for the specified level and semester");
+				    }
+				}
+
+				if (module.getLevel() == 6) {
+				    // Check the number of compulsory modules for level 6
+				    int maxCompulsoryModulesLevel6 = 2;
+
+				    String countQueryLevel6 = "SELECT COUNT(*) AS total FROM module WHERE level = ? AND is_mandatory = 1";
+
+				    PreparedStatement countPstLevel6 = conn.prepareStatement(countQueryLevel6);
+				    countPstLevel6.setInt(1, module.getLevel());
+
+				    ResultSet countResultLevel6 = countPstLevel6.executeQuery();
+				    countResultLevel6.next();
+
+				    int compulsoryModulesCountLevel6 = countResultLevel6.getInt("total");
+
+				    if (compulsoryModulesCountLevel6 < maxCompulsoryModulesLevel6) {
+				        // The first two modules are compulsory
+				        module.setMandatory(true);
+				    } else {
+				        // After the first two modules, set the rest as optional
+				        module.setMandatory(false);
+
+				        // Check total number of modules (compulsory + non-compulsory)
+				        String totalModulesQuery = "SELECT COUNT(*) AS totalModules FROM module WHERE level = ?";
+				        PreparedStatement totalModulesPst = conn.prepareStatement(totalModulesQuery);
+				        totalModulesPst.setInt(1, module.getLevel());
+
+				        ResultSet totalModulesResult = totalModulesPst.executeQuery();
+				        totalModulesResult.next();
+
+				        int totalModulesCount = totalModulesResult.getInt("totalModules");
+
+				        if (totalModulesCount >= 5) {
+				            throw new FormException("Exceeded maximum number of modules for Level 6");
+				        }
+				    }
+				}
+
+				String query2 = "INSERT INTO module (module_name, course_id, semester, level, is_mandatory) VALUES (?, ?, ?, ?, ?)";
+
+				PreparedStatement pst2 = conn.prepareStatement(query2);
+
+				int index = 1;
+
+				pst2.setString(index, module.getModuleName());
+
+				index++;
+
+				pst2.setInt(index, Integer.parseInt(courseId));
+
+				index++;
+
+				pst2.setInt(index, module.getSemester());
+
+				index++;
+
+				pst2.setInt(index, module.getLevel());
+
+				index++;
+
+				pst2.setBoolean(index, module.isMandatory());
+
+				int rowsAffected = pst2.executeUpdate();
+
+				if (rowsAffected < 1) {
+				    throw new FormException("Please try again");
+				}
+
+				JOptionPane.showMessageDialog(null, "Module Successfully Added", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+				resetFields();
+				
+			}catch (SQLException sqle) {
+				JOptionPane.showMessageDialog(null, "Database Error", "Error", JOptionPane.WARNING_MESSAGE);
+			}catch (FormException fe) {
+				String error = fe.getMessage();
+				JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
+			}catch (Exception exp) {
+				JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
+			}
+			
+			
+		}
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private void removeActionListeners() {
+		StandardButton[] buttons = {
+				okBtn, closeBtn, getDetailsBtn
+		};
+		for(StandardButton button : buttons) {
+			button.removeActionListener(this);
+		}
+	}
+}

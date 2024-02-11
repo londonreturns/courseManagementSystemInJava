@@ -111,6 +111,7 @@ public class GenerateReportFrame extends StandardFrame implements ActionListener
 	}
 	
 	public void setDefaultCloseOperation() {
+		removeActionListeners();
 		removeAll();
 		dispose();
 	}
@@ -120,10 +121,9 @@ public class GenerateReportFrame extends StandardFrame implements ActionListener
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e){
 		
-		removeAll();
-		dispose();
+		setDefaultCloseOperation();
 		
 	}
 	
@@ -210,6 +210,7 @@ public class GenerateReportFrame extends StandardFrame implements ActionListener
 
 	            JOptionPane.showMessageDialog(null, "Report Successfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
 
+	            setDefaultCloseOperation();
 	            resetFields();
 	            
 			}catch (SQLException sqle) {
@@ -220,6 +221,7 @@ public class GenerateReportFrame extends StandardFrame implements ActionListener
 			}catch (Exception exp) {
 				JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
 			}
+			
 			
 		}else if (e.getSource() == getDetailsBtn){
 			String id = studentIdTextField.getText().trim();
@@ -277,4 +279,13 @@ public class GenerateReportFrame extends StandardFrame implements ActionListener
 		
 	}
 	
+	private void removeActionListeners() {
+		StandardButton[] buttons = {
+				okBtn, closeBtn, getDetailsBtn
+		};
+		for(StandardButton button : buttons) {
+			button.removeActionListener(this);
+			button.removeMouseListener(this);
+		}
+	}
 }

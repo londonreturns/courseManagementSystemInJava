@@ -28,7 +28,6 @@ import java.util.Date;
 import java.util.regex.Pattern;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -77,7 +76,7 @@ public class RegisterFrame extends StandardFrame implements ItemListener, MouseL
 	
 	JLabel loginLabel = new JLabel();
 	
-	JButton okBtnRegister = new StandardButton();
+	StandardButton okBtnRegister = new StandardButton();
 	
 	private int axisX = 8;
 	private int axisY = 110;
@@ -178,6 +177,7 @@ public class RegisterFrame extends StandardFrame implements ItemListener, MouseL
 				
 				@Override
 				public void mouseReleased(MouseEvent e) {
+					removeActionListeners();
 					Main.loginFrameDisplay();
 				}
 
@@ -753,6 +753,16 @@ public class RegisterFrame extends StandardFrame implements ItemListener, MouseL
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	private void removeActionListeners() {
+		StandardButton[] buttons = {
+				okBtnRegister
+		};
+		for(StandardButton button : buttons) {
+			button.removeItemListener(this);
+			button.removeMouseListener(this);
+		}
 	}
 	
 	

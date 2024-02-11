@@ -100,6 +100,7 @@ public class UnassignModuleFrame extends StandardFrame implements ActionListener
 	}
 	
 	public void setDefaultCloseOperation() {
+		removeActionListeners();
 		removeAll();
 		dispose();
 	}
@@ -204,8 +205,6 @@ public class UnassignModuleFrame extends StandardFrame implements ActionListener
 			    } else {
 			        throw new DatabaseException("Unsuccessful. Please try again");
 			    }
-			    removeAll();
-				dispose();
 			    
 	            resetFields();
 	            
@@ -220,10 +219,9 @@ public class UnassignModuleFrame extends StandardFrame implements ActionListener
 				JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
 			}
 			
-		}else {
-			removeAll();
-			dispose();
 		}
+		
+		setDefaultCloseOperation();
 	}
 	
 	private void setPlaceHolders() {
@@ -241,6 +239,15 @@ public class UnassignModuleFrame extends StandardFrame implements ActionListener
 	private void resetFields() {
 		teacherIdTextField.setText("");
 		moduleIdTextField.setText("");
+	}
+	
+	private void removeActionListeners() {
+		StandardButton[] buttons = {
+				okBtn, closeBtn
+		};
+		for(StandardButton button : buttons) {
+			button.removeActionListener(this);
+		}
 	}
 	
 }

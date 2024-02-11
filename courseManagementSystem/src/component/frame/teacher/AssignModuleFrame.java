@@ -101,6 +101,7 @@ public class AssignModuleFrame extends StandardFrame implements ActionListener{
 	}
 	
 	public void setDefaultCloseOperation() {
+		removeActionListeners();
 		removeAll();
 		dispose();
 	}
@@ -207,8 +208,7 @@ public class AssignModuleFrame extends StandardFrame implements ActionListener{
 				resetFields();
 
 				conn.close();
-				removeAll();
-				dispose();
+				
 
 			}catch (SQLException sqle) {
 				JOptionPane.showMessageDialog(null, "Database Error", "Error", JOptionPane.WARNING_MESSAGE);
@@ -221,11 +221,9 @@ public class AssignModuleFrame extends StandardFrame implements ActionListener{
 				JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
 			}
 			
-		}else {
-			removeAll();
-			dispose();
 		}
 		
+		setDefaultCloseOperation();		
 		
 	}
 	
@@ -246,4 +244,12 @@ public class AssignModuleFrame extends StandardFrame implements ActionListener{
 		moduleIdTextField.setText("");
 	}
 	
+	private void removeActionListeners() {
+		StandardButton[] buttons = {
+				okBtn, closeBtn
+		};
+		for(StandardButton button : buttons) {
+			button.removeActionListener(this);
+		}
+	}
 }

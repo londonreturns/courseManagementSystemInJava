@@ -12,7 +12,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -54,7 +53,7 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 
 	public JLabel registerLabel = new JLabel();
 	
-	public JButton okBtnLogin = new StandardButton();
+	public StandardButton okBtnLogin = new StandardButton();
 	
 	private int axisX = 8;
 	private int axisY = 150;
@@ -118,6 +117,7 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
+				removeActionListeners();
 				Main.registerFrameDisplay();
 			}
 
@@ -275,5 +275,13 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 		return x += 35;
 	}
 	
+	private void removeActionListeners() {
+		StandardButton[] buttons = {
+				okBtnLogin
+		};
+		for(StandardButton button : buttons) {
+			button.removeActionListener(this);
+		}
+	}
 	
 }

@@ -108,7 +108,7 @@ public class EditCourseFrame extends StandardFrame implements ActionListener, Mo
 	}
 	
 	public void setDefaultCloseOperation() {
-		setVisible(false);
+		removeActionListeners();
 		removeAll();
 		dispose();
 	}
@@ -118,7 +118,8 @@ public class EditCourseFrame extends StandardFrame implements ActionListener, Mo
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e){
+		
 		setDefaultCloseOperation();
 		
 	}
@@ -246,6 +247,16 @@ public class EditCourseFrame extends StandardFrame implements ActionListener, Mo
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	private void removeActionListeners() {
+		StandardButton[] buttons = {
+				okBtn, closeBtn, getDetailsBtn
+		};
+		for(StandardButton button : buttons) {
+			button.removeActionListener(this);
+			button.removeMouseListener(this);
+		}
 	}
 	
 }
