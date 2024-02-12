@@ -131,7 +131,6 @@ public class MarkStudentFrame extends StandardFrame implements ActionListener{
 				Class.forName(DatabaseConstant.CLASSNAME);
 			    Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
 
-			    // Check if the module exists
 			    String query1 = "SELECT module_id FROM module WHERE module_id = ?";
 			    PreparedStatement pst1 = conn.prepareStatement(query1);
 			    pst1.setString(1, moduleId);
@@ -158,7 +157,6 @@ public class MarkStudentFrame extends StandardFrame implements ActionListener{
 			        throw new FormException("Invalid module id");
 			    }
 
-			    // Check if the teacher exists
 			    String query2 = "SELECT teacher_id FROM teacher WHERE teacher_id = ?";
 			    PreparedStatement pst2 = conn.prepareStatement(query2);
 			    pst2.setString(1, teacher.getId());
@@ -169,7 +167,6 @@ public class MarkStudentFrame extends StandardFrame implements ActionListener{
 			        throw new FormException("Invalid teacher id");
 			    }
 
-			    // Check if the teacher is assigned to the module
 			    String query3 = "SELECT * FROM teacher_module WHERE teacher_id = ? AND module_id = ?";
 			    PreparedStatement pst3 = conn.prepareStatement(query3);
 			    pst3.setString(1, teacher.getId());
@@ -181,7 +178,6 @@ public class MarkStudentFrame extends StandardFrame implements ActionListener{
 			        throw new FormException("Teacher is not assigned to the module");
 			    }
 
-			    // Update marks for the student and module
 			    String updateQuery = "UPDATE student_enrollment SET marks = ? WHERE student_id = ? AND module_id = ?";
 			    PreparedStatement updatePst = conn.prepareStatement(updateQuery);
 			    updatePst.setInt(1, marks);

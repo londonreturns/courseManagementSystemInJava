@@ -123,7 +123,6 @@ public class AssignModuleFrame extends StandardFrame implements ActionListener{
 				Class.forName(DatabaseConstant.CLASSNAME);
 				Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
 
-				// Check if the teacher already has 4 modules assigned
 				String countModulesQuery = "SELECT COUNT(*) AS module_count FROM teacher_module WHERE teacher_id = ?";
 				PreparedStatement countModulesPst = conn.prepareStatement(countModulesQuery);
 				countModulesPst.setString(1, teacherId);

@@ -299,7 +299,7 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 
 					ArrayList<Module_> modules = new ArrayList<Module_>();
 
-					String[] columns = {"Module Name", "Module Id", "Course", "Level", "Semester", "Marks"}; // Added "Marks" column
+					String[] columns = {"Module Name", "Module Id", "Course", "Level", "Semester", "Marks"};
 					Class.forName(DatabaseConstant.CLASSNAME);
 					Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
 
@@ -316,7 +316,7 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					while (result.next()) {
 					    Module_ module = new Module_();
 
-					    int moduleId = result.getInt("module_id");
+					    String moduleId = result.getString("module_id");
 					    String moduleName = result.getString("module_name");
 					    int semester = result.getInt("semester");
 					    int level = result.getInt("level");
@@ -435,7 +435,6 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 
 					ArrayList<Teacher> teachers = new ArrayList<Teacher>();
 
-					// Updated columns array to include "Module Name"
 					String[] columns = {"Teacher Id", "Teacher Name", "Module Name"};
 					Class.forName(DatabaseConstant.CLASSNAME);
 					Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
@@ -461,7 +460,6 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					    teacher.setId(teacherId);
 					    teacher.setName(teacherName);
 
-					    // Add the module to the teacher
 					    Module_ module = new Module_();
 					    module.setModuleName(moduleName);
 					    teacher.addModule(module);
@@ -472,15 +470,13 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					conn.close();
 
 					Object[][] tData = new Object[teachers.size()][];
-					int rowIndex = 0; // Variable to keep track of the current row index
+					int rowIndex = 0;
 
 					for (int i = 0; i < teachers.size(); i++) {
 					    Teacher tempTeacher = teachers.get(i);
 
-					    // Get modules for the current teacher
 					    ArrayList<Module_> teacherModules = tempTeacher.getModules();
-
-					    // Create separate rows for each module
+					    
 					    for (int j = 0; j < teacherModules.size(); j++) {
 					        Object[] teacherData = {
 					            tempTeacher.getId(),
@@ -558,7 +554,6 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					
 					Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
 
-					// Query to count the number of modules that the teacher teaches
 					String countModulesQuery = "SELECT COUNT(DISTINCT tm.module_id) AS module_count " +
 					                           "FROM teacher_module tm " +
 					                           "INNER JOIN module m ON tm.module_id = m.module_id " +
@@ -570,8 +565,6 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					if (moduleCountResult.next()) {
 					    numberOfModules = moduleCountResult.getInt("module_count");
 					}
-
-					// Query to count the number of students enrolled in modules that the teacher teaches
 					String countStudentsQuery = "SELECT COUNT(DISTINCT se.student_id) AS student_count " +
 					                            "FROM student_enrollment se " +
 					                            "INNER JOIN teacher_module tm ON se.module_id = tm.module_id " +
@@ -643,7 +636,7 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					while (result.next()) {
 					    Module_ module = new Module_();
 	
-					    int moduleId = result.getInt("module_id");
+					    String moduleId = result.getString("module_id");
 					    String moduleName = result.getString("module_name");
 					    int semester = result.getInt("semester");
 					    int level = result.getInt("level");
@@ -698,7 +691,7 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					allStudentLabel.setBounds(40, 0, 400, 100);
 
 					ArrayList<Student> students = new ArrayList<Student>();
-					String[] columns = {"Name", "Id", "Module", "Course", "Marks"}; // Added "Marks" column
+					String[] columns = {"Name", "Id", "Module", "Course", "Marks"};
 					Class.forName(DatabaseConstant.CLASSNAME);
 					Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
 
@@ -719,7 +712,7 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					    String studentName = result.getString("name");
 					    String moduleName = result.getString("module_name");
 					    String courseName = result.getString("course_name");
-					    int marks = result.getInt("marks"); // Added "marks" column
+					    int marks = result.getInt("marks");
 
 					    Student student = new Student();
 					    student.setName(studentName);
@@ -733,29 +726,28 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					    course.setCourseName(courseName);
 					    student.setCourse(course);
 					    
-					    // Set marks for each module
+					    
 					    module.setMarks(marks);
 
 					    students.add(student);
 					}
 
 					Object[][] sData = new Object[students.size()][];
-					int rowIndex = 0; // Variable to keep track of the current row index
+					int rowIndex = 0;
 
 					for (int i = 0; i < students.size(); i++) {
 					    Student tempStudent = students.get(i);
-
-					    // Get modules for the current student
+					    
 					    ArrayList<Module_> studentModules = tempStudent.getModules();
 
-					    // Create separate rows for each module
+
 					    for (int j = 0; j < studentModules.size(); j++) {
 					        Object[] studentData = {
 					            tempStudent.getName(),
 					            tempStudent.getId(),
 					            studentModules.get(j).getModuleName(),
 					            tempStudent.getCourse().getCourseName(),
-					            studentModules.get(j).getMarks() // Added marks for each module
+					            studentModules.get(j).getMarks()
 					        };
 					        sData[rowIndex++] = studentData;
 					    }
@@ -1013,7 +1005,7 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					while (result.next()) {
 					    Module_ module = new Module_();
 
-					    int moduleId = result.getInt("module_id");
+					    String moduleId = result.getString("module_id");
 					    String moduleName = result.getString("module_name");
 					    int semester = result.getInt("semester");
 					    int level = result.getInt("level");
@@ -1024,12 +1016,10 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					    module.setSemester(semester);
 					    module.setLevel(level);
 
-					    // Create a new PreparedStatement for the nested query
 					    String courseQuery = "SELECT course_name FROM course WHERE course_id = ?";
 					    PreparedStatement coursePst = conn.prepareStatement(courseQuery);
 					    coursePst.setInt(1, courseId);
 
-					    // Execute the nested query
 					    ResultSet courseResult = coursePst.executeQuery();
 
 					    Course course = new Course();
@@ -1138,10 +1128,8 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 				            }
 				        }
 
-				        // Check if the student has courses; if not, set a default Course object
 				        if (!studentHasCourses) {
-				            // Set a default Course object or handle it as needed
-				            Course defaultCourse = new Course();
+				        	Course defaultCourse = new Course();
 				            defaultCourse.setCourseName("No Course");
 				            student.setCourse(defaultCourse);
 				        }
@@ -1308,7 +1296,6 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 			if(e.getSource() == logOut) {
-				System.out.println("LOG");
 				this.setVisible(false);
 				rightPanel.removeAll();
 				leftPanel.removeAll();
@@ -1451,7 +1438,6 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					    countResult.next();
 					    int totalModules = countResult.getInt("totalModules");
 
-					    // Check if the student has passed in more than half of the modules
 					    String passQuery = "SELECT COUNT(*) AS passedModules FROM student_enrollment se" +
 					            " INNER JOIN module m ON se.module_id = m.module_id" +
 					            " WHERE se.student_id = ? AND se.currently_studying = true AND se.marks >= ? AND m.is_mandatory = 1";
@@ -1463,29 +1449,23 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					        passResult.next();
 					        int passedModules = passResult.getInt("passedModules");
 
-					        // Determine if the student has passed or failed based on the count
 					        String result = passedModules >= totalModules / 2 ? "Pass" : "Fail";
 
 					        if (result.equals("Pass")) {
-					            // Update student's level to the next level
 					            String updateLevelQuery = "UPDATE student SET level = level + 1 WHERE student_id = ?";
 					            try (PreparedStatement updateLevelPst = conn.prepareStatement(updateLevelQuery)) {
 					                updateLevelPst.setString(1, student.getId());
 					                int rowsAffected = updateLevelPst.executeUpdate();
 
 					                if (rowsAffected > 0) {
-					                    System.out.println("Student level updated to the next level");
-
-					                    // Set currently_studying to 0 for old level's modules
+					                    
 					                    String updateOldModulesQuery = "UPDATE student_enrollment SET currently_studying = 0 WHERE student_id = ? AND level = ?";
 					                    try (PreparedStatement updateOldModulesPst = conn.prepareStatement(updateOldModulesQuery)) {
 					                        updateOldModulesPst.setString(1, student.getId());
 					                        updateOldModulesPst.setInt(2, Integer.parseInt(student.getLevel()));
 					                        updateOldModulesPst.executeUpdate();
-					                        System.out.println("Old level modules marked as not currently studying");
 					                    }
 
-					                    // Set currently_studying to 1 for new level's compulsory modules
 					                    String updateNewCompulsoryModulesQuery = "UPDATE student_enrollment se" +
 					                            " INNER JOIN module m ON se.module_id = m.module_id" +
 					                            " SET se.currently_studying = 1" +
@@ -1494,13 +1474,10 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					                        updateNewCompulsoryModulesPst.setString(1, student.getId());
 					                        updateNewCompulsoryModulesPst.setInt(2, Integer.parseInt(student.getLevel()) + 1);
 					                        updateNewCompulsoryModulesPst.executeUpdate();
-					                        System.out.println("New level compulsory modules marked as currently studying");
 					                    }
 					                    int oldLevel = Integer.parseInt(student.getLevel());
 					                    int newLevel = oldLevel + 1;
-					                    student.setId(Integer.toString(newLevel));
-					                } else {
-					                    System.out.println("Failed to update student level");
+					                    student.setLevel(Integer.toString(newLevel));
 					                }
 					            }
 					        } else {
@@ -1531,19 +1508,16 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 				    pst.setString(1, student.getId());
 				    pst.setInt(2, moduleId);
 
-				    // Execute the update query
 				    int rowsAffected = pst.executeUpdate();
 
-				    // Check if the update was successful
 				    if (rowsAffected > 0) {
 				    	optionalModuleComboBox.removeItem(optionalModuleComboBox.getSelectedItem());
-				        System.out.println("Successfully updated currently_studying to 1 for student " + student.getId() + " and module " + moduleId);
-				    } else {
-				        System.out.println("Update failed. No matching records found for student " + student.getId() + " and module " + moduleId);
 				    }
 					
+				} catch (SQLException sqle) {
+					JOptionPane.showMessageDialog(null, "Database Error", "Error", JOptionPane.WARNING_MESSAGE);
 				} catch (Exception exp) {
-					
+					JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
 				}
 			}
 			else {
@@ -1554,8 +1528,8 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 				}
 				try {
 					changePanel(typeOfUser);
-				}catch (Exception exp) {
-		            JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
+				} catch (Exception exp) {
+					JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
 				}
 				
 			}

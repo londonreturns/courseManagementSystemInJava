@@ -2,7 +2,7 @@ package user;
 
 import java.sql.Date;
 
-public class User {
+abstract public class User {
 	private String name;
 	private String id;
 	private String email;
@@ -67,13 +67,4 @@ public class User {
 		this.dateOfBirth = dateOfBirth;
 	}
 	
-	public void displayDetails() {
-		System.out.println(this.getName());
-		System.out.println(this.getId());
-		System.out.println(this.getEmail());
-		System.out.println(this.getPassword());
-		System.out.println(this.getContact());
-		System.out.println(this.getTypeOfUser());
-		System.out.println(this.getDateOfBirth());
-	}
 }

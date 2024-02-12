@@ -184,6 +184,7 @@
 		<item key="expanded8" value="false"/>
 	</section>
 	<section name="BreadcrumbItemDropDown">
+		<item key="height" value="440"/>
 	</section>
 	<section name="org.eclipse.jdt.internal.ui.dialogs.FilteredTypesSelectionDialog">
 		<item key="ShowStatusLine" value="true"/>

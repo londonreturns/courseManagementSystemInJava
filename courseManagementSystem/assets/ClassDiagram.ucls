@@ -1,0 +1,1102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.14" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+  <class id="1" language="java" name="component.frame.teacher.TeacherFrame" project="courseManagementSystem" 
+    file="/courseManagementSystem/src/component/frame/teacher/TeacherFrame.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="96" width="213" x="1800" y="1703"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="component.button.MenuButton" project="courseManagementSystem" 
+    file="/courseManagementSystem/src/component/button/MenuButton.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="96" width="156" x="2591" y="2615"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="component.frame.student.MarkStudentFrame" project="courseManagementSystem" 
+    file="/courseManagementSystem/src/component/frame/student/MarkStudentFrame.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="416" width="305" x="2946" y="1703"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="course.Module_" project="courseManagementSystem" 
+    file="/courseManagementSystem/src/course/Module_.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="496" width="224" x="1401" y="2615"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="component.frame.teacher.UnassignModuleFrame" project="courseManagementSystem" 
+    file="/courseManagementSystem/src/component/frame/teacher/UnassignModuleFrame.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="356" width="274" x="4528" y="1703"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="component.frame.student.GenerateReportFrame" project="courseManagementSystem" 
+    file="/courseManagementSystem/src/component/frame/student/GenerateReportFrame.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="456" width="270" x="4218" y="1703"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="component.frame.course.EnableCourseFrame" project="courseManagementSystem" 
+    file="/courseManagementSystem/src/component/frame/course/EnableCourseFrame.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="476" width="269" x="5769" y="1703"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="component.frame.module.EditModuleFrame" project="courseManagementSystem" 
+    file="/courseManagementSystem/src/component/frame/module/EditModuleFrame.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="476" width="269" x="6386" y="1703"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="component.frame.course.RemoveCourseFrame" project="courseManagementSystem" 
+    file="/courseManagementSystem/src/component/frame/course/RemoveCourseFrame.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="476" width="269" x="3909" y="1703"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="component.button.StandardButton" project="courseManagementSystem" 
+    file="/courseManagementSystem/src/component/button/StandardButton.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="116" width="185" x="2906" y="2239"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="component.frame.MenuFrame" project="courseManagementSystem" 
+    file="/courseManagementSystem/src/component/frame/MenuFrame.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="616" width="588" x="2759" y="847"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="user.Teacher" project="courseManagementSystem" 
+    file="/courseManagementSystem/src/user/Teacher.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="176" width="289" x="1091" y="2239"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="component.frame.teacher.AssignModuleFrame" project="courseManagementSystem" 
+    file="/courseManagementSystem/src/component/frame/teacher/AssignModuleFrame.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="356" width="268" x="6078" y="1703"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="component.frame.course.EditCourseFrame" project="courseManagementSystem" 
+    file="/courseManagementSystem/src/component/frame/course/EditCourseFrame.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="436" width="269" x="3600" y="1703"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="user.User" project="courseManagementSystem" 
+    file="/courseManagementSystem/src/user/User.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="516" width="213" x="836" y="847"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="component.frame.course.AddCourseFrame" project="courseManagementSystem" 
+    file="/courseManagementSystem/src/component/frame/course/AddCourseFrame.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="456" width="269" x="5151" y="1703"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="component.frame.LoginFrame" project="courseManagementSystem" 
+    file="/courseManagementSystem/src/component/frame/LoginFrame.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="436" width="320" x="1760" y="847"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="18" language="java" name="driver.Main" project="courseManagementSystem" 
+    file="/courseManagementSystem/src/driver/Main.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="236" width="332" x="1131" y="531"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="19" language="java" name="course.Course" project="courseManagementSystem" 
+    file="/courseManagementSystem/src/course/Course.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="336" width="289" x="2281" y="2239"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="20" language="java" name="component.frame.admin.AdminFrame" project="courseManagementSystem" 
+    file="/courseManagementSystem/src/component/frame/admin/AdminFrame.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="96" width="203" x="2053" y="1703"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="21" language="java" name="component.frame.course.DisableCourseFrame" project="courseManagementSystem" 
+    file="/courseManagementSystem/src/component/frame/course/DisableCourseFrame.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="476" width="269" x="4842" y="1703"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="22" language="java" name="user.Student" project="courseManagementSystem" 
+    file="/courseManagementSystem/src/user/Student.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="256" width="289" x="1131" y="1703"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="23" language="java" name="component.frame.StandardFrame" project="courseManagementSystem" 
+    file="/courseManagementSystem/src/component/frame/StandardFrame.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="276" width="264" x="4528" y="531"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="24" language="java" name="component.panel.StandardPanel" project="courseManagementSystem" 
+    file="/courseManagementSystem/src/component/panel/StandardPanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1590" y="1820"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="25" language="java" name="user.Admin" project="courseManagementSystem" 
+    file="/courseManagementSystem/src/user/Admin.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="96" width="123" x="947" y="1703"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="26" language="java" name="component.frame.RegisterFrame" project="courseManagementSystem" 
+    file="/courseManagementSystem/src/component/frame/RegisterFrame.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="816" width="320" x="2399" y="847"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="27" language="java" name="component.frame.module.AddModuleFrame" project="courseManagementSystem" 
+    file="/courseManagementSystem/src/component/frame/module/AddModuleFrame.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="496" width="269" x="3291" y="1703"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="28" language="java" name="component.frame.student.StudentFrame" project="courseManagementSystem" 
+    file="/courseManagementSystem/src/component/frame/student/StudentFrame.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="96" width="211" x="2296" y="1703"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="29" language="java" name="component.frame.module.RemoveModuleFrame" project="courseManagementSystem" 
+    file="/courseManagementSystem/src/component/frame/module/RemoveModuleFrame.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="456" width="269" x="5460" y="1703"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="30" language="java" name="javax.swing.JFrame" project="courseManagementSystem" 
+    file="C:/Program Files/Java/jdk-20/lib/jrt-fs.jar" binary="true" corner="BOTTOM_RIGHT">    
+    <position height="896" width="363" x="3976" y="-89"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="31" language="java" name="javax.swing.JButton" project="courseManagementSystem" 
+    file="C:/Program Files/Java/jdk-20/lib/jrt-fs.jar" binary="true" corner="BOTTOM_RIGHT">    
+    <position height="376" width="322" x="3327" y="2375"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="32" language="java" name="javax.swing.JPanel" project="courseManagementSystem" 
+    file="C:/Program Files/Java/jdk-20/lib/jrt-fs.jar" binary="true" corner="BOTTOM_RIGHT">    
+    <position height="316" width="322" x="1241" y="949"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="33">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="34" name="getDetailsBtn"/>      
+      <multiplicity id="35" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="36">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="37" name="unassignCourseFrame"/>      
+      <multiplicity id="38" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="39">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="40" name="getDetailsBtn"/>      
+      <multiplicity id="41" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="42">    
+    <bendpoint x="5157" y="847"/>    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="23"/>  
+  </generalization>  
+  <generalization id="43">    
+    <end type="SOURCE" refId="23"/>    
+    <end type="TARGET" refId="30"/>  
+  </generalization>  
+  <association id="44">    
+    <end type="SOURCE" refId="29" navigable="false">      
+      <attribute id="45" name="okBtn"/>      
+      <multiplicity id="46" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="47">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="48" name="okBtn"/>      
+      <multiplicity id="49" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="50">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="10"/>  
+  </generalization>  
+  <association id="51">    
+    <bendpoint x="2642" y="1703"/>    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="52" name="editCourseButton"/>      
+      <multiplicity id="53" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="54">    
+    <bendpoint x="2852" y="1703"/>    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="55" name="removeCourseButton"/>      
+      <multiplicity id="56" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="57">    
+    <end type="SOURCE" refId="22" navigable="false">      
+      <attribute id="58" name="course"/>      
+      <multiplicity id="59" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="60">    
+    <bendpoint x="5466" y="847"/>    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="23"/>  
+  </generalization>  
+  <association id="61">    
+    <end type="SOURCE" refId="29" navigable="false">      
+      <attribute id="62" name="getDetailsBtn"/>      
+      <multiplicity id="63" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="64">    
+    <bendpoint x="5312" y="847"/>    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="23"/>  
+  </generalization>  
+  <association id="65">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="66" name="disableCourseFrame"/>      
+      <multiplicity id="67" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="21" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="68">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="69" name="okBtn"/>      
+      <multiplicity id="70" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="71">    
+    <bendpoint x="2558" y="1703"/>    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="72" name="course"/>      
+      <multiplicity id="73" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="74">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="75" name="okBtn"/>      
+      <multiplicity id="76" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="77">    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="78" name="okBtn"/>      
+      <multiplicity id="79" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="80">    
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="15"/>  
+  </generalization>  
+  <generalization id="81">    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="32"/>  
+  </generalization>  
+  <association id="82">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="83" name="leftPanel"/>      
+      <multiplicity id="84" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="24" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="85">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="11"/>  
+  </generalization>  
+  <association id="86">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="87" name="editCourseFrame"/>      
+      <multiplicity id="88" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="89">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="90" name="modules"/>      
+      <multiplicity id="91" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="92">    
+    <bendpoint x="1748" y="1703"/>    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="93" name="teacher"/>      
+      <multiplicity id="94" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="95">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="96" name="editModuleFrame"/>      
+      <multiplicity id="97" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="98">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="99" name="markStudentFrame"/>      
+      <multiplicity id="100" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="101">    
+    <end type="SOURCE" refId="21" navigable="false">      
+      <attribute id="102" name="getDetailsBtn"/>      
+      <multiplicity id="103" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="104">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="105" name="closeBtn"/>      
+      <multiplicity id="106" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="107">    
+    <bendpoint x="4382" y="847"/>    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="23"/>  
+  </generalization>  
+  <association id="108">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="109" name="admin"/>      
+      <multiplicity id="110" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="25" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="111">    
+    <bendpoint x="4228" y="847"/>    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="23"/>  
+  </generalization>  
+  <association id="112">    
+    <bendpoint x="2705" y="1703"/>    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="113" name="logOut"/>      
+      <multiplicity id="114" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="115">    
+    <bendpoint x="2894" y="1703"/>    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="116" name="selectOptionalModuleButton"/>      
+      <multiplicity id="117" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="118">    
+    <bendpoint x="2579" y="1703"/>    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="119" name="okBtnRegister"/>      
+      <multiplicity id="120" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="121">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="122" name="closeBtn"/>      
+      <multiplicity id="123" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="124">    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="125" name="getDetailsBtn"/>      
+      <multiplicity id="126" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="127">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="128" name="enableCourseFrame"/>      
+      <multiplicity id="129" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="130">    
+    <bendpoint x="3919" y="847"/>    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="23"/>  
+  </generalization>  
+  <association id="131">    
+    <bendpoint x="1100" y="847"/>    
+    <bendpoint x="1100" y="1703"/>    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="132" name="teacher"/>      
+      <multiplicity id="133" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="134">    
+    <bendpoint x="4537" y="847"/>    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="23"/>  
+  </generalization>  
+  <association id="135">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="136" name="okBtn"/>      
+      <multiplicity id="137" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="138">    
+    <bendpoint x="1140" y="847"/>    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="139" name="student"/>      
+      <multiplicity id="140" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="22" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="141">    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="142" name="okBtn"/>      
+      <multiplicity id="143" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="144">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="145" name="closeBtn"/>      
+      <multiplicity id="146" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="147">    
+    <end type="SOURCE" refId="25"/>    
+    <end type="TARGET" refId="15"/>  
+  </generalization>  
+  <association id="148">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="149" name="addCourseFrame"/>      
+      <multiplicity id="150" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="151">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="152" name="closeBtn"/>      
+      <multiplicity id="153" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="154">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="155" name="addModuleFrame"/>      
+      <multiplicity id="156" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="157">    
+    <bendpoint x="4694" y="847"/>    
+    <end type="SOURCE" refId="21"/>    
+    <end type="TARGET" refId="23"/>  
+  </generalization>  
+  <association id="158">    
+    <bendpoint x="2789" y="1703"/>    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="159" name="markStudentButton"/>      
+      <multiplicity id="160" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="161">    
+    <bendpoint x="4073" y="847"/>    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="23"/>  
+  </generalization>  
+  <generalization id="162">    
+    <bendpoint x="4849" y="847"/>    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="23"/>  
+  </generalization>  
+  <association id="163">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="164" name="closeBtn"/>      
+      <multiplicity id="165" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="166">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="167" name="teacher"/>      
+      <multiplicity id="168" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="169">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="11"/>  
+  </generalization>  
+  <association id="170">    
+    <end type="SOURCE" refId="21" navigable="false">      
+      <attribute id="171" name="closeBtn"/>      
+      <multiplicity id="172" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="173">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="174" name="rightPanel"/>      
+      <multiplicity id="175" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="24" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="176">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="23"/>  
+  </generalization>  
+  <association id="177">    
+    <bendpoint x="2684" y="1703"/>    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="178" name="addCourseButton"/>      
+      <multiplicity id="179" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="180">    
+    <bendpoint x="2621" y="1703"/>    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="181" name="unassignModuleButton"/>      
+      <multiplicity id="182" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="183">    
+    <bendpoint x="2810" y="1703"/>    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="184" name="disableCourseButton"/>      
+      <multiplicity id="185" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="186">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="187" name="course"/>      
+      <multiplicity id="188" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="189">    
+    <bendpoint x="3746" y="847"/>    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="23"/>  
+  </generalization>  
+  <association id="190">    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="191" name="closeBtn"/>      
+      <multiplicity id="192" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="193">    
+    <end type="SOURCE" refId="29" navigable="false">      
+      <attribute id="194" name="closeBtn"/>      
+      <multiplicity id="195" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="196">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="197" name="modules"/>      
+      <multiplicity id="198" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="199">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="200" name="removeModuleFrame"/>      
+      <multiplicity id="201" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="29" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="202">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="203" name="okBtn"/>      
+      <multiplicity id="204" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="205">    
+    <bendpoint x="916" y="1703"/>    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="15"/>  
+  </generalization>  
+  <association id="206">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="207" name="getDetailsBtn"/>      
+      <multiplicity id="208" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="209">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="210" name="closeBtn"/>      
+      <multiplicity id="211" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="212">    
+    <bendpoint x="2663" y="1703"/>    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="213" name="addModuleButton"/>      
+      <multiplicity id="214" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="215">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="216" name="generateReportFrame"/>      
+      <multiplicity id="217" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="218">    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="219" name="closeBtn"/>      
+      <multiplicity id="220" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="221">    
+    <bendpoint x="2915" y="1703"/>    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="222" name="assignModuleButton"/>      
+      <multiplicity id="223" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="224">    
+    <end type="SOURCE" refId="26"/>    
+    <end type="TARGET" refId="23"/>  
+  </generalization>  
+  <generalization id="225">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="23"/>  
+  </generalization>  
+  <association id="226">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="227" name="loginFrame"/>      
+      <multiplicity id="228" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="17" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="229">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="31"/>  
+  </generalization>  
+  <association id="230">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="231" name="bottomPanel"/>      
+      <multiplicity id="232" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="24" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="233">    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="234" name="okBtn"/>      
+      <multiplicity id="235" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="236">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="237" name="removeCourseFrame"/>      
+      <multiplicity id="238" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="239">    
+    <bendpoint x="1410" y="2239"/>    
+    <end type="SOURCE" refId="22" navigable="false">      
+      <attribute id="240" name="modules"/>      
+      <multiplicity id="241" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="242">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="243" name="okBtn"/>      
+      <multiplicity id="244" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="245">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="246" name="assignCourseFrame"/>      
+      <multiplicity id="247" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="248">    
+    <bendpoint x="1769" y="1703"/>    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="249" name="okBtnLogin"/>      
+      <multiplicity id="250" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="251">    
+    <end type="SOURCE" refId="21" navigable="false">      
+      <attribute id="252" name="okBtn"/>      
+      <multiplicity id="253" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="254">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="255" name="getDetailsBtn"/>      
+      <multiplicity id="256" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="257">    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="258" name="loginPanel"/>      
+      <multiplicity id="259" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="24" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="260">    
+    <bendpoint x="2537" y="1703"/>    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="261" name="courses"/>      
+      <multiplicity id="262" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="263">    
+    <bendpoint x="1079" y="847"/>    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="264" name="admin"/>      
+      <multiplicity id="265" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="25" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="266">    
+    <bendpoint x="2600" y="1703"/>    
+    <bendpoint x="2600" y="2239"/>    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="267" name="menuButtonList"/>      
+      <multiplicity id="268" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="269">    
+    <bendpoint x="2873" y="1703"/>    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="270" name="generateReportButton"/>      
+      <multiplicity id="271" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="272">    
+    <bendpoint x="2747" y="1703"/>    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="273" name="enableCourseButton"/>      
+      <multiplicity id="274" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="275">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="276" name="closeBtn"/>      
+      <multiplicity id="277" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="278">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="279" name="okBtn"/>      
+      <multiplicity id="280" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="281">    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="282" name="closeBtn"/>      
+      <multiplicity id="283" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="284">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="285" name="student"/>      
+      <multiplicity id="286" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="22" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="287">    
+    <bendpoint x="2831" y="1703"/>    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="288" name="editModuleButton"/>      
+      <multiplicity id="289" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="290">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="291" name="registerFrame"/>      
+      <multiplicity id="292" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="26" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="293">    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="294" name="registerPanel"/>      
+      <multiplicity id="295" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="24" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="296">    
+    <bendpoint x="2726" y="1703"/>    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="297" name="goUpYearButton"/>      
+      <multiplicity id="298" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="299">    
+    <end type="SOURCE" refId="28"/>    
+    <end type="TARGET" refId="11"/>  
+  </generalization>  
+  <association id="300">    
+    <bendpoint x="2768" y="1703"/>    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="301" name="removeModuleButton"/>      
+      <multiplicity id="302" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="303">    
+    <bendpoint x="5003" y="847"/>    
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="23"/>  
+  </generalization>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

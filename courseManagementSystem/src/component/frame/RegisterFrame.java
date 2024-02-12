@@ -31,7 +31,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -47,7 +46,7 @@ import exception.FormException;
 
 public class RegisterFrame extends StandardFrame implements ItemListener, MouseListener{
 	
-	JPanel registerPanel = new StandardPanel(100, 75, 450, 550);
+	StandardPanel registerPanel = new StandardPanel(100, 75, 450, 550);
 	JLabel registerTitle = new JLabel();
 	
 	JLabel nameLabel = new JLabel();
@@ -189,13 +188,11 @@ public class RegisterFrame extends StandardFrame implements ItemListener, MouseL
 
 				@Override
 				public void mouseEntered(MouseEvent e) {
-//					registrationLabel.setFont(new Font("Dialog", Font.BOLD, 13));
 					loginLabel.setForeground(new Color(0xF4D160));
 				}
 
 				@Override
 				public void mouseExited(MouseEvent e) {
-//					registrationLabel.setFont(new Font("Dialog", Font.BOLD, 12));
 					loginLabel.setForeground(new Color(0x321D2F));
 				}
 			});
@@ -270,16 +267,10 @@ public class RegisterFrame extends StandardFrame implements ItemListener, MouseL
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseClicked(MouseEvent e) {}
 
 	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mousePressed(MouseEvent e) {}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
@@ -315,8 +306,7 @@ public class RegisterFrame extends StandardFrame implements ItemListener, MouseL
 				int tempId = 0;
 				String id = "";
 				
-				if(user.equals("student")) {					
-					System.out.println(user);
+				if(user.equals("student")) {	
 					try {						
 						Class.forName(DatabaseConstant.CLASSNAME);
 						Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
@@ -507,10 +497,8 @@ public class RegisterFrame extends StandardFrame implements ItemListener, MouseL
 					    conn.close();
 			        } catch (DatabaseException dbExp) {
 			            String error = dbExp.getMessage();
-			            System.out.println(dbExp);
 			            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
 			        } catch (Exception exp) {
-			            System.out.println(exp);
 			        	String err = "Please try again" + exp;
 			            JOptionPane.showMessageDialog(null, err, "Error", JOptionPane.WARNING_MESSAGE);
 					}
@@ -614,11 +602,9 @@ public class RegisterFrame extends StandardFrame implements ItemListener, MouseL
 					    conn.close();
 			        } catch (DatabaseException dbExp) {
 			            String error = dbExp.getMessage();
-			            System.out.println(dbExp);
 			            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
 			        } catch (Exception error) {
-			            System.out.println(error);
-			        	String err = "Please try again" + error;
+			        	String err = "Please try again";
 			            JOptionPane.showMessageDialog(null, err, "Error", JOptionPane.WARNING_MESSAGE);
 					}
 				}else {
@@ -721,11 +707,9 @@ public class RegisterFrame extends StandardFrame implements ItemListener, MouseL
 					    conn.close();
 			        } catch (DatabaseException dbExp) {
 			            String error = dbExp.getMessage();
-			            System.out.println(dbExp);
 			            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
 			        } catch (Exception error) {
-			            System.out.println(error);
-			        	String err = "Please try again" + error;
+			        	String err = "Please try again";
 			            JOptionPane.showMessageDialog(null, err, "Error", JOptionPane.WARNING_MESSAGE);
 					}
 				}
@@ -744,16 +728,10 @@ public class RegisterFrame extends StandardFrame implements ItemListener, MouseL
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseEntered(MouseEvent e) {}
 
 	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseExited(MouseEvent e) {}
 	
 	private void removeActionListeners() {
 		StandardButton[] buttons = {

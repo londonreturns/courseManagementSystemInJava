@@ -20,7 +20,7 @@ public class StandardTable extends JTable{
 	}
 	
 	private void settings() {
-		RegularFont headerFont = new RegularFont(); // Replace with your desired font
+		RegularFont headerFont = new RegularFont();
 		this.getTableHeader().setFont(headerFont);
 		this.getTableHeader().setBackground(Color.black);
 		this.getTableHeader().setForeground(Color.white);

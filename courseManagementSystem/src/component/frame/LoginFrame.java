@@ -14,7 +14,6 @@ import java.sql.ResultSet;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -42,7 +41,7 @@ import java.util.regex.Pattern;
 
 public class LoginFrame extends StandardFrame implements ActionListener{
 	
-	public JPanel loginPanel = new StandardPanel(100, 75, 450, 450);
+	public StandardPanel loginPanel = new StandardPanel(100, 75, 450, 450);
 	public JLabel loginTitle = new JLabel();
 	
 	public JLabel idLabel = new JLabel();
@@ -117,7 +116,6 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				removeActionListeners();
 				Main.registerFrameDisplay();
 			}
 
@@ -165,11 +163,10 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == okBtnLogin) {
-			User user1 = new User();
-			user1.setId(idTextField.getText());
+			String id = idTextField.getText();
 			String password = new String(passwordPasswordField.getPassword());
 			try {
-				if(!Pattern.matches("^[0-9]{7}$", user1.getId())) {
+				if(!Pattern.matches("^[0-9]{7}$", id)) {
 					throw new FormException("Invalid id");
 				}else if(!Pattern.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$", password)) {
 					throw new FormException("Invalid password");
@@ -182,18 +179,17 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 					String query = "SELECT type_of_user FROM user WHERE student_id = ? OR teacher_id = ? OR admin_id = ?";
 					PreparedStatement pst = conn.prepareStatement(query);
 					
-					pst.setString(1, user1.getId());
-					pst.setString(2, user1.getId());
-					pst.setString(3, user1.getId());
+					pst.setString(1, id);
+					pst.setString(2, id);
+					pst.setString(3, id);
 					ResultSet result = pst.executeQuery();
 					
 					if(!result.next()) {
 						throw new DatabaseException("Credentials invalid");
 					}else {
 						String typeOfUser = result.getString(1);
-						user1.setTypeOfUser(typeOfUser);
 						
-						query = "SELECT * FROM " + user1.getTypeOfUser() + " WHERE " + user1.getTypeOfUser() + "_id = " + user1.getId();
+						query = "SELECT * FROM " + typeOfUser + " WHERE " + typeOfUser + "_id = " + id;
 						
 						pst = conn.prepareStatement(query);
 						
@@ -206,8 +202,7 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 							if (password.equals(dbPassword)) {
 								JOptionPane.showMessageDialog(null, "Login successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
 						        resetFields();
-						        if(user1.getTypeOfUser().equals("student")) {
-						        	System.out.println("Student");
+						        if(id.equals("student")) {
 						        	Student student1 = new Student();
 						        	student1.setName(result.getString("name"));
 									student1.setId(result.getString("student_id"));
@@ -218,7 +213,7 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 									student1.setLevel(result.getString("level"));
 									student1.setDateOfBirth(result.getDate("dob"));
 							        Main.studentFrameDisplay(this, student1);
-						        }else if(user1.getTypeOfUser().equals("teacher")) {
+						        }else if(id.equals("teacher")) {
 						        	Teacher teacher1 = new Teacher();
 						        	teacher1.setName(result.getString("name"));
 						        	teacher1.setId(result.getString("teacher_id"));
@@ -228,7 +223,6 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 						        	teacher1.setTypeOfUser("teacher");
 						        	teacher1.setDateOfBirth(result.getDate("dob"));
 						        	
-						        	System.out.println("Teacher");
 						        	Main.teacherFrameDisplay(this, teacher1);
 						        }else {
 						        	Admin admin1 = new Admin();
@@ -239,7 +233,6 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 						        	admin1.setContact(result.getString("contact"));
 						        	admin1.setTypeOfUser("admin");
 						        	admin1.setDateOfBirth(result.getDate("dob"));
-						        	System.out.println("Admin");
 						        	Main.adminFrameDisplay(this, admin1);
 						        }
 							}else {
@@ -258,7 +251,6 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 				} 
 			}catch(FormException fe) {
 				String exp = fe.getMessage();
-	            System.out.println(fe);
 	            JOptionPane.showMessageDialog(null, exp, "Error", JOptionPane.WARNING_MESSAGE);
 			}
 			
@@ -275,13 +267,5 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 		return x += 35;
 	}
 	
-	private void removeActionListeners() {
-		StandardButton[] buttons = {
-				okBtnLogin
-		};
-		for(StandardButton button : buttons) {
-			button.removeActionListener(this);
-		}
-	}
 	
 }

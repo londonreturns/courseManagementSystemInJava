@@ -146,16 +146,10 @@ public class AddModuleFrame extends StandardFrame implements ActionListener, Mou
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseClicked(MouseEvent e) {}
 
 	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mousePressed(MouseEvent e) {}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
@@ -188,12 +182,10 @@ public class AddModuleFrame extends StandardFrame implements ActionListener, Mou
 				Class.forName(DatabaseConstant.CLASSNAME);
 				Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
 				
-				// Inside the try block
 				if (module.getLevel() == 4 || module.getLevel() == 5) {
 					
 					module.setMandatory(true);
 					
-				    // Check the number of compulsory modules for level 4 and 5
 				    int maxCompulsoryModules = 8;
 				    
 				    String countQuery = "SELECT COUNT(*) AS total FROM module WHERE level = ? AND semester = ? AND is_mandatory = 1";
@@ -213,7 +205,6 @@ public class AddModuleFrame extends StandardFrame implements ActionListener, Mou
 				}
 
 				if (module.getLevel() == 6) {
-				    // Check the number of compulsory modules for level 6
 				    int maxCompulsoryModulesLevel6 = 2;
 
 				    String countQueryLevel6 = "SELECT COUNT(*) AS total FROM module WHERE level = ? AND is_mandatory = 1";
@@ -227,13 +218,10 @@ public class AddModuleFrame extends StandardFrame implements ActionListener, Mou
 				    int compulsoryModulesCountLevel6 = countResultLevel6.getInt("total");
 
 				    if (compulsoryModulesCountLevel6 < maxCompulsoryModulesLevel6) {
-				        // The first two modules are compulsory
 				        module.setMandatory(true);
 				    } else {
-				        // After the first two modules, set the rest as optional
 				        module.setMandatory(false);
 
-				        // Check total number of modules (compulsory + non-compulsory)
 				        String totalModulesQuery = "SELECT COUNT(*) AS totalModules FROM module WHERE level = ?";
 				        PreparedStatement totalModulesPst = conn.prepareStatement(totalModulesQuery);
 				        totalModulesPst.setInt(1, module.getLevel());
@@ -298,16 +286,10 @@ public class AddModuleFrame extends StandardFrame implements ActionListener, Mou
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseEntered(MouseEvent e) {}
 
 	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseExited(MouseEvent e) {}
 	
 	private void removeActionListeners() {
 		StandardButton[] buttons = {

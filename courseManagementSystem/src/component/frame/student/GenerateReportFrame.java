@@ -144,74 +144,106 @@ public class GenerateReportFrame extends StandardFrame implements ActionListener
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseClicked(MouseEvent e) {}
 
 	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mousePressed(MouseEvent e) {}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		if (e.getSource() == okBtn) {
 			String id = studentIdTextField.getText().trim();
+			int passMark = 40;
+
 			try {
-	            Class.forName(DatabaseConstant.CLASSNAME);
-	            Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
+			    Class.forName(DatabaseConstant.CLASSNAME);
+			    Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
 
-	            // Check if the student exists
-	            String checkStudentQuery = "SELECT student_id FROM student WHERE student_id = ?";
-	            PreparedStatement checkStudentPst = conn.prepareStatement(checkStudentQuery);
-	            checkStudentPst.setString(1, id);
+			    String checkStudentQuery = "SELECT student_id FROM student WHERE student_id = ?";
+			    PreparedStatement checkStudentPst = conn.prepareStatement(checkStudentQuery);
+			    checkStudentPst.setString(1, id);
 
-	            ResultSet studentResult = checkStudentPst.executeQuery();
-	            int studentRows = 0;
+			    ResultSet studentResult = checkStudentPst.executeQuery();
+			    int studentRows = 0;
 
-	            while (studentResult.next()) {
-	                studentRows++;
-	            }
+			    while (studentResult.next()) {
+			        studentRows++;
+			    }
 
-	            if (studentRows == 0) {
-	                throw new FormException("Id not found");
-	            }
+			    if (studentRows == 0) {
+			        throw new FormException("Id not found");
+			    }
 
-	            // If the student exists, retrieve marks and course name from student_course and course tables
-	            String getMarksAndModuleNameQuery = "SELECT se.marks, m.module_name " +
-                        "FROM student_enrollment se " +
-                        "INNER JOIN module m ON se.module_id = m.module_id " +
-                        "WHERE se.student_id = ?";
+			    String getMarksAndModuleNameQuery = "SELECT se.marks, m.module_name, se.level, se.currently_studying " +
+			            "FROM student_enrollment se " +
+			            "INNER JOIN module m ON se.module_id = m.module_id " +
+			            "WHERE se.student_id = ?";
 
-	            PreparedStatement getMarksAndModulePst = conn.prepareStatement(getMarksAndModuleNameQuery);
-	            getMarksAndModulePst.setString(1, id);
+			    PreparedStatement getMarksAndModulePst = conn.prepareStatement(getMarksAndModuleNameQuery);
+			    getMarksAndModulePst.setString(1, id);
 
-	            ResultSet marksAndModuleResult = getMarksAndModulePst.executeQuery();
+			    ResultSet marksAndModuleResult = getMarksAndModulePst.executeQuery();
 
-	            
-	            File csvFile = new File("studentMarks/" + id + ".csv");
-	            try (PrintWriter writer = new PrintWriter(csvFile)) {
+			    String getCurrentLevelQuery = "SELECT level FROM student_enrollment WHERE student_id = ? AND currently_studying = true";
+			    PreparedStatement getCurrentLevelPst = conn.prepareStatement(getCurrentLevelQuery);
+			    getCurrentLevelPst.setString(1, id);
 
-	                writer.println("Course Name, Marks");
-	                
-	                while (marksAndModuleResult.next()) {
-	                    String moduleName = marksAndModuleResult.getString("module_name");
-	                    int marks = marksAndModuleResult.getInt("marks");
+			    ResultSet currentLevelResult = getCurrentLevelPst.executeQuery();
+			    int currentLevel = 0;
 
-	                    writer.println(moduleName + "," + marks);
-	                }
-	            }
+			    if (currentLevelResult.next()) {
+			        currentLevel = currentLevelResult.getInt("level");
+			    }
 
-	            System.out.println("Data has been written to studentMarks/" + id + ".csv");
+			    File currentLevelCsvFile = new File("studentMarks/" + id + "_level_" + currentLevel + ".csv");
+			    try (PrintWriter currentLevelWriter = new PrintWriter(currentLevelCsvFile)) {
+			        currentLevelWriter.println("Course Name, Marks");
 
-	            conn.close();
+			        File allLevelsCsvFile = new File("studentMarks/" + id + "_all_levels.csv");
+			        try (PrintWriter allLevelsWriter = new PrintWriter(allLevelsCsvFile)) {
+			            allLevelsWriter.println("Course Name, Marks");
 
-	            JOptionPane.showMessageDialog(null, "Report Successfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
+			            int totalModules = 0;
+			            int passedModules = 0;
 
-	            setDefaultCloseOperation();
-	            resetFields();
+			            while (marksAndModuleResult.next()) {
+			                String moduleName = marksAndModuleResult.getString("module_name");
+			                int marks = marksAndModuleResult.getInt("marks");
+			                int moduleLevel = marksAndModuleResult.getInt("level");
+			                boolean currentlyStudying = marksAndModuleResult.getBoolean("currently_studying");
+
+			                allLevelsWriter.println(moduleName + "," + marks);
+
+			                if (currentlyStudying) {
+			                    totalModules++;
+
+			                    if (moduleLevel == 4 || moduleLevel == 5) {
+			                        if (marks >= passMark) {
+			                            passedModules++;
+			                        }
+			                    }
+			                }
+
+			                if (moduleLevel == currentLevel) {
+			                    currentLevelWriter.println(moduleName + "," + marks);
+			                }
+			            }
+
+			            String result = passedModules * 2 >= totalModules ? "Can go to next level" : "Cannot go to next level";
+
+			            if (currentLevel != 6) {
+			                currentLevelWriter.println("Result: " + result);
+			            }
+			        }
+			    }
+
+			    conn.close();
+
+			    JOptionPane.showMessageDialog(null, "Report Successfully Generated", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+			    setDefaultCloseOperation();
+			    resetFields();
+
 	            
 			}catch (SQLException sqle) {
 				JOptionPane.showMessageDialog(null, "Database Error", "Error", JOptionPane.WARNING_MESSAGE);
@@ -268,16 +300,10 @@ public class GenerateReportFrame extends StandardFrame implements ActionListener
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseEntered(MouseEvent e) {}
 
 	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseExited(MouseEvent e) {}
 	
 	private void removeActionListeners() {
 		StandardButton[] buttons = {

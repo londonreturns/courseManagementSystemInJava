@@ -6,10 +6,10 @@ import java.security.NoSuchAlgorithmException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import component.frame.AdminFrame;
 import component.frame.LoginFrame;
 import component.frame.MenuFrame;
 import component.frame.RegisterFrame;
+import component.frame.admin.AdminFrame;
 import component.frame.student.StudentFrame;
 import component.frame.teacher.TeacherFrame;
 import user.Admin;
@@ -80,8 +80,6 @@ public class Main {
 	    try {
 	        teacherFrame.changeRightPanel(teacher, "Dashboard");
 	    } catch (Exception exp) {
-	        String error = exp.getMessage();
-	        System.out.println(exp);
 	        JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
 	    }
 		
@@ -99,8 +97,6 @@ public class Main {
 	    try {
 	    	adminFrame.changeRightPanel(admin, "Dashboard");
 	    } catch (Exception exp) {
-	        String error = exp.getMessage();
-	        System.out.println(exp);
 	        JOptionPane.showMessageDialog(null, "Please try again", "Error", JOptionPane.WARNING_MESSAGE);
 	    }
 	}

@@ -1,7 +1,7 @@
 package course;
 
 public class Module_ {
-	private int moduleId;
+	private String moduleId;
     private String moduleName;
     private int level;
     private int semester;
@@ -9,11 +9,11 @@ public class Module_ {
     private int marks;
     private boolean isMandatory;
     
-	public int getModuleId() {
+	public String getModuleId() {
 		return moduleId;
 	}
 	
-	public void setModuleId(int moduleId) {
+	public void setModuleId(String moduleId) {
 		this.moduleId = moduleId;
 	}
 	

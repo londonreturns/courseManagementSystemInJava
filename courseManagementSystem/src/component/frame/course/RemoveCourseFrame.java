@@ -146,16 +146,10 @@ public class RemoveCourseFrame extends StandardFrame implements ActionListener, 
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseClicked(MouseEvent e) {}
 
 	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mousePressed(MouseEvent e) {}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
@@ -207,7 +201,6 @@ public class RemoveCourseFrame extends StandardFrame implements ActionListener, 
 				conn.close();
 			} catch (ClassNotFoundException | SQLException e1) {
 				String error = e1.getMessage();
-	            System.out.println(e1);
 	            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
 	        
 	            
@@ -216,7 +209,6 @@ public class RemoveCourseFrame extends StandardFrame implements ActionListener, 
 	        
 			}catch (Exception e1) {
 				String error = "Id error";
-	            System.out.println(e1);
 	            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.WARNING_MESSAGE);
 			}
 			
@@ -266,16 +258,10 @@ public class RemoveCourseFrame extends StandardFrame implements ActionListener, 
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseEntered(MouseEvent e) {}
 
 	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseExited(MouseEvent e) {}
 	
 	private void removeActionListeners() {
 		StandardButton[] buttons = {

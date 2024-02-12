@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="Color.Color0"/>
-    <fullyQualifiedTypeName name="Color.Color4"/>
-    <fullyQualifiedTypeName name="Color.Color3"/>
     <fullyQualifiedTypeName name="Color.Color2"/>
     <fullyQualifiedTypeName name="javax.swing.text.StyleContext.SmallAttributeSet"/>
     <fullyQualifiedTypeName name="font.SmallBold"/>
@@ -54,10 +51,13 @@
     <fullyQualifiedTypeName name="user.Teacher"/>
     <fullyQualifiedTypeName name="course.Module_"/>
     <fullyQualifiedTypeName name="course.Course"/>
-    <fullyQualifiedTypeName name="component.button.StandardButton"/>
     <fullyQualifiedTypeName name="javax.swing.JColorChooser"/>
     <fullyQualifiedTypeName name="javax.swing.JComboBox"/>
     <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
     <fullyQualifiedTypeName name="java.sql.SQLException"/>
     <fullyQualifiedTypeName name="java.lang.ClassNotFoundException"/>
+    <fullyQualifiedTypeName name="javax.swing.BorderFactory"/>
+    <fullyQualifiedTypeName name="java.awt.Color"/>
+    <fullyQualifiedTypeName name="color.Color0"/>
+    <fullyQualifiedTypeName name="component.button.StandardButton"/>
 </qualifiedTypeNameHistroy>
