@@ -21,6 +21,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -152,6 +153,7 @@ public class RegisterFrame extends StandardFrame implements ItemListener, MouseL
 			
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
+			// select unique course
 			String query = "SELECT DISTINCT course_name FROM course WHERE is_active = 1";
 			PreparedStatement pst = conn.prepareStatement(query);
 			
@@ -287,6 +289,7 @@ public class RegisterFrame extends StandardFrame implements ItemListener, MouseL
 				LocalDate convertedDob = dateOfBirth.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
 				LocalDate today = LocalDate.now();
 				
+				// regular expression
 				if (convertedDob.isAfter(today)) {
 					throw new DateException("Invalid date");
 				}else if(name.length() == 0 || name.length() > 50) {
@@ -311,29 +314,7 @@ public class RegisterFrame extends StandardFrame implements ItemListener, MouseL
 						Class.forName(DatabaseConstant.CLASSNAME);
 						Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
 						
-						while (!false) {
-							tempId = (int)(Math.random() * (9999999 - 1000000)) + 1000000;
-							id = Integer.toString(tempId);
-							System.out.println("Generated ID: " + tempId);
-							
-							String query = "SELECT * FROM user WHERE student_id = ? OR teacher_id = ? OR admin_id = ?";
-							PreparedStatement pst = conn.prepareStatement(query);
-							
-							pst.setString(1, id);
-							pst.setString(2, id);
-							pst.setString(3, id);
-							ResultSet result = pst.executeQuery();
-
-							int rows = 0;
-							
-							while (result.next()) {
-								rows++;
-							}
-							if(!(rows > 0)) {
-								break;
-							}
-							
-						}
+						id = generateId();
 
 						String level = "4";
 						
@@ -347,6 +328,7 @@ public class RegisterFrame extends StandardFrame implements ItemListener, MouseL
 						student1.setDateOfBirth(new java.sql.Date(dateOfBirth.getTime()));
 						student1.setLevel(level);
 						
+						// insert in table
 						String query = "INSERT INTO " + student1.getTypeOfUser() + " (student_id, name, email, password, contact, dob, level)"
 								+ " VALUES"
 								+ " (?, ?, ?, ?, ?, ?, ?)";
@@ -383,6 +365,7 @@ public class RegisterFrame extends StandardFrame implements ItemListener, MouseL
 						
 						int rowsAffected = pst.executeUpdate();
 						
+						// insert in user table
 						query = "INSERT INTO user (student_id, name, type_of_user)"
 								+ " VALUES"
 								+ " (?, ?, ?)";
@@ -408,6 +391,7 @@ public class RegisterFrame extends StandardFrame implements ItemListener, MouseL
 					        
 					    } 
 					    
+					    // select course 
 					    query = "SELECT course_id FROM course WHERE course_name = ?";
 						
 						pst = conn.prepareStatement(query);
@@ -424,6 +408,7 @@ public class RegisterFrame extends StandardFrame implements ItemListener, MouseL
 							courseId = result.getInt("course_id");
 						}
 						
+						// select all modules from the course
 						query = "SELECT module_id, level, semester FROM module WHERE course_id = ?";
 						
 						pst = conn.prepareStatement(query);
@@ -434,6 +419,7 @@ public class RegisterFrame extends StandardFrame implements ItemListener, MouseL
 						
 						result = pst.executeQuery();
 						
+						// loop for all courses
 						while (result.next()) {
 							Boolean currentlyStuding = false;
 							int moduleId = result.getInt("module_id");
@@ -445,6 +431,7 @@ public class RegisterFrame extends StandardFrame implements ItemListener, MouseL
 								currentlyStuding = true;
 							}
 							
+							// new record for every module
 							query = "INSERT INTO student_enrollment "
 							        + "(student_id, course_id, module_id, semester, "
 							        + "level, marks, currently_studying)"
@@ -507,29 +494,7 @@ public class RegisterFrame extends StandardFrame implements ItemListener, MouseL
 						Class.forName(DatabaseConstant.CLASSNAME);
 						Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
 						
-						while (!false) {
-							tempId = (int)(Math.random() * (9999999 - 1000000)) + 1000000;
-							id = Integer.toString(tempId);
-							System.out.println("Generated ID: " + tempId);
-							
-							String query = "SELECT * FROM user WHERE student_id = ? OR teacher_id = ? OR admin_id = ?";
-							PreparedStatement pst = conn.prepareStatement(query);
-							
-							pst.setString(1, id);
-							pst.setString(2, id);
-							pst.setString(3, id);
-							ResultSet result = pst.executeQuery();
-
-							int rows = 0;
-							
-							while (result.next()) {
-								rows++;
-							}
-							if(!(rows > 0)) {
-								break;
-							}
-							
-						}
+						id = generateId();
 						
 						Teacher teacher1 = new Teacher();
 						teacher1.setId(id);
@@ -540,6 +505,7 @@ public class RegisterFrame extends StandardFrame implements ItemListener, MouseL
 						teacher1.setTypeOfUser(user);
 						teacher1.setDateOfBirth(new java.sql.Date(dateOfBirth.getTime()));
 						
+						// insert into teacher table
 						String query = "INSERT INTO " + teacher1.getTypeOfUser() + " (" + teacher1.getTypeOfUser() + "_id, name, email, password, contact, dob)"
 						        + " VALUES"
 						        + " (?, ?, ?, ?, ?, ?)";
@@ -572,6 +538,7 @@ public class RegisterFrame extends StandardFrame implements ItemListener, MouseL
 						
 						int rowsAffected = pst.executeUpdate();
 						
+						// insert into user
 						query = "INSERT INTO user (" + teacher1.getTypeOfUser() + "_id, name, type_of_user)"
 								+ " VALUES"
 								+ " (?, ?, ?)";
@@ -612,29 +579,7 @@ public class RegisterFrame extends StandardFrame implements ItemListener, MouseL
 						Class.forName(DatabaseConstant.CLASSNAME);
 						Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
 						
-						while (!false) {
-							tempId = (int)(Math.random() * (9999999 - 1000000)) + 1000000;
-							id = Integer.toString(tempId);
-							System.out.println("Generated ID: " + tempId);
-							
-							String query = "SELECT * FROM user WHERE student_id = ? OR teacher_id = ? OR admin_id = ?";
-							PreparedStatement pst = conn.prepareStatement(query);
-							
-							pst.setString(1, id);
-							pst.setString(2, id);
-							pst.setString(3, id);
-							ResultSet result = pst.executeQuery();
-
-							int rows = 0;
-							
-							while (result.next()) {
-								rows++;
-							}
-							if(!(rows > 0)) {
-								break;
-							}
-							
-						}
+						id = generateId();
 						
 						Admin admin1 = new Admin();
 						admin1.setId(id);
@@ -645,6 +590,7 @@ public class RegisterFrame extends StandardFrame implements ItemListener, MouseL
 						admin1.setTypeOfUser(user);
 						admin1.setDateOfBirth(new java.sql.Date(dateOfBirth.getTime()));
 						
+						// insert in admin
 						String query = "INSERT INTO " + admin1.getTypeOfUser() + " (" + admin1.getTypeOfUser() + "_id, name, email, password, contact, dob)"
 						        + " VALUES"
 						        + " (?, ?, ?, ?, ?, ?)";
@@ -677,6 +623,7 @@ public class RegisterFrame extends StandardFrame implements ItemListener, MouseL
 						
 						int rowsAffected = pst.executeUpdate();
 						
+						// insert into user
 						query = "INSERT INTO user (" + admin1.getTypeOfUser() + "_id, name, type_of_user)"
 								+ " VALUES"
 								+ " (?, ?, ?)";
@@ -741,6 +688,39 @@ public class RegisterFrame extends StandardFrame implements ItemListener, MouseL
 			button.removeItemListener(this);
 			button.removeMouseListener(this);
 		}
+	}
+	
+	private String generateId() throws SQLException, ClassNotFoundException {
+		Class.forName(DatabaseConstant.CLASSNAME);
+		Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
+		String id;
+		int tempId;
+		while (!false) {
+			tempId = (int)(Math.random() * (9999999 - 1000000)) + 1000000;
+			id = Integer.toString(tempId);
+			System.out.println("Generated ID: " + tempId);
+			
+			// check is id exists
+			String query = "SELECT * FROM user WHERE student_id = ? OR teacher_id = ? OR admin_id = ?";
+			PreparedStatement pst = conn.prepareStatement(query);
+			
+			pst.setString(1, id);
+			pst.setString(2, id);
+			pst.setString(3, id);
+			ResultSet result = pst.executeQuery();
+
+			int rows = 0;
+			
+			while (result.next()) {
+				rows++;
+			}
+			if(!(rows > 0)) {
+				break;
+			}
+			
+		}
+		conn.close();
+		return id;
 	}
 	
 	

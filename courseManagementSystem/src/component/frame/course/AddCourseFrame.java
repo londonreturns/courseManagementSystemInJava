@@ -165,6 +165,7 @@ public class AddCourseFrame extends StandardFrame implements ActionListener, Mou
 				Class.forName(DatabaseConstant.CLASSNAME);
 				Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
 				
+				// select course id
 				String query1 = "SELECT course_id FROM course WHERE course_id = ?";
 				
 				PreparedStatement pst1 = conn.prepareStatement(query1);
@@ -185,6 +186,7 @@ public class AddCourseFrame extends StandardFrame implements ActionListener, Mou
 					throw new FormException("Id already exists");
 				}
 				
+				// insert in course table
 				String query2 = "INSERT INTO course (course_id, course_name, is_active)"
 						+ " VALUES"
 						+ " (?, ?, ?)";

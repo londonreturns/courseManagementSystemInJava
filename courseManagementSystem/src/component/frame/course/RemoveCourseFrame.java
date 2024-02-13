@@ -155,7 +155,6 @@ public class RemoveCourseFrame extends StandardFrame implements ActionListener, 
 	public void mouseReleased(MouseEvent e) {
 		if (e.getSource() == okBtn) {
 			String id = courseIdTextField.getText().trim();
-			String isEnabled = "1";
 			try {
 				if (!Pattern.matches("^[a-zA-Z0-9].{4,10}$", id)) {
 				    throw new FormException("Invalid id");
@@ -184,6 +183,7 @@ public class RemoveCourseFrame extends StandardFrame implements ActionListener, 
 					throw new FormException("Id not found");
 				}
 				
+				// delete course
 				String deleteQuery = "DELETE FROM course WHERE course_id = ?";
 		        PreparedStatement deleteStatement = conn.prepareStatement(deleteQuery);
 		        deleteStatement.setString(1, id);
@@ -219,6 +219,7 @@ public class RemoveCourseFrame extends StandardFrame implements ActionListener, 
 				Class.forName(DatabaseConstant.CLASSNAME);
 				Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
 				
+				// select course
 				String query1 = "SELECT * FROM course WHERE course_id = ?";
 				
 				PreparedStatement pst1 = conn.prepareStatement(query1);

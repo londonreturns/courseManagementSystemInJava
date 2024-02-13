@@ -188,6 +188,7 @@ public class AddModuleFrame extends StandardFrame implements ActionListener, Mou
 					
 				    int maxCompulsoryModules = 8;
 				    
+				    // count number of modules in a semester of a course
 				    String countQuery = "SELECT COUNT(*) AS total FROM module WHERE level = ? AND semester = ? AND is_mandatory = 1";
 				    
 				    PreparedStatement countPst = conn.prepareStatement(countQuery);
@@ -207,6 +208,7 @@ public class AddModuleFrame extends StandardFrame implements ActionListener, Mou
 				if (module.getLevel() == 6) {
 				    int maxCompulsoryModulesLevel6 = 2;
 
+				    // count mandatory modules in level 6 
 				    String countQueryLevel6 = "SELECT COUNT(*) AS total FROM module WHERE level = ? AND is_mandatory = 1";
 
 				    PreparedStatement countPstLevel6 = conn.prepareStatement(countQueryLevel6);
@@ -222,6 +224,7 @@ public class AddModuleFrame extends StandardFrame implements ActionListener, Mou
 				    } else {
 				        module.setMandatory(false);
 
+				        // total modules in level 6
 				        String totalModulesQuery = "SELECT COUNT(*) AS totalModules FROM module WHERE level = ?";
 				        PreparedStatement totalModulesPst = conn.prepareStatement(totalModulesQuery);
 				        totalModulesPst.setInt(1, module.getLevel());
@@ -237,6 +240,7 @@ public class AddModuleFrame extends StandardFrame implements ActionListener, Mou
 				    }
 				}
 
+				// insert into module
 				String query2 = "INSERT INTO module (module_name, course_id, semester, level, is_mandatory) VALUES (?, ?, ?, ?, ?)";
 
 				PreparedStatement pst2 = conn.prepareStatement(query2);

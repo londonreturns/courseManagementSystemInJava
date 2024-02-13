@@ -123,6 +123,7 @@ public class AssignModuleFrame extends StandardFrame implements ActionListener{
 				Class.forName(DatabaseConstant.CLASSNAME);
 				Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
 
+				// number of modules that the teacher teaches
 				String countModulesQuery = "SELECT COUNT(*) AS module_count FROM teacher_module WHERE teacher_id = ?";
 				PreparedStatement countModulesPst = conn.prepareStatement(countModulesQuery);
 				countModulesPst.setString(1, teacherId);
@@ -152,7 +153,8 @@ public class AssignModuleFrame extends StandardFrame implements ActionListener{
 				if (rows == 0) {
 				    throw new FormException("Invalid module id");
 				}
-
+				
+				// select teacher
 				String query2 = "SELECT teacher_id FROM teacher WHERE teacher_id = ?";
 				PreparedStatement pst2 = conn.prepareStatement(query2);
 				index = 1;
@@ -169,6 +171,7 @@ public class AssignModuleFrame extends StandardFrame implements ActionListener{
 				    throw new FormException("Invalid teacher id");
 				}
 
+				// select teacher module
 				String query3 = "SELECT * FROM teacher_module WHERE teacher_id = ? AND module_id = ?";
 				PreparedStatement pst3 = conn.prepareStatement(query3);
 				index = 1;
@@ -187,6 +190,7 @@ public class AssignModuleFrame extends StandardFrame implements ActionListener{
 				    throw new FormException("Already assigned.");
 				}
 
+				// insert in teacher module
 				String query4 = "INSERT INTO teacher_module (teacher_id, module_id) VALUES (?, ?)";
 				PreparedStatement pst4 = conn.prepareStatement(query4);
 				index = 1;

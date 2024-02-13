@@ -159,6 +159,7 @@ public class GenerateReportFrame extends StandardFrame implements ActionListener
 			    Class.forName(DatabaseConstant.CLASSNAME);
 			    Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
 
+			    // select student
 			    String checkStudentQuery = "SELECT student_id FROM student WHERE student_id = ?";
 			    PreparedStatement checkStudentPst = conn.prepareStatement(checkStudentQuery);
 			    checkStudentPst.setString(1, id);
@@ -174,6 +175,7 @@ public class GenerateReportFrame extends StandardFrame implements ActionListener
 			        throw new FormException("Id not found");
 			    }
 
+			    // get student and module details 
 			    String getMarksAndModuleNameQuery = "SELECT se.marks, m.module_name, se.level, se.currently_studying " +
 			            "FROM student_enrollment se " +
 			            "INNER JOIN module m ON se.module_id = m.module_id " +
@@ -184,6 +186,7 @@ public class GenerateReportFrame extends StandardFrame implements ActionListener
 
 			    ResultSet marksAndModuleResult = getMarksAndModulePst.executeQuery();
 
+			    // select level which the student is currently studying
 			    String getCurrentLevelQuery = "SELECT level FROM student_enrollment WHERE student_id = ? AND currently_studying = true";
 			    PreparedStatement getCurrentLevelPst = conn.prepareStatement(getCurrentLevelQuery);
 			    getCurrentLevelPst.setString(1, id);
@@ -262,6 +265,7 @@ public class GenerateReportFrame extends StandardFrame implements ActionListener
 				Class.forName(DatabaseConstant.CLASSNAME);
 				Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
 				
+				// select student
 				String query1 = "SELECT * FROM student WHERE student_id = ?";
 				
 				PreparedStatement pst1 = conn.prepareStatement(query1);

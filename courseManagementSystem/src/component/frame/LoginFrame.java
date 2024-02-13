@@ -99,6 +99,7 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 		
 		setPlaceHolders();
 		
+		// set horizontal to right
 		ArrayList<Component> allLabelComponents = new ArrayList<>(Arrays.asList(
 				idLabel, passwordLabel));
 		for(Component labelComponent : allLabelComponents) {
@@ -127,17 +128,20 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
+				// change color on hover
 				registerLabel.setForeground(new Color(0xF4D160));
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
+				// change color on hover
 				registerLabel.setForeground(new Color(0x321D2F));
 			}
 		});
 		
 		loginPanel.setBorder(BorderFactory.createLineBorder(new Color0()));
 		
+		// add to panel
 		ArrayList<Component> allComponents = new ArrayList<>(Arrays.asList(
 				loginTitle, idLabel, passwordLabel, idTextField, passwordPasswordField,
 				okBtnLogin, registerLabel));	
@@ -162,16 +166,19 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		// okBtnLogin triggered
 		if (e.getSource() == okBtnLogin) {
 			String id = idTextField.getText();
 			String password = new String(passwordPasswordField.getPassword());
 			try {
+				// Regular expression
 				if(!Pattern.matches("^[0-9]{7}$", id)) {
 					throw new FormException("Invalid id");
 				}else if(!Pattern.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$", password)) {
 					throw new FormException("Invalid password");
 				}	
 				try {
+					// encrypt
 					password = Main.hashAlgorithm(password);
 					
 					Class.forName("com.mysql.jdbc.Driver");
@@ -198,11 +205,12 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 						if(!result.next()) {
 							throw new DatabaseException("Credentials invalid");
 						}else {
+							// check password
 							String dbPassword = result.getString(4);
 							if (password.equals(dbPassword)) {
 								JOptionPane.showMessageDialog(null, "Login successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
 						        resetFields();
-						        if(id.equals("student")) {
+						        if(typeOfUser.equals("student")) {
 						        	Student student1 = new Student();
 						        	student1.setName(result.getString("name"));
 									student1.setId(result.getString("student_id"));
@@ -212,8 +220,9 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 									student1.setTypeOfUser("student");
 									student1.setLevel(result.getString("level"));
 									student1.setDateOfBirth(result.getDate("dob"));
+									// display student dashboard
 							        Main.studentFrameDisplay(this, student1);
-						        }else if(id.equals("teacher")) {
+						        }else if(typeOfUser.equals("teacher")) {
 						        	Teacher teacher1 = new Teacher();
 						        	teacher1.setName(result.getString("name"));
 						        	teacher1.setId(result.getString("teacher_id"));
@@ -222,7 +231,7 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 						        	teacher1.setContact(result.getString("contact"));
 						        	teacher1.setTypeOfUser("teacher");
 						        	teacher1.setDateOfBirth(result.getDate("dob"));
-						        	
+						        	// display teacher dashboard
 						        	Main.teacherFrameDisplay(this, teacher1);
 						        }else {
 						        	Admin admin1 = new Admin();
@@ -233,6 +242,7 @@ public class LoginFrame extends StandardFrame implements ActionListener{
 						        	admin1.setContact(result.getString("contact"));
 						        	admin1.setTypeOfUser("admin");
 						        	admin1.setDateOfBirth(result.getDate("dob"));
+						        	// display admin dashboard
 						        	Main.adminFrameDisplay(this, admin1);
 						        }
 							}else {

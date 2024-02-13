@@ -137,6 +137,7 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 		ImageIcon cmsImageIcon = new ImageIcon("assets/cms2.png");
 		cmsLabel.setIcon(cmsImageIcon);
 		
+		// menu buttons
 		String[] menuItems = {};
 		
 		switch (typeOfUser) {
@@ -188,6 +189,7 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 	
 	
 	public void newSelectedMenu(MenuButton newMenuButton) {
+		// when menu button is clicked
 		selectedMenu = newMenuButton.getText();
 		for(MenuButton menuButton : menuButtonList) {
 			if(newMenuButton == menuButton) {
@@ -201,6 +203,7 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 	}
 	
 	public void changeRightPanel(Student student, String menu) throws ClassNotFoundException {
+		removeActionListeners();
 		this.student = student;
 		rightPanel.removeAll();
 		switch (menu) {
@@ -224,7 +227,9 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 
 					axisX = 75;
 					axisY = 250;
-
+					
+					
+					// set labels
 					for (JLabel label : labels) {
 					    label.setBounds(axisX, axisY, 400, 100);
 					    label.setFont(new BigBold());
@@ -243,6 +248,7 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 
 				    Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
 
+				    // count number of modules
 				    String countModulesQuery = "SELECT COUNT(DISTINCT se.module_id) AS module_count " +
 				            "FROM student_enrollment se " +
 				            "WHERE se.student_id = ? AND se.currently_studying = true";
@@ -263,7 +269,8 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 
 				    axisX = 505;
 				    axisY = 250;
-
+				    
+				    // add to panel
 				    for (JLabel label : numbers) {
 				        label.setBounds(axisX, axisY, 400, 100);
 				        label.setFont(new SmallBold());
@@ -302,7 +309,8 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					String[] columns = {"Module Name", "Module Id", "Course", "Level", "Semester", "Marks"};
 					Class.forName(DatabaseConstant.CLASSNAME);
 					Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
-
+					
+					// select modules for student
 					String query = "SELECT m.module_id, m.module_name, m.semester, m.level, m.course_id, c.course_name, se.marks " +
 				               "FROM student_enrollment se " +
 				               "INNER JOIN module m ON se.module_id = m.module_id " +
@@ -340,7 +348,7 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					}
 
 					
-
+					// set modules in 2d array
 					Object[][] cData = new Object[modules.size()][];
 					for (int i = 0; i < modules.size(); i++) {
 					    Module_ tempModule = modules.get(i);
@@ -363,8 +371,6 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					
 					String level = student.getLevel();
 					
-					
-					
 					if((level.equals("4") || level.equals("5"))) {
 						goUpYearButton.setText("Go next year");
 						goUpYearButton.setBounds(300, 645, 200, 35);
@@ -372,6 +378,7 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 						rightPanel.add(goUpYearButton);
 					}else {
 						optionalModuleComboBox.removeAllItems();
+						// select level 6 modules which is optional and the student is studying
 						query = "SELECT currently_studying FROM student_enrollment WHERE level = 6 AND currently_studying = 1";
 						pst = conn.prepareStatement(query);
 						
@@ -385,6 +392,7 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 						
 						try {
 							if (rows != 4) {
+								// select level 6 module which is optional and student is not studying
 								query = "SELECT m.module_id FROM module m" +
 							               " LEFT JOIN student_enrollment se ON m.module_id = se.module_id" +
 							               " WHERE m.level = 6 AND m.is_mandatory = 0 AND (se.currently_studying IS NULL OR se.currently_studying = 0)";
@@ -398,7 +406,6 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 
 							        optionalModuleComboBox.addItem(moduleId);
 								}
-								
 								
 								selectOptionalModuleButton.setText("Select module");
 								selectOptionalModuleButton.setBounds(400, 645, 200, 35);
@@ -439,6 +446,7 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					Class.forName(DatabaseConstant.CLASSNAME);
 					Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
 
+					// select teacher if the teacher teaches same module as the student is studying
 					String query = "SELECT t.teacher_id, t.name AS teacher_name, m.module_name " +
 					               "FROM teacher_module tm " +
 					               "INNER JOIN teacher t ON tm.teacher_id = t.teacher_id " +
@@ -449,7 +457,8 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					PreparedStatement pst = conn.prepareStatement(query);
 					pst.setString(1, student.getId());
 					ResultSet result = pst.executeQuery();
-
+					
+					// saving teachers in array
 					while (result.next()) {
 					    Teacher teacher = new Teacher();
 
@@ -468,7 +477,8 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					}
 
 					conn.close();
-
+					
+					// making teachers into 2d array
 					Object[][] tData = new Object[teachers.size()][];
 					int rowIndex = 0;
 
@@ -553,11 +563,13 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					id.setFont(new SmallBold());
 					
 					Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
-
+					
+					// count number of modules taught by the teacher
 					String countModulesQuery = "SELECT COUNT(DISTINCT tm.module_id) AS module_count " +
 					                           "FROM teacher_module tm " +
 					                           "INNER JOIN module m ON tm.module_id = m.module_id " +
 					                           "WHERE tm.teacher_id = ?";
+					
 					PreparedStatement countModulesPst = conn.prepareStatement(countModulesQuery);
 					countModulesPst.setString(1, teacher.getId());
 					ResultSet moduleCountResult = countModulesPst.executeQuery();
@@ -565,6 +577,8 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					if (moduleCountResult.next()) {
 					    numberOfModules = moduleCountResult.getInt("module_count");
 					}
+					
+					// count number of students enrolled in modules taught by the teacher
 					String countStudentsQuery = "SELECT COUNT(DISTINCT se.student_id) AS student_count " +
 					                            "FROM student_enrollment se " +
 					                            "INNER JOIN teacher_module tm ON se.module_id = tm.module_id " +
@@ -622,7 +636,8 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					String[] columns = {"Module Name", "Module Id", "Course", "Level", "Semester"};
 					Class.forName(DatabaseConstant.CLASSNAME);
 					Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
-	
+					
+					// get all modules taught by the teacher
 					String query = "SELECT m.module_id, m.module_name, m.semester, m.level, m.course_id, c.course_name " +
 				               "FROM module m " +
 				               "INNER JOIN teacher_module tm ON m.module_id = tm.module_id " +
@@ -694,7 +709,8 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					String[] columns = {"Name", "Id", "Module", "Course", "Marks"};
 					Class.forName(DatabaseConstant.CLASSNAME);
 					Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
-
+					
+					// get all students studying in module taught by the teacher
 					String query = "SELECT s.*, m.module_name, c.course_name, se.marks " +
 					               "FROM student_enrollment se " +
 					               "JOIN student s ON se.student_id = s.student_id " +
@@ -706,7 +722,8 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					PreparedStatement pst = conn.prepareStatement(query);
 					pst.setString(1, teacher.getId());
 					ResultSet result = pst.executeQuery();
-
+					
+					// saving in students array
 					while (result.next()) {
 					    String studentId = result.getString("student_id");
 					    String studentName = result.getString("name");
@@ -731,7 +748,8 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 
 					    students.add(student);
 					}
-
+					
+					// saving in 2d array
 					Object[][] sData = new Object[students.size()][];
 					int rowIndex = 0;
 
@@ -927,7 +945,9 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 
 					PreparedStatement pst = conn.prepareStatement(query);
 					ResultSet result = pst.executeQuery();
-
+					
+					
+					// saving in course array
 					while (result.next()) {
 					    String courseId = result.getString("course_id");
 					    String courseName = result.getString("course_name");
@@ -939,7 +959,8 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					    course.setActive(isEnabled);
 					    courses.add(course);
 					}
-
+					
+					// saving in 2d array
 					Object[][] cData = new Object[courses.size()][];
 					for (int i = 0; i < courses.size(); i++) {
 					    Course tempCourse = courses.get(i);
@@ -1002,6 +1023,7 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					PreparedStatement pst = conn.prepareStatement(query);
 					ResultSet result = pst.executeQuery();
 
+					// saving in array
 					while (result.next()) {
 					    Module_ module = new Module_();
 
@@ -1035,7 +1057,8 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					}
 					
 					conn.close();
-
+					
+					// saving in 2d array
 					Object[][] cData = new Object[modules.size()][];
 					for (int i = 0; i < modules.size(); i++) {
 					    Module_ tempModule = modules.get(i);
@@ -1094,7 +1117,8 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 
 				    PreparedStatement pst = conn.prepareStatement(query);
 				    ResultSet result = pst.executeQuery();
-
+				    
+				    // saving in student array
 				    while (result.next()) {
 				        String studentId = result.getString("student_id");
 				        String studentName = result.getString("name");
@@ -1102,7 +1126,7 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 				        Student student = new Student();
 				        student.setName(studentName);
 				        student.setId(studentId);
-
+				        // select course id that the student is enrolled in
 				        String courseQuery = "SELECT DISTINCT course_id FROM student_enrollment WHERE student_id = ?";
 				        PreparedStatement coursePst = conn.prepareStatement(courseQuery);
 				        coursePst.setString(1, studentId);
@@ -1114,6 +1138,7 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 				            studentHasCourses = true;
 
 				            String courseId = courseResult.getString("course_id");
+				            // course name 
 				            String courseNameQuery = "SELECT course_name FROM course WHERE course_id = ?";
 				            PreparedStatement courseNamePst = conn.prepareStatement(courseNameQuery);
 				            courseNamePst.setString(1, courseId);
@@ -1136,7 +1161,8 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 
 				        students.add(student);
 				    }
-
+				    
+				    // saving in 2d array
 				    Object[][] sData = new Object[students.size()][];
 				    for (int i = 0; i < students.size(); i++) {
 				        Student tempStudent = students.get(i);
@@ -1177,12 +1203,14 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					String[] columns = {"Name", "Id", "Modules"};
 					Class.forName(DatabaseConstant.CLASSNAME);
 					Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
-
+					
+					// select teachers
 					String query = "SELECT * FROM teacher";
 
 					PreparedStatement pst = conn.prepareStatement(query);
 					ResultSet result = pst.executeQuery();
-
+					
+					// saving data in teacher array
 					while (result.next()) {
 				        String teacherId = result.getString("teacher_id");
 				        String teacherName = result.getString("name");
@@ -1190,7 +1218,8 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 				        Teacher teacher = new Teacher();
 				        teacher.setName(teacherName);
 				        teacher.setId(teacherId);
-
+				        
+				        // get all modules that the teacher teaches
 				        String moduleQuery = "SELECT module_id FROM teacher_module WHERE teacher_id = ?";
 				        PreparedStatement modulePst = conn.prepareStatement(moduleQuery);
 				        modulePst.setString(1, teacher.getId());
@@ -1200,7 +1229,7 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 				        
 				        while (moduleResult.next()) {
 				        	teacherHasModules = true;
-
+				        	// get module name
 				            String moduleId = moduleResult.getString("module_id");
 				            String moduleNameQuery = "SELECT module_name FROM module WHERE module_id = ?";
 				            PreparedStatement moduleNamePst = conn.prepareStatement(moduleNameQuery);
@@ -1226,7 +1255,8 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 				            teachers.add(teacher);
 				        }
 				    }
-
+					
+					// saving in 2d array
 					Object[][] sData = new Object[teachers.size()][];
 					for (int i = 0; i < teachers.size(); i++) {
 					    Teacher tempTeacher = teachers.get(i);
@@ -1296,6 +1326,7 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 			if(e.getSource() == logOut) {
+				// destroy frame
 				this.setVisible(false);
 				rightPanel.removeAll();
 				leftPanel.removeAll();
@@ -1430,6 +1461,7 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 			    	Class.forName("com.mysql.jdbc.Driver");
 					Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
 					
+					// count number of modules that the student is currently studying
 					String countQuery = "SELECT COUNT(*) AS totalModules FROM student_enrollment WHERE student_id = ? AND currently_studying = true";
 
 					try (PreparedStatement countPst = conn.prepareStatement(countQuery)) {
@@ -1437,7 +1469,8 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					    ResultSet countResult = countPst.executeQuery();
 					    countResult.next();
 					    int totalModules = countResult.getInt("totalModules");
-
+					    
+					    // count number of modules the student is currently studying and passed
 					    String passQuery = "SELECT COUNT(*) AS passedModules FROM student_enrollment se" +
 					            " INNER JOIN module m ON se.module_id = m.module_id" +
 					            " WHERE se.student_id = ? AND se.currently_studying = true AND se.marks >= ? AND m.is_mandatory = 1";
@@ -1452,13 +1485,14 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					        String result = passedModules >= totalModules / 2 ? "Pass" : "Fail";
 
 					        if (result.equals("Pass")) {
+					        	// update level
 					            String updateLevelQuery = "UPDATE student SET level = level + 1 WHERE student_id = ?";
 					            try (PreparedStatement updateLevelPst = conn.prepareStatement(updateLevelQuery)) {
 					                updateLevelPst.setString(1, student.getId());
 					                int rowsAffected = updateLevelPst.executeUpdate();
 
 					                if (rowsAffected > 0) {
-					                    
+					                    // set old level currently studying to 0
 					                    String updateOldModulesQuery = "UPDATE student_enrollment SET currently_studying = 0 WHERE student_id = ? AND level = ?";
 					                    try (PreparedStatement updateOldModulesPst = conn.prepareStatement(updateOldModulesQuery)) {
 					                        updateOldModulesPst.setString(1, student.getId());
@@ -1466,6 +1500,7 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					                        updateOldModulesPst.executeUpdate();
 					                    }
 
+					                    // set new level currently studying to 1
 					                    String updateNewCompulsoryModulesQuery = "UPDATE student_enrollment se" +
 					                            " INNER JOIN module m ON se.module_id = m.module_id" +
 					                            " SET se.currently_studying = 1" +
@@ -1486,9 +1521,6 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 					    }
 					}
 
-
-
-
 		            conn.close();
 		        }catch (SQLException sqle) {
 		            JOptionPane.showMessageDialog(null, "Database Error", "Error", JOptionPane.WARNING_MESSAGE);
@@ -1501,7 +1533,8 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 				try {
 					Class.forName(DatabaseConstant.CLASSNAME);
 					Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
-
+					
+					// set current studying to 1
 					String query = "UPDATE student_enrollment SET currently_studying = 1 WHERE student_id = ? AND module_id = ?";
 				    
 				    PreparedStatement pst = conn.prepareStatement(query);
@@ -1521,6 +1554,7 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 				}
 			}
 			else {
+				// change color if button is clicked
 				for (MenuButton menuButton : menuButtonList) {
 					if (e.getSource() == menuButton) {
 						newSelectedMenu(menuButton);
@@ -1536,7 +1570,7 @@ public class MenuFrame extends StandardFrame  implements ActionListener{
 		}
 	
 	
-	private void changePanel(String typeOfUser2) throws ClassNotFoundException{
+	private void changePanel(String typeOfUser) throws ClassNotFoundException{
 		rightPanel.removeAll();
 		if (typeOfUser.equals("student")) {
 			changeRightPanel(student, selectedMenu);

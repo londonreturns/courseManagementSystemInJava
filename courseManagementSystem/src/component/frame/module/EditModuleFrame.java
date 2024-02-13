@@ -159,6 +159,7 @@ public class EditModuleFrame extends StandardFrame implements ActionListener, Mo
 				Class.forName(DatabaseConstant.CLASSNAME);
 				Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
 				
+				// select module
 				String query1 = "SELECT module_id FROM module WHERE module_id = ?";
 				
 				PreparedStatement pst1 = conn.prepareStatement(query1);
@@ -179,6 +180,7 @@ public class EditModuleFrame extends StandardFrame implements ActionListener, Mo
 					throw new FormException();
 				}
 				
+				// update module
 				String updateModuleQuery = "UPDATE module SET module_name = ?, semester = ?, level = ? WHERE module_id = ?";
 			    PreparedStatement updateModuleStatement = conn.prepareStatement(updateModuleQuery);
 			    

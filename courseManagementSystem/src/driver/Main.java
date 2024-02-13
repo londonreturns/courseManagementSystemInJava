@@ -37,6 +37,8 @@ public class Main {
 			loginFrame.setLocation(registerFrame.getX(), registerFrame.getY());
 			loginFrame.setVisible(true);
 		}
+		loginFrame.repaint();
+		loginFrame.revalidate();
 		registerFrame.setVisible(false);
 	}
 	
@@ -44,6 +46,8 @@ public class Main {
 		if (registerFrame.init == false) {
 			registerFrame.init = true;
 		}
+		registerFrame.repaint();
+		registerFrame.revalidate();
 		registerFrame.setRegisterElements();
 		registerFrame.setLocation(loginFrame.getX(), loginFrame.getY());
 		registerFrame.typeOfUserCombo.setSelectedItem("Student");

@@ -119,6 +119,7 @@ public class UnassignModuleFrame extends StandardFrame implements ActionListener
 				Class.forName(DatabaseConstant.CLASSNAME);
 				Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
 				
+				// select module
 				String query1 = "SELECT module_id FROM module WHERE module_id = ?";
 				
 				PreparedStatement pst1 = conn.prepareStatement(query1);
@@ -139,6 +140,7 @@ public class UnassignModuleFrame extends StandardFrame implements ActionListener
 					throw new FormException();
 				}
 				
+				// select teacher
 				String query2 = "SELECT teacher_id FROM teacher WHERE teacher_id = ?";
 	            
 	            PreparedStatement pst2 = conn.prepareStatement(query2);
@@ -159,6 +161,7 @@ public class UnassignModuleFrame extends StandardFrame implements ActionListener
 					throw new FormException();
 				}
 				
+				// select teacher module
 				String query3 = "SELECT * FROM teacher_module WHERE teacher_id = ? AND module_id = ?";
 	            
 	            PreparedStatement pst3 = conn.prepareStatement(query3);
@@ -183,6 +186,7 @@ public class UnassignModuleFrame extends StandardFrame implements ActionListener
 					throw new FormException("Not assgined.");
 				}
 				
+				// delete teacher module
 				String query4 = "DELETE FROM teacher_module WHERE teacher_id = ? AND module_id = ?";
 				
 				PreparedStatement pst4 = conn.prepareStatement(query4);

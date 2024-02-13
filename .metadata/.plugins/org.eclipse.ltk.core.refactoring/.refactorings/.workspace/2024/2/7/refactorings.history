@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete resource &apos;courseManagementSystem/studentMarks/9119018_level_4.csv&apos;" deleteContents="false" description="Delete resource &apos;courseManagementSystem/studentMarks/9119018_level_4.csv&apos;" element1="/courseManagementSystem/studentMarks/9119018_level_4.csv" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1707732961741"/>
+</session>

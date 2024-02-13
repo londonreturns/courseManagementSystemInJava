@@ -164,6 +164,7 @@ public class EnableCourseFrame extends StandardFrame implements ActionListener, 
 				Class.forName(DatabaseConstant.CLASSNAME);
 				Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
 				
+				// select course
 				String query1 = "SELECT course_id FROM course WHERE course_id = ?";
 				
 				PreparedStatement pst1 = conn.prepareStatement(query1);
@@ -184,6 +185,7 @@ public class EnableCourseFrame extends StandardFrame implements ActionListener, 
 					throw new FormException("Id not found");
 				}
 				
+				// update is active
 				String query2 = "UPDATE course SET is_active = ? WHERE course_id = ?";
 	            
 	            PreparedStatement updateStatement = conn.prepareStatement(query2);
@@ -217,6 +219,7 @@ public class EnableCourseFrame extends StandardFrame implements ActionListener, 
 				Class.forName(DatabaseConstant.CLASSNAME);
 				Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
 				
+				// select course
 				String query1 = "SELECT * FROM course WHERE course_id = ?";
 				
 				PreparedStatement pst1 = conn.prepareStatement(query1);

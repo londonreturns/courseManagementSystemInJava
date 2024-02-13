@@ -159,6 +159,7 @@ public class RemoveModuleFrame extends StandardFrame implements ActionListener, 
 				Class.forName(DatabaseConstant.CLASSNAME);
 				Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
 				
+				// select module
 				String query1 = "SELECT module_id FROM module WHERE module_id = ?";
 				
 				PreparedStatement pst1 = conn.prepareStatement(query1);
@@ -179,6 +180,7 @@ public class RemoveModuleFrame extends StandardFrame implements ActionListener, 
 					throw new FormException("Id not found");
 				}
 				
+				// delete module
 				String deleteQuery = "DELETE FROM module WHERE module_id = ?";
 		        PreparedStatement deleteStatement = conn.prepareStatement(deleteQuery);
 		        deleteStatement.setString(1, id);
@@ -210,6 +212,7 @@ public class RemoveModuleFrame extends StandardFrame implements ActionListener, 
 				Class.forName(DatabaseConstant.CLASSNAME);
 				Connection conn = DriverManager.getConnection(DatabaseConstant.URL, DatabaseConstant.USERNAME, DatabaseConstant.PASSWORD);
 				
+				// select module
 				String query1 = "SELECT * FROM module WHERE module_id = ?";
 				
 				PreparedStatement pst1 = conn.prepareStatement(query1);
